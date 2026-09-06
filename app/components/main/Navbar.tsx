@@ -43,9 +43,10 @@ export default function Navbar() {
       <div
         className={` z-40 bg-[#00354E] w-2/3  fixed min-h-screen transition-all ease-in-ou duration-500 shadow-2xl ${isOpen ? "right-0" : "-right-full"} `}
       >
-        <ul className=" flex flex-col p-20 mt-5 gap-8 items-center text-white">
+        <ul className=" flex flex-col p-20 mt-5 gap-8 text-sm items-center text-white font-['poppins-medium']">
           <LinkNav contain={"Home"} linkInput="/"></LinkNav>
           <LinkNav contain={"Theme"} linkInput="/"></LinkNav>
+          <LinkNav contain={"Gallery"} linkInput="/"></LinkNav>
           <LinkNav contain={"Merch"} linkInput="/"></LinkNav>
           <LinkNav contain={"Contact"} linkInput="/"></LinkNav>
         </ul>
