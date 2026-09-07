@@ -9,7 +9,7 @@ export default function Hero() {
           Genotif 47
         </h1>{" "}
         <p className="text-[#00354E] text-sm  font-['poppins-light'] text-shadow-sm ">
-          Genotif is the acronym for{" "}
+          Genotif merupakan akronim dari{" "}
           <q className="italic"> Generasi Orang-Orang Kreatif dan Inovatif</q>,
           or in English it means a Generation of Creative and Innovative People.
         </p>
@@ -17,14 +17,12 @@ export default function Hero() {
       <div className=" flex flex-col gap-3">
         <Link
           href={"/"}
-          className="font-['poppins-medium'] text-xs flex bg-[#00354E] shadow-sm w-44 h-12 text-center items-center justify-center p-2 text-white rounded-full"
-        >
+          className="font-['poppins-medium'] text-xs flex bg-[#00354E] shadow-sm w-44 h-12 text-center items-center justify-center p-2 text-white rounded-full">
           SEE THE DAY'S TALE
         </Link>
         <Link
           href={"/"}
-          className="font-['poppins-medium'] text-xs flex bg-white/60 backdrop-blur-md border shadow-sm border-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-[#00354E] rounded-full"
-        >
+          className="font-['poppins-medium'] text-xs flex bg-white/60 backdrop-blur-md border shadow-sm border-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-[#00354E] rounded-full">
           BECOME A PARTNERS
         </Link>
       </div>

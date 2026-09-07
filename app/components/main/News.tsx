@@ -1,10 +1,18 @@
+import Card from "./news/Card";
 export default function News() {
   return (
-    <section className="w-full min-h-screen flex flex-col items-center text-center gap-10">
+    <section className="mt-10  w-full min-h-screen flex flex-col items-center text-center gap-6">
       <hr className="w-2/3 text-[#00354E]" />
       <h1 className="text-[#00354E] font-['Telma-Medium'] text-4xl p-5 text-shadow-lg">
         Latest News
       </h1>
+      <div className="grid grid-cols-1">
+        <Card
+          cardTitle="CFD LOCATION"
+          cardSubtitle="Panitia Genotif 47 menjual berbagai macam snack yang enak dan kekinian. Kunjung booth Genotif 47 di Car Free Day Hawurwangi setiap hari Minggu "
+          cardImg="/content/scene-fair.jpg"
+        />
+      </div>
     </section>
   );
 }

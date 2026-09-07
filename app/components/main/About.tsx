@@ -1,7 +1,7 @@
 import Link from "next/link";
 export default function About() {
   return (
-    <section className="-translate-y-10 rounded-t-4xl bg-linear-to-b   bg-white w-full min-h-screen flex flex-col p-5  items-center text-center">
+    <section className="-translate-y-10 rounded-t-4xl bg-linear-to-b   bg-white w-full  flex flex-col p-5  items-center text-center">
       <h1 className="text-[#00354E] font-['Telma-Medium'] text-4xl p-5 text-shadow-lg">
         More About Genotif
       </h1>
@@ -17,14 +17,12 @@ export default function About() {
       <div className="flex flex-col gap-4">
         <Link
           href={"/"}
-          className="after:content-['_↗'] font-['poppins-medium'] text-sm flex bg-[#00354E] backdrop-blur-md border shadow-sm ring-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-white rounded-full"
-        >
+          className="after:content-['_↗'] font-['poppins-medium'] text-sm flex bg-[#00354E] backdrop-blur-md border shadow-sm ring-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-white rounded-full">
           VISIT THE GALLERY
         </Link>
         <Link
           href={"/"}
-          className="font-['poppins-medium'] text-xs flex bg-white/60 backdrop-blur-md border shadow-sm border-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-[#00354E] rounded-full"
-        >
+          className="font-['poppins-medium'] text-xs flex bg-white/60 backdrop-blur-md border shadow-sm border-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-[#00354E] rounded-full">
           THEME
         </Link>
       </div>
