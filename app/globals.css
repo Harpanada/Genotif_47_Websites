@@ -11,18 +11,16 @@
     --foreground: #ededed;
   }
 }
-@font-face{
+@font-face {
   font-family: "poppins-light";
-  src:
-    url("/fonts/Poppins-Light.ttf") format("truetype");
+  src: url("/fonts/Poppins-Light.ttf") format("truetype");
   font-weight: 300;
   font-display: swap;
   font-style: normal;
 }
-@font-face{
+@font-face {
   font-family: "poppins-medium";
-  src:
-    url("/fonts/Poppins-Medium.ttf") format("truetype");
+  src: url("/fonts/Poppins-Medium.ttf") format("truetype");
   font-weight: 300;
   font-display: swap;
   font-style: normal;
@@ -94,4 +92,23 @@
   font-weight: 300 900;
   font-display: swap;
   font-style: normal;
+}
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 16s linear infinite;
+}
+
+/* Pause animasi saat user menempelkan kursor (hover) */
+.animate-marquee:hover {
+  animation-play-state: paused;
 }

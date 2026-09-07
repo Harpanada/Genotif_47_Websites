@@ -3,6 +3,7 @@ import Footer from "./components/main/Footer";
 import Hero from "./components/main/Hero";
 import About from "./components/main/About";
 import News from "./components/main/News";
+import Partners from "./components/main/Partners";
 export default function Home() {
   return (
     <div className="scroll-smooth bg-white min-h-screen">
@@ -11,6 +12,7 @@ export default function Home() {
       <About />
       <News />
       <div className="w-full min-h-screen"></div>
+      <Partners />
       <Footer />
     </div>
   );

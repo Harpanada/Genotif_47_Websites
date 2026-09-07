@@ -6,9 +6,15 @@ export default function News() {
       <h1 className="text-[#00354E] font-['Telma-Medium'] text-4xl p-5 text-shadow-lg">
         Latest News
       </h1>
-      <div className="grid grid-cols-1">
+      <div className="grid grid-cols-1 gap-6">
         <Card
-          cardTitle="CFD LOCATION"
+          cardTitle="CFD BOOTH"
+          cardSubtitle="Panitia Genotif 47 menjual berbagai macam snack yang enak dan kekinian. Kunjung booth Genotif 47 di Car Free Day Hawurwangi setiap hari Minggu "
+          cardImg="/content/scene-fair.jpg"
+        />
+
+        <Card
+          cardTitle="PANITIA G47"
           cardSubtitle="Panitia Genotif 47 menjual berbagai macam snack yang enak dan kekinian. Kunjung booth Genotif 47 di Car Free Day Hawurwangi setiap hari Minggu "
           cardImg="/content/scene-fair.jpg"
         />

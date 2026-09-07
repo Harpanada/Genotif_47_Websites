@@ -16,7 +16,7 @@ export default function About() {
       </p>
       <div className="flex flex-col gap-4">
         <Link
-          href={"/"}
+          href="/components/gallery"
           className="after:content-['_↗'] font-['poppins-medium'] text-sm flex bg-[#00354E] backdrop-blur-md border shadow-sm ring-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-white rounded-full">
           VISIT THE GALLERY
         </Link>

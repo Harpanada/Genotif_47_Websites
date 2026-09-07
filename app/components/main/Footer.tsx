@@ -30,7 +30,7 @@ export default function Footer() {
 
       <div className="text-white justify-center flex flex-col items-center text-center">
         <small className=" ">
-          © 2026 GENOTIF 47, part of
+          ©Copyright 2026 GENOTIF 47, part of
           <a
             href="https://sman1ciranjang.sch.id/#"
             className="underline underline-offset-4 after:content-['_↗']">
@@ -38,7 +38,10 @@ export default function Footer() {
             SMAN 1 CIRANJANG
           </a>
         </small>
-        <small> Designed & Developed by DKD</small>
+        <small className="text-[10px]">
+          {" "}
+          Designed & Developed by DKD & Liyovan Harpanada
+        </small>
       </div>
     </footer>
   );
