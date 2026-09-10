@@ -1,4 +1,4 @@
-import Card from "./news/Card";
+import Card from "@/app/components/main/news/Card";
 export default function News() {
   return (
     <section className="mt-10  w-full min-h-screen flex flex-col items-center text-center gap-6">

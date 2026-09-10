@@ -1,7 +1,7 @@
-import LinkNav from "./nav/LinkNav";
+import LinkNav from "@/app/components/main/nav/LinkNav";
 export default function Footer() {
   return (
-    <footer className="min-w-screen bg-[#00354E] flex flex-col justify-center items-center p-10 gap-4">
+    <footer className="min-w-screen bg-[#00354E] flex flex-col justify-center items-center p-10 gap-4  shadow-lg">
       <h1 className="text-white font-['Telma-Regular'] text-2xl">Genotif 47</h1>
       <section className="flex gap-3">
         <div className="flex w-10 rounded-full h-10 bg-white p-2.5">
@@ -40,7 +40,7 @@ export default function Footer() {
         </small>
         <small className="text-[10px]">
           {" "}
-          Designed & Developed by DKD & Liyovan Harpanada
+          Designed & Developed by Liyovan Harpanada | DKD 47
         </small>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 export default function About() {
   return (
-    <section className="-translate-y-10 rounded-t-4xl bg-linear-to-b   bg-white w-full  flex flex-col p-5  items-center text-center">
+    <section className="-translate-y-10 rounded-t-4xl  bg-white w-full  flex flex-col p-5 min-h-screen  items-center text-center shadow-lg">
       <h1 className="text-[#00354E] font-['Telma-Medium'] text-4xl p-5 text-shadow-lg">
         More About Genotif
       </h1>
