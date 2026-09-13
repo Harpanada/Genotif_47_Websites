@@ -16,7 +16,7 @@ export default function Partners() {
   ];
 
   return (
-    <section className="w-full min-h-screen flex flex-col items-center overflow-hidden bg-transparent">
+    <section className="w-full min-h-screen flex flex-col items-center overflow-hidden  p-5 sh mb-5 ">
       {/* Sponsors */}
       <h1 className="text-[#00354E] font-['Telma-Medium'] text-3xl p-5 text-shadow-lg whitespace-nowrap">
         Sponsors
@@ -100,6 +100,7 @@ export default function Partners() {
           ))}
         </div>
       </div>
+      <div className="w-full shadow-2xl bg-[#e4f3f6] h-5"></div>
     </section>
   );
 }

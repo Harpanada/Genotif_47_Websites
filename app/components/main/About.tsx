@@ -5,24 +5,24 @@ export default function About() {
       <h1 className="text-[#00354E] font-['Telma-Medium'] text-4xl p-5 text-shadow-lg">
         More About Genotif
       </h1>
-      <p className="text-[#00354E] text-sm  font-['poppins-light'] text-shadow-xs p-5">
+      <p className="text-[#00354E] text-md  font-['poppins-light'] text-shadow-xs p-5">
         Genotif aims to provide a platform for students at SMA Negeri 1
         Ciranjang to develop their talents and creative ideas, which are
         showcased in the school's largest annual event—an event that
         consistently demonstrates innovation from year to year.
       </p>
-      <p className="text-[#00354E] text-sm  font-['poppins-light'] text-shadow-xs p-5">
+      <p className="text-[#00354E] text-md font-['poppins-light'] text-shadow-xs p-5">
         This 47th genotype takes the ABCD theme. to blah blah blah
       </p>
       <div className="flex flex-col gap-4">
         <Link
           href="/components/gallery"
-          className="after:content-['_↗'] font-['poppins-medium'] text-sm flex bg-[#00354E] backdrop-blur-md border shadow-sm ring-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-white rounded-full">
+          className="after:content-['_↗'] font-['poppins-light'] font-black text-sm flex bg-[#00354E] backdrop-blur-md border shadow-sm ring-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-white rounded-full">
           VISIT THE GALLERY
         </Link>
         <Link
           href={"/"}
-          className="font-['poppins-medium'] text-xs flex bg-white/60 backdrop-blur-md border shadow-sm border-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-[#00354E] rounded-full">
+          className="font-['poppins-light'] font-bold  text-sm flex bg-white/60 backdrop-blur-md border shadow-sm border-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-[#00354E] rounded-full">
           THEME
         </Link>
       </div>

@@ -7,10 +7,10 @@ export default function Card({ cardTitle, cardSubtitle, cardImg }: any) {
       <div className="p-2.5 flex flex-col justify-center">
         <Link
           href={"/"}
-          className="text-lg font-['poppins-medium']  text-[#00354E] after:content-['_↗']">
+          className="text-lg font-['poppins-light'] font-bold text-[#00354E] after:content-['_↗']">
           {cardTitle}
         </Link>
-        <p className="text-xs font-['poppins-light'] text-[#00354E] ">
+        <p className="text-xs text-shadow-xs font-['poppins-light'] font-medium text-[#00354E] ">
           {cardSubtitle}
         </p>
       </div>

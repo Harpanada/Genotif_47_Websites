@@ -11,12 +11,12 @@ export default function GalletyCard({
       className={`h-46 w-72 rounded-4xl border shadow-lg border-[#E3AD4B] overflow-hidden `}>
       <div className="flex flex-col absolute p-4 w-72  h-20 gap-12 ">
         <div className="z-10 flex justify-between">
-          <h3 className=" text-xs  text-[#00354E] w-12 h-6  flex justify-center items-center  font-['poppins-bold'] bg-white/80 backdrop-blur-sm rounded-full p-2    ">
+          <h3 className=" text-xs  text-[#00354E] w-12 h-6  flex justify-center items-center font-black  font-['poppins-light'] bg-white/80 backdrop-blur-sm rounded-full p-2    ">
             {cardYear}
           </h3>
           <Link
             href={linkDoc}
-            className="after:content-['_↗'] text-xs  text-[#00354E]  h-6  flex justify-center items-center  font-['poppins-bold'] bg-white/80 backdrop-blur-sm rounded-full p-2">
+            className="after:content-['_↗'] text-xs  text-[#00354E]  h-6  flex justify-center items-center font-black   font-['poppins-light'] bg-white/80 backdrop-blur-sm rounded-full p-2">
             {" "}
             SEE DETAILS
           </Link>
@@ -24,7 +24,9 @@ export default function GalletyCard({
 
         <div className="z-10 text-shadow-xs text-[#E3AD4B]  ">
           <h1 className=" font-['Telma-Bold'] text-2xl  ">{cardTtl}</h1>
-          <p className=" text-xs  font-['poppins-light']  ">{cardSbttl}</p>
+          <p className=" text-sm   font-['poppins-light'] font-bold ">
+            {cardSbttl}
+          </p>
         </div>
       </div>
 

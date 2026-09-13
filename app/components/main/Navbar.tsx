@@ -37,14 +37,16 @@ export default function Navbar() {
       <div
         onClick={() => setIsOpen(false)}
         className={` z-40 bg-[#00354E] w-2/3  fixed min-h-screen transition-all ease-in-ou duration-500 shadow-2xl ${isOpen ? "right-0" : "-right-full"} `}>
-        <ul className=" flex flex-col p-20 mt-5 gap-8 text-sm items-center text-white font-['poppins-medium']">
+        <ul className=" flex flex-col p-20 mt-5 gap-8 text-sm items-center text-white font-['poppins-light'] font-extrabold">
           <LinkNav contain={"Home"} linkInput="/"></LinkNav>
           <LinkNav contain={"Theme"} linkInput="/"></LinkNav>
           <LinkNav
             contain={"Gallery"}
             linkInput="/components/gallery"></LinkNav>
           <LinkNav contain={"Merch"} linkInput="/"></LinkNav>
-          <LinkNav contain={"Partnership"} linkInput="/"></LinkNav>
+          <LinkNav
+            contain={"Partnership"}
+            linkInput="/components/partnership"></LinkNav>
           <LinkNav contain={"Contact"} linkInput="/"></LinkNav>
         </ul>
       </div>
