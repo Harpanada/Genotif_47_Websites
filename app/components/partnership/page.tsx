@@ -16,8 +16,8 @@ export default function Partnership() {
           voice as a media partner. Every alliance strengthens the kingdom.
         </p>
       </div>
-      <div className="bg-[url(/content/hero-partnershipb.jpg)] brightness-80 min-h-screen bg-no-repeat w-auto bg-cover bg-center z-0 bg-fixed"></div>
-      <div className="absolute bottom-0 left-0 w-full h-32  bg-linear-to-b from-transparent to-[#e4f3f6] pointer-events-none "></div>
+      <div className="mask-b-from-65% mask-b-to-100% bg-[url(/content/hero-partnershipb.jpg)] brightness-80 min-h-screen bg-no-repeat w-auto bg-cover bg-center z-0 bg-fixed"></div>
+      {/* <div className="absolute bottom-0 left-0 w-full h-32  bg-linear-to-b from-transparent to-[#e4f3f6] pointer-events-none "></div> */}
       <div className="p-5 flex flex-col gap-20 ">
         <Sponsor />
         <Tenant />

@@ -5,10 +5,10 @@ export default function CardTwo({
   give,
   recieve,
   platfrom,
-  cardLink = "",
+  cardLink,
 }: any) {
   return (
-    <section className=" flex flex-col gap-4 justify-center bg-white w-72 h-64 p-5 rounded-2xl border  shadow-lg shadow-[#94E5FF]  border-[#E3AD4B] text-[#00354E] font-['poppins-light'] ">
+    <section className=" flex flex-col gap-4 justify-center bg-white w-72 min-h-64 p-5 rounded-2xl border  shadow-lg shadow-[#94E5FF]  border-[#E3AD4B] text-[#00354E] font-['poppins-light'] ">
       {" "}
       <div className=" flex justify-between items-center gap-1.5">
         <h1 className="font-['Telma-medium'] text-shadow-2xs text-3xl">

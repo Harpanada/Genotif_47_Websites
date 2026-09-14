@@ -47,7 +47,9 @@ export default function Navbar() {
           <LinkNav
             contain={"Partnership"}
             linkInput="/components/partnership"></LinkNav>
-          <LinkNav contain={"Contact"} linkInput="/"></LinkNav>
+          <LinkNav
+            contain={"Contact"}
+            linkInput="/components/contact"></LinkNav>
         </ul>
       </div>
       {/* Overllay */}
