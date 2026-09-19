@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  genotif-prototype:
+    build: .
+    container_name: genotif_47_dev
+    restart: always
+    ports:
+      - "8047:80" # Sesuaikan port kiri (8080) agar tidak bentrok dengan website lain
+    networks:
+      - server-network
+
+networks:
+  server-network:
+    external: true # Me
