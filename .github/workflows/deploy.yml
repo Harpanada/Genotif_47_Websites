@@ -1,0 +1,27 @@
+name: Deploy NextJS App
+
+on:
+  push:
+    branches:
+      - main # Atau 'master', sesuaikan dengan branch utama repo kamu
+
+jobs:
+  deploy:
+    runs-on: self-hosted # Menggunakan runner lokal di server kamu
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy with Docker Compose
+        run: |
+          # 1. Reset file lokal server agar selalu sesuai commit terbaru
+          git fetch --all
+          git reset --hard origin/main
+
+          # 2. Build ulang container tanpa cache agar perubahan ter-apply bersih
+          docker compose build --no-cache
+
+          # 3. Restart container Next.js
+          docker compose down
+          docker compose up -d
