@@ -9,7 +9,7 @@ export default function CardOne({
 }: any) {
   return (
     <section
-      className={`flex flex-col  gap-4 p-4 w-64 min-h-64 rounded-2xl border  ${customCls} border-[#E3AD4B] bg-white shadow-lg shadow-[#94E5FF] `}>
+      className={`flex flex-col  gap-4 p-4 w-72 h-72 rounded-2xl border  ${customCls} border-[#E3AD4B] bg-white shadow-lg shadow-[#94E5FF] `}>
       <div className="font-['Telma-medium'] text-shadow-2xs ">
         {" "}
         <h1 className="text-4xl text-[#00354E]">{tier}</h1>
