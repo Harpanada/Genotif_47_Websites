@@ -11,51 +11,33 @@ const guildBenef = [
 ];
 export default function Tenant() {
   return (
-    <section className="flex flex-col items-center gap-10 ">
-      <div className="flex flex-col gap-2 text-balance text-[#00354E] md:ml-36">
-        <h1 className="font-['Telma-Medium'] text-5xl  text-shadow-lg  md:text-6xl">
-          Become A Tenant
-        </h1>
-        <p className="text-md font-['poppins-light'] font-bold md:text-xl md:w-3/4 ">
-          Join GENOTIF as a tenant and reach over 1000 SMAN 1 Ciranjang
-          students. Get a strategic spot, promotional support, and a lively
-          atmosphere to grow your business.
-        </p>
-        <div className="text-sm ml-7 flex flex-col w-full  ">
-          <List txtContain="Booth space at Genotif" />
-          <List txtContain="Guest passes for your representatives" />
-          <List txtContain="Stage recognition during opening and closing ceremonies" />
-          <List txtContain="Direct access to 1,500+ students," />
-        </div>
+    <section className="flex flex-col md:flex-row gap-6 justify-center items-center">
+      <div className="">
+        <CardOne
+          tier="Market Stall"
+          price="Rp 750K"
+          customCls="gap-9"
+          benefits={stallBenf}
+          link="/"
+          linkTitle="RESERVE A BOOTH"></CardOne>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3">
-        <div className="">
-          <CardOne
-            tier="Market Stall"
-            price="Rp 750K"
-            customCls="gap-9"
-            benefits={stallBenf}
-            link="/"
-            linkTitle="RESERVE A BOOTH"></CardOne>
-        </div>
-        <div className="">
-          {" "}
-          <CardOne
-            tier="Corner Pavilion"
-            price="Rp 1.5M"
-            benefits={pavBenef}
-            link="/"
-            linkTitle="RESERVE A BOOTH"></CardOne>
-        </div>
-        <div className="">
-          <CardOne
-            tier="Guild Tent"
-            price="Rp 3M"
-            customCls="gap-6 border-3"
-            benefits={guildBenef}
-            link="/"
-            linkTitle="RESERVE A BOOTH"></CardOne>
-        </div>
+      <div className="">
+        {" "}
+        <CardOne
+          tier="Corner Pavilion"
+          price="Rp 1.5M"
+          benefits={pavBenef}
+          link="/"
+          linkTitle="RESERVE A BOOTH"></CardOne>
+      </div>
+      <div className="">
+        <CardOne
+          tier="Guild Tent"
+          price="Rp 3M"
+          customCls="gap-6 border-3"
+          benefits={guildBenef}
+          link="/"
+          linkTitle="RESERVE A BOOTH"></CardOne>
       </div>
     </section>
   );

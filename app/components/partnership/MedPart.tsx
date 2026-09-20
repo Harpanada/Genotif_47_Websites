@@ -12,53 +12,28 @@ const guildBenef = [
 ];
 export default function MedPart() {
   return (
-    <section className="flex flex-col items-center gap-10 mb-10 min-w-screen">
-      {" "}
-      <div className="flex flex-col gap-2 text-balance text-[#00354E] md:ml-10 ">
-        <h1 className="font-['Telma-Medium'] text-5xl  text-shadow-lg md:text-6xl">
-          Media Partner
-        </h1>
-        <p className="text-md font-['poppins-light'] font-bold md:text-xl md:w-3/4">
-          Help carry the news of GENOTIF 47 across the realm. In return, your
-          brand rides alongside the festival on banners, posts, and the main
-          stage.
-        </p>
-        <div className="text-sm ml-7 flex flex-col w-full  ">
-          <List
-            txtContain="Official media partner badge on all print & digital assets
-"
-          />
-          <List
-            txtContain="Press access to opening and stage performances
-"
-          />
-          <List txtContain="Co-branded content across GENOTIF social channels" />
-          <List txtContain="Priority updates and behind-the-scenes coverage" />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <CardTwo
-          cardTtl="Town Crier"
-          cardLink="/"
-          give="3 feed posts + 5 stories"
-          recieve="Logo on digital flyer, 1 press pass"
-          platfrom="Social Media"
-        />
-        <CardTwo
-          cardTtl="Royal Scribe"
-          cardLink="/"
-          give="1 pre-event article + 1 recaps"
-          recieve="Logo on website, 2 press passes, interview slot "
-          platfrom="Blog / Online Magazine"
-        />
-        <CardTwo
-          cardTtl="Kingdom Herald"
-          cardLink="/"
-          give="On-air mentions + event coverage"
-          recieve="Title media partner credit, stage logo, 4 press passes"
-          platfrom="Youtube Live / Podcast / Video"
-        />
-      </div>
+    <section className="flex flex-col md:flex-row gap-6 justify-center items-center">
+      <CardTwo
+        cardTtl="Town Crier"
+        cardLink="/"
+        give="3 feed posts + 5 stories"
+        recieve="Logo on digital flyer, 1 press pass"
+        platfrom="Social Media"
+      />
+      <CardTwo
+        cardTtl="Royal Scribe"
+        cardLink="/"
+        give="1 pre-event article + 1 recaps"
+        recieve="Logo on website, 2 press passes, interview slot "
+        platfrom="Blog / Online Magazine"
+      />
+      <CardTwo
+        cardTtl="Kingdom Herald"
+        cardLink="/"
+        give="On-air mentions + event coverage"
+        recieve="Title media partner credit, stage logo, 4 press passes"
+        platfrom="Youtube Live / Podcast / Video"
+      />
     </section>
   );
 }
