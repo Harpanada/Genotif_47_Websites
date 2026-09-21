@@ -4,11 +4,11 @@ export default function Hero() {
   return (
     <section className="p-6 flex flex-col text-center gap-14 items-center justify-center w-full bg-cover bg-center h-screen bg-no-repeat bg-fixed  bg-[url(/content/hero-edelweiss.jpg)]  ">
       <div className="flex flex-col gap-5 justify-center items-center">
-        <h1 className="font-['Telma-Bold'] mt-10 md:mt-0 md:text-7xl lg:text-8xl xl:text-9xl text-6xl text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3]">
+        <h1 className="font-['Telma-Bold'] mt-10 md:mt-0  lg:text-8xl xl:text-9xl text-7xl text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3]">
           {" "}
           Genotif 47
         </h1>{" "}
-        <p className="text-[#00354E] text-balance text-md md:text-lg lg:text-xl xl:text-2xl md:max-w-3/5  font-['poppins-light'] font-bold text-shadow-lg ">
+        <p className="text-[#00354E] text-balance text-lg  lg:text-xl xl:text-2xl md:max-w-3/5  font-['poppins-light'] font-bold text-shadow-lg ">
           Genotif is an acronym for{" "}
           <q className="italic"> Generasi Orang-Orang Kreatif dan Inovatif</q>,
           or in English it means a Generation of Creative and Innovative People.

@@ -27,10 +27,10 @@ export default function Partnership() {
     <section className="scroll-smooth flex flex-col  min-w-screen bg-[#e4f3f6] min-h-screen overflow-hidden ">
       <Navbar />
       <div className="absolute top-44 z-10 p-5 flex flex-col justify-center text-center items-center gap-3 w-full">
-        <h1 className=" font-['Telma-Bold']  w-full text-5xl text-center text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3] md:text-6xl lg:text-8xl ">
+        <h1 className=" font-['Telma-Bold']  w-full text-6xl text-center text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3] md:text-6xl lg:text-8xl ">
           Partnership
         </h1>
-        <p className="text-[#00354E] text-md md:text-lg lg:text-xl text-shadow-2xs text-balance text-center font-['poppins-light'] font-bold w-11/12  ">
+        <p className="text-[#00354E] text-lg md:text-lg lg:text-xl text-shadow-2xs text-balance text-center font-['poppins-light'] font-bold w-11/12  ">
           Pledge Your Banner, open a stall in the magic market or lend your{" "}
           <br />
           voice as a media partner. Every alliance strengthens the kingdom.

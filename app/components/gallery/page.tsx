@@ -6,10 +6,10 @@ export default function Gallery() {
     <section className="scroll-smooth  min-w-screen bg-[#e4f3f6] min-h-screen   overflow-hidden ">
       <Navbar />
       <div className="z-10 p-5 absolute top-44 md:top-52 lg:top-60 w-full text-center flex justify-center flex-col items-center ">
-        <h1 className="font-['Telma-Bold'] text-5xl  text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3]  md:text-6xl lg:text-8xl   ">
+        <h1 className="font-['Telma-Bold'] text-6xl  text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3]  md:text-6xl lg:text-8xl   ">
           Hall of Memories
         </h1>
-        <p className="text-[#00354E] text-balance text-md md:text-lg lg:text-xl xl:text-2xl md:max-w-3/5  font-['poppins-light'] font-bold text-shadow-lg ">
+        <p className="text-[#00354E] text-balance text-lg md:text-lg lg:text-xl xl:text-2xl md:max-w-3/5  font-['poppins-light'] font-bold text-shadow-lg ">
           Genotif is more than a one-day event. It's a long process, born from
           thousands of small moments, woven together by the entire school
           community along the way. We've gathered all those memories here, to be
