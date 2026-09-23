@@ -4,8 +4,8 @@ import AnimatedSection from "@/app/components/main/animation/AnimatedSection";
 import AnimatedButton from "@/app/components/main/animation/AnimatedButton";
 export default function Hero() {
   return (
-    <section className="p-6 flex flex-col text-center gap-14 items-center justify-center w-screen bg-cover bg-center h-screen bg-no-repeat bg-fixed  bg-[url(/content/hero-edelweiss.jpg)]  ">
-      <AnimatedSection>
+    <AnimatedSection>
+      <section className="p-6 flex flex-col text-center gap-14 items-center justify-center w-screen bg-cover bg-center h-screen bg-no-repeat bg-fixed  bg-[url(/content/hero-edelweiss.jpg)]  ">
         <div className="flex flex-col text-center gap-14 items-center justify-center w-full h-full">
           <div className="flex flex-col gap-5 justify-center items-center">
             <h1 className="font-['Telma-Bold'] mt-10 md:mt-0 md:text-7xl lg:text-8xl xl:text-9xl text-7xl text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3]">
@@ -35,7 +35,7 @@ export default function Hero() {
             </AnimatedButton>
           </div>
         </div>
-      </AnimatedSection>
-    </section>
+      </section>
+    </AnimatedSection>
   );
 }
