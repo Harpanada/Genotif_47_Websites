@@ -29,9 +29,9 @@ export default function Partnership() {
     <section className="scroll-smooth flex flex-col  min-w-screen bg-[#e4f3f6] min-h-screen overflow-hidden ">
       <Navbar />
       <GlobalHero
+        bgSrc="/content/hero.webp"
         ttl="Partnership"
         desc=" Pledge Your Banner, open a stall in the magic market or lend your voice as a media partner. Every alliance strengthens the kingdom."
-        bgSrc="/content/hero-partnershipb.jpg"
       />
       <div className="flex flex-col p-5 justify-center items-center gap-20 mt-20 ">
         <div className="md:w-3/4">

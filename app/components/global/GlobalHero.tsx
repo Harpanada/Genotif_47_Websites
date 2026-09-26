@@ -2,7 +2,8 @@ import AnimatedSection from "@/app/components/animation/AnimatedSection";
 export default function GlobalHero({ bgSrc, ttl, desc }: any) {
   return (
     <div
-      className={`bg-[url(${bgSrc})] mask-b-from-90% to-100% bg-cover bg-center  w-screen  h-screen bg-no-repeat  z-0 bg-fixed`}>
+      style={{ backgroundImage: `url(${bgSrc})` }}
+      className={` mask-b-from-90% to-100% bg-cover bg-center  w-screen  h-screen bg-no-repeat  z-0 bg-fixed`}>
       <div className="z-10  absolute top-44 md:top-52 lg:top-60 w-full  ">
         <div className="p-5 text-center flex justify-center flex-col items-center w-full  ">
           <AnimatedSection direction_y={-40} ease={"easeOut"} duration={0.5}>

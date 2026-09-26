@@ -4,7 +4,7 @@ import AnimatedSection from "@/app/components/animation/AnimatedSection";
 import AnimatedButton from "@/app/components/animation/AnimatedButton";
 export default function Hero() {
   return (
-    <section className="p-6 flex flex-col text-center gap-14 items-center justify-center w-screen bg-cover bg-center h-screen bg-no-repeat bg-fixed  bg-[url(/content/hero-edelweiss.jpg)]  ">
+    <section className="p-6 flex flex-col text-center gap-14 items-center justify-center w-screen bg-cover bg-center h-screen bg-no-repeat bg-fixed  bg-[url(/content/hero-edelweiss.webp)]  ">
       <div className="flex flex-col text-center gap-14 items-center justify-center w-full h-full">
         <div className="flex flex-col gap-5 justify-center items-center  ">
           <AnimatedSection direction_y={40} ease={"easeOut"} duration={0.5}>

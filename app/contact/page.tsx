@@ -14,7 +14,7 @@ export default function Contact() {
               The GENOTIF committee is ready to help with more information, from
               partnership details and registration requirements to the event
               schedule."
-        bgSrc="/content/contact_page.jpg"
+        bgSrc="/content/contact_page.webp"
       />
       <div className="min-h-screen  flex flex-col gap-5 mb-10 items-center justify-center ">
         <h2 className="text-[#00354E] font-['Telma-Bold'] mt-10 text-center text-shadow-2xs  text-5xl md:text-6xl   ">

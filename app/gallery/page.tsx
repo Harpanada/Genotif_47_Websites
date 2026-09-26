@@ -7,7 +7,7 @@ export default function Gallery() {
     <section className="scroll-smooth min-w-screen min-h-screen bg-[#e4f3f6]">
       <Navbar />
       <GlobalHero
-        bgSrc="/content/hero-edelweiss.jpg"
+        bgSrc="/content/hero-edelweiss.webp"
         ttl=" Hall of Memories"
         desc="  Genotif is more than a one-day event. It's a long process, born
               from thousands of small moments, woven together by the entire
