@@ -1,4 +1,3 @@
-import { linkGc } from "next/dist/client/app-link-gc";
 import Link from "next/link";
 export default function CardTwo({
   cardTtl,

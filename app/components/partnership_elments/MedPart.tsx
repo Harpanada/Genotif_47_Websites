@@ -1,15 +1,5 @@
-import List from "./elments/List";
-import CardTwo from "./elments/Card_2";
-import Link from "next/link";
-import Card from "../main/news/Card";
-const stallBenf = ["1.5 × 1.5 m booth", "1 vendor pass", "Map listin"];
-const pavBenef = ["2 × 2 m corner booth", "2 vendor passes", "Social feature"];
-const guildBenef = [
-  "3 × 3 m tent",
-  "4 vendor passes",
-  "Stage shout-out",
-  "Banner logo",
-];
+import CardTwo from "./Card_2";
+
 export default function MedPart() {
   return (
     <section className="flex flex-col md:flex-row gap-6 justify-center items-center">

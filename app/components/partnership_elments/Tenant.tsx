@@ -1,5 +1,5 @@
-import List from "./elments/List";
-import CardOne from "./elments/Card_1";
+import List from "./List";
+import CardOne from "./Card_1";
 
 const stallBenf = ["1.5 × 1.5 m booth", "1 vendor pass", "Map listin"];
 const pavBenef = ["2 × 2 m corner booth", "2 vendor passes", "Social feature"];

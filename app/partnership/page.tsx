@@ -1,10 +1,11 @@
-import Navbar from "@/app/components/main/Navbar";
-import Footer from "@/app/components/main/Footer";
-import Sponsor from "./Sponsor";
-import Tenant from "./Tenant";
-import MedPart from "./MedPart";
-import Title from "./elments/Title";
-import AnimatedSection from "@/app/components/main/animation/AnimatedSection";
+import Navbar from "@/app/components/global/Navbar";
+import Footer from "@/app/components/global/Footer";
+import Sponsor from "@/app/components/partnership_elments/Sponsor";
+import Tenant from "@/app/components/partnership_elments/Tenant";
+import MedPart from "@/app/components/partnership_elments/MedPart";
+import Title from "@/app/components/partnership_elments/Title";
+import AnimatedSection from "@/app/components/animation/AnimatedSection";
+import GlobalHero from "@/app/components/global/GlobalHero";
 export default function Partnership() {
   const sponsor_benefit = [
     "Logo placement across event banners, print, and social assets",
@@ -27,22 +28,11 @@ export default function Partnership() {
   return (
     <section className="scroll-smooth flex flex-col  min-w-screen bg-[#e4f3f6] min-h-screen overflow-hidden ">
       <Navbar />
-      <div className="absolute top-44 z-10  w-full">
-        <AnimatedSection>
-          <div className="p-5 flex flex-col justify-center text-center items-center gap-3">
-            <h1 className=" font-['Telma-Bold']  w-full text-6xl text-center text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3] md:text-6xl lg:text-8xl ">
-              Partnership
-            </h1>
-            <p className="text-[#00354E] text-lg md:text-lg lg:text-xl text-shadow-2xs text-balance text-center font-['poppins-light'] font-bold w-11/12  ">
-              Pledge Your Banner, open a stall in the magic market or lend your{" "}
-              <br />
-              voice as a media partner. Every alliance strengthens the kingdom.
-            </p>
-          </div>
-        </AnimatedSection>
-      </div>
-      <div className="mask-b-from-35% mask-b-to-100% bg-[url(/content/hero-partnershipb.jpg)] brightness-80 min-h-screen bg-no-repeat w-auto bg-cover bg-center z-0 bg-fixed"></div>
-      {/* <div className="absolute bottom-0 left-0 w-full h-32  bg-linear-to-b from-transparent to-[#e4f3f6] pointer-events-none "></div> */}
+      <GlobalHero
+        ttl="Partnership"
+        desc=" Pledge Your Banner, open a stall in the magic market or lend your voice as a media partner. Every alliance strengthens the kingdom."
+        bgSrc="/content/hero-partnershipb.jpg"
+      />
       <div className="flex flex-col p-5 justify-center items-center gap-20 mt-20 ">
         <div className="md:w-3/4">
           <Title

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import AnimatedButton from "@/app/components/main/animation/AnimatedButton";
+import AnimatedButton from "@/app/components/animation/AnimatedButton";
 export default function About() {
   return (
     <section className="-translate-y-10  rounded-t-4xl  bg-white w-full  flex flex-col p-5 min-h-screen  items-center text-center shadow-lg">

@@ -1,5 +1,5 @@
-import List from "./elments/List";
-import CardOne from "./elments/Card_1";
+import List from "./List";
+import CardOne from "./Card_1";
 export default function Sponsor() {
   const squire_benefits = [
     "Logo on the event banner",
