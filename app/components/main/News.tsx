@@ -10,18 +10,18 @@ export default function News() {
         <Card
           cardTitle="PRA EVENT"
           cardSubtitle=" Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos enim eaque delectus nulla, iste exercitationem? "
-          cardImg="/content/scene-fair.jpg"
+          cardImg="/content/scene-fair.webp"
         />
         <Card
           cardTitle="CFD BOOTH"
           cardSubtitle="Panitia Genotif 47 menjual berbagai macam snack yang enak dan kekinian. Kunjung booth Genotif 47 di Car Free Day Hawurwangi setiap hari Minggu "
-          cardImg="/content/scene-fair.jpg"
+          cardImg="/content/scene-fair.webp"
         />
 
         <Card
           cardTitle="PANITIA G47"
           cardSubtitle=" Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos enim eaque delectus nulla, iste exercitationem? "
-          cardImg="/content/scene-fair.jpg"
+          cardImg="/content/scene-fair.webp"
         />
       </div>
     </section>

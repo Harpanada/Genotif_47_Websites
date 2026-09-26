@@ -2,7 +2,7 @@ import Link from "next/link";
 import AnimatedButton from "@/app/components/animation/AnimatedButton";
 export default function About() {
   return (
-    <section className="-translate-y-10  rounded-t-4xl  bg-white w-full  flex flex-col p-5 min-h-screen  items-center text-center shadow-lg">
+    <section className="-translate-y-10  rounded-t-4xl  bg-white w-full  flex flex-col p-5 h-11/12 items-center text-center shadow-lg">
       <h1 className="text-[#00354E] font-['Telma-Medium'] text-4xl md:text-5xl lg:8xl p-5 text-shadow-lg">
         More About Genotif
       </h1>
