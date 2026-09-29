@@ -38,25 +38,27 @@ export default function Partnership() {
           <Title
             ttl="Become A Sponsor "
             paragraph=" Sponsors keep the tents standing and the lanterns lit. Choose a rank and be named among the founders of the realm."
-            lst={sponsor_benefit}></Title>
+            lst={sponsor_benefit}
+          ></Title>
           <Sponsor />
         </div>
         <div className="md:w-3/4">
           <Title
             ttl="Become A Tenant "
             paragraph=" Join GENOTIF as a tenant and reach over 1000 SMAN 1 Ciranjang students. Get a strategic spot, promotional support, and a lively atmosphere to grow your business."
-            lst={tenant_benefit}></Title>
+            lst={tenant_benefit}
+          ></Title>
           <Tenant />
         </div>
         <div className="md:w-3/4">
           <Title
             ttl="Media Partner "
             paragraph="Help carry the news of GENOTIF 47 across the realm. In return, your brand rides alongside the festival on banners, posts, and the main stage."
-            lst={medpart_benefit}></Title>
+            lst={medpart_benefit}
+          ></Title>
           <MedPart />
         </div>
       </div>
-
       <Footer />
     </section>
   );

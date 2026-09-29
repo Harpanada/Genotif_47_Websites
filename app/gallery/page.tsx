@@ -4,7 +4,7 @@ import GallerySection from "@/app/components/gallery_elments/GallerySection";
 import GlobalHero from "@/app/components/global/GlobalHero";
 export default function Gallery() {
   return (
-    <section className="scroll-smooth min-w-screen min-h-screen bg-[#e4f3f6]">
+    <section className="scroll-smooth min-w-screen min-h-screen bg-[#e4f3f6] overflow-hidden">
       <Navbar />
       <GlobalHero
         bgSrc="/content/hero-edelweiss.webp"
@@ -14,6 +14,7 @@ export default function Gallery() {
               school community along the way. We've gathered all those memories
               here, to be remembered forever."
       />
+
       <GallerySection />
       <Footer />
     </section>
