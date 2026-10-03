@@ -9,11 +9,11 @@ export default function Contact() {
       <Navbar />
       <GlobalHero
         ttl="Contact Person"
-        desc="Have questions about GENOTIF, or interested in joining as a
-              sponsor, tenant, or media partner? Don't hesitate to reach out!
-              The GENOTIF committee is ready to help with more information, from
-              partnership details and registration requirements to the event
-              schedule."
+        desc="Punya pertanyaan seputar GENOTIF, atau tertarik untuk bergabung sebagai
+    sponsor, tenant, atau media partner? Jangan ragu untuk menghubungi kami! 
+Panitia GENOTIF siap membantu memberikan informasi lebih lanjut, mulai
+dari detail kerja sama dan persyaratan pendaftaran hingga jadwal
+acara."
         bgSrc="/content/contact_page.webp"
       />
       <div className="min-h-screen  flex flex-col gap-5 mb-10 items-center justify-center ">

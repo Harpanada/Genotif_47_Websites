@@ -1,10 +1,17 @@
 import AnimatedSection from "@/app/components/animation/AnimatedSection";
-export default function GlobalHero({ bgSrc, ttl, desc }: any) {
+import { image } from "motion/react-client";
+
+interface GlobalHeroProps {
+  bgSrc: string;
+  ttl: string;
+  desc: string;
+}
+export default function GlobalHero({ bgSrc, ttl, desc }: GlobalHeroProps) {
   return (
-    <section className=" flex flex-col justify-between">
+    <section className="relative flex flex-col justify-between">
       <div
         style={{ backgroundImage: `url(${bgSrc})` }}
-        className={`  bg-cover bg-center  w-screen  h-screen bg-no-repeat  z-0 bg-fixed`}
+        className={`  bg-cover bg-center  w-screen  h-screen bg-no-repeat  z-0 bg-fixed p-6 flex flex-col text-center gap-14 items-center justify-center   `}
       >
         <div className="z-10  absolute top-44 md:top-52 lg:top-60 w-full  ">
           <div className="p-5 text-center flex justify-center flex-col items-center w-full  ">
@@ -19,14 +26,14 @@ export default function GlobalHero({ bgSrc, ttl, desc }: any) {
               duration={0.5}
               customStyle="flex flex-col justify-center items-center "
             >
-              <p className="text-[#00354E] text-balance text-lg md:text-lg lg:text-xl xl:text-2xl md:max-w-3/5  font-['poppins-light'] font-bold text-shadow-lg ">
+              <p className="text-[#00354E] text-balance text-lg md:text-lg lg:text-xl xl:text-2xl md:max-w-3/5  font-['body-regular'] font-bold text-shadow-lg ">
                 {desc}
               </p>
             </AnimatedSection>
           </div>
         </div>
       </div>
-      <div className="-translate-y-50 w-screen h-50 bg-linear-to-b from-10% to-[#e4f3f6] "></div>
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-linear-to-t from-[#e4f3f6] to-transparent pointer-events-none"></div>
     </section>
   );
 }

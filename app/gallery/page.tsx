@@ -7,14 +7,12 @@ export default function Gallery() {
     <section className="scroll-smooth min-w-screen min-h-screen bg-[#e4f3f6] overflow-hidden">
       <Navbar />
       <GlobalHero
-        bgSrc="/content/hero-edelweiss.webp"
+        bgSrc={"/content/hero-edelweiss.webp"}
         ttl=" Hall of Memories"
-        desc="  Genotif is more than a one-day event. It's a long process, born
-              from thousands of small moments, woven together by the entire
-              school community along the way. We've gathered all those memories
-              here, to be remembered forever."
+        desc="Genotif adalah sebuah proses panjang yang lahir dari ribuan momen kecil, 
+        yang dirajut bersama oleh seluruh warga sekolah sepanjang perjalanannya. 
+        Kami telah mengumpulkan semua kenangan tersebut di sini, untuk dikenang selamanya."
       />
-
       <GallerySection />
       <Footer />
     </section>

@@ -9,17 +9,20 @@ export default function Footer() {
         <div className=" flex gap-3">
           <a
             href=""
-            className="flex w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-2.5">
+            className="flex w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-2.5"
+          >
             <img src="/icon//Instagram_Glyph_Black.svg" alt="" />
           </a>
           <a
             href=""
-            className="flex w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-1.5">
+            className="flex w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-1.5"
+          >
             <img src="/icon/TIKTOK_SIMPLIFIED_NOTE_BLACK.svg" alt="" />
           </a>
           <a
             href=""
-            className=" w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-0.5 ">
+            className=" w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-0.5 "
+          >
             <img
               className="translate-y-0.5"
               src="/icon//yt_icon_almostblack_digital.png"
@@ -30,7 +33,7 @@ export default function Footer() {
       </section>
       <hr className="w-3/4 text-white" />
       <nav className="flex flex-col  justify-center items-center text-center">
-        <ul className=" flex  gap-4  text-white font-['poppins-light'] text-sm md:text-lg">
+        <ul className=" flex  gap-4  text-white font-['body-regular'] text-sm md:text-lg">
           <LinkNav contain={"Home"} linkInput="/"></LinkNav>
           <LinkNav contain={"Theme"} linkInput="/"></LinkNav>
           <LinkNav contain={"Merch"} linkInput="/"></LinkNav>
@@ -38,12 +41,13 @@ export default function Footer() {
         </ul>
       </nav>
 
-      <div className="text-white justify-center flex flex-col items-center text-center">
+      <div className="text-white justify-center flex flex-col items-center text-center font-['body-light']">
         <small className="md:text-sm ">
           ©Copyright 2026 GENOTIF 47, part of
           <a
             href="https://sman1ciranjang.sch.id/#"
-            className="underline underline-offset-4 after:content-['_↗'] ">
+            className="underline underline-offset-4 after:content-['_↗'] "
+          >
             {" "}
             SMAN 1 CIRANJANG
           </a>

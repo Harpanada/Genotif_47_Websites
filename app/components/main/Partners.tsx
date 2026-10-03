@@ -21,24 +21,28 @@ export default function Partners() {
         {/* Track 1 */}
         <div
           className="animate-marquee flex items-center gap-20 shrink-0 pr-20 h-36
-        ">
+        "
+        >
           {sponsors.map((item, index) => (
             <img
               key={`1-${index}`}
               className="text-[#00354E] font-['Telma-Medium'] text-3xl p-5 text-shadow-lg whitespace-nowrap h-72"
-              src={item}></img>
+              src={item}
+            ></img>
           ))}
         </div>
 
         {/* Track 2 (Duplikat untuk efek seamless/tanpa putus) */}
         <div
           className="animate-marquee flex items-center gap-20 shrink-0 pr-20 h-36"
-          aria-hidden="true">
+          aria-hidden="true"
+        >
           {sponsors.map((item, index) => (
             <img
               key={`2-${index}`}
               className="text-[#00354E] font-['Telma-Medium'] text-3xl p-5 text-shadow-lg whitespace-nowrap h-72"
-              src={item}></img>
+              src={item}
+            ></img>
           ))}
         </div>
       </div>

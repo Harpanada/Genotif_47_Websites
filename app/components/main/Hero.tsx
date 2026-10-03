@@ -14,33 +14,28 @@ export default function Hero() {
             </h1>{" "}
           </AnimatedSection>
           <AnimatedSection
-            customStyle="text-[#00354E] text-balance text-md md:text-lg lg:text-xl xl:text-2xl md:max-w-3/5  font-['poppins-light'] font-bold text-shadow-lg "
+            customStyle="text-[#00354E] text-balance text-md md:text-lg lg:text-xl xl:text-2xl md:max-w-3/5  font-['body-regular'] font-bold text-shadow-lg "
             direction_y={20}
             duration={0.8}
-            ease={"easeInOut"}>
-            <p className=" ">
-              Genotif is an acronym for{" "}
-              <q className="italic">
-                {" "}
-                Generasi Orang-Orang Kreatif dan Inovatif
-              </q>
-              , or in English it means a Generation of Creative and Innovative
-              People.
-            </p>
+            ease={"easeInOut"}
+          >
+            <p className=" "></p>
           </AnimatedSection>
         </div>
         <div className=" flex flex-col gap-3">
           <AnimatedSection ease={"easeOut"} direction_x={100} duration={0.8}>
             <AnimatedButton
               link="/"
-              customStyle="font-['poppins-light'] font-bold text-xs md:text-sm lg:text-lg flex bg-[#00354E] shadow-sm w-44 h-12  lg:w-64 lg:h-16 text-center items-center justify-center p-2 text-white rounded-full">
+              customStyle="font-['body-regular'] font-bold text-xs md:text-sm lg:text-lg flex bg-[#00354E] shadow-sm w-44 h-12  lg:w-64 lg:h-16 text-center items-center justify-center p-2 text-white rounded-full"
+            >
               SEE THE DAY'S TALE
             </AnimatedButton>
           </AnimatedSection>
           <AnimatedSection ease={"easeOut"} direction_x={-100} duration={0.8}>
             <AnimatedButton
-              link="/components/partnership"
-              customStyle="font-['poppins-light'] font-bold text-xs md:text-sm lg:text-lg flex bg-white/60 backdrop-blur-md border shadow-sm lg:w-64 lg:h-16 border-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-[#00354E] rounded-full">
+              link="/partnership"
+              customStyle="font-['body-regular'] font-bold text-xs md:text-sm lg:text-lg flex bg-white/60 backdrop-blur-md border shadow-sm lg:w-64 lg:h-16 border-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-[#00354E] rounded-full"
+            >
               BECOME A PARTNERS
             </AnimatedButton>
           </AnimatedSection>

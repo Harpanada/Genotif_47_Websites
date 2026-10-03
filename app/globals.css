@@ -11,10 +11,30 @@
     --foreground: #ededed;
   }
 }
-
 @font-face {
-  font-family: "poppins-light";
-  src: url("/fonts/Quicksand.ttf") format("truetype");
+  font-family: "body-light";
+  src: url("/fonts/Quicksand-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "body-regular";
+  src: url("/fonts/Quicksand-Regular.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "body-medium";
+  src: url("/fonts/Quicksand-Medium.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "body-bold";
+  src: url("/fonts/Quicksand-Bold.ttf") format("truetype");
   font-weight: 300;
   font-display: swap;
   font-style: normal;

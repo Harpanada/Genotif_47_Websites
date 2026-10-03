@@ -8,22 +8,22 @@ import AnimatedSection from "@/app/components/animation/AnimatedSection";
 import GlobalHero from "@/app/components/global/GlobalHero";
 export default function Partnership() {
   const sponsor_benefit = [
-    "Logo placement across event banners, print, and social assets",
-    "Guest passes for your representatives",
-    "Stage recognition during opening and closing ceremonies",
-    "Direct access to 1,500+ students,",
+    "Penempatan logo pada spanduk acara, materi cetak, dan aset media sosial",
+    "Tiket masuk bagi perwakilan Anda",
+    "Penyebutan nama/apresiasi di panggung selama upacara pembukaan dan penutupan",
+    "Akses langsung ke lebih dari 1.000 siswa,",
   ];
   const tenant_benefit = [
-    "Booth space at Genotif",
-    "Guest passes for your representatives",
-    "Stage recognition during opening and closing ceremonies",
-    "Direct access to 1,500+ students",
+    "Ruang stan di Genotif",
+    "Tiket tamu untuk perwakilan Anda",
+    "Pengakuan di panggung selama upacara pembukaan dan penutupan",
+    "Akses langsung ke lebih dari 1.500 mahasiswa",
   ];
   const medpart_benefit = [
-    "Official media partner badge on all print & digital assets",
-    "Press access to opening and stage performances",
-    "Co-branded content across GENOTIF social channels",
-    "Priority updates and behind-the-scenes coverage",
+    "Lencana mitra media resmi pada semua materi cetak & digital",
+    "Akses pers untuk acara pembukaan dan pertunjukan panggung",
+    "Konten *co-branding* di seluruh kanal media sosial GENOTIF",
+    "Pembaruan prioritas dan liputan di balik layar",
   ];
   return (
     <section className="scroll-smooth flex flex-col  min-w-screen bg-[#e4f3f6] min-h-screen overflow-hidden ">
@@ -31,7 +31,7 @@ export default function Partnership() {
       <GlobalHero
         bgSrc="/content/hero.webp"
         ttl="Partnership"
-        desc=" Pledge Your Banner, open a stall in the magic market or lend your voice as a media partner. Every alliance strengthens the kingdom."
+        desc="Tunjukkan dukunganmu, buka stan di magic market, atau berikan suaramu sebagai media partner. Setiap aliansi memperkuat kerajaan."
       />
       <div className="flex flex-col p-5 justify-center items-center gap-20 mt-20 ">
         <div className="md:w-3/4">

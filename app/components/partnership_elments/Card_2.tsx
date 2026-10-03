@@ -7,7 +7,7 @@ export default function CardTwo({
   cardLink,
 }: any) {
   return (
-    <section className=" flex flex-col gap-4 justify-center bg-white w-72 min-h-64 p-5 rounded-2xl border  shadow-lg shadow-[#94E5FF]  border-[#E3AD4B] text-[#00354E] font-['poppins-light'] ">
+    <section className=" flex flex-col gap-4 justify-center bg-white w-72 min-h-64 p-5 rounded-2xl border  shadow-lg shadow-[#94E5FF]  border-[#E3AD4B] text-[#00354E] font-['body-regular'] ">
       {" "}
       <div className=" flex justify-between items-center gap-1.5">
         <h1 className="font-['Telma-medium'] text-shadow-2xs text-3xl">
@@ -28,7 +28,8 @@ export default function CardTwo({
       <div className="w-full flex justify-center items-center">
         <Link
           className="text-xs bg-white/50 backdrop-blur-2xl font-bold shadow-lg rounded-full  flex justify-center items-center w-60 h-8 ring ring-[#00354E]"
-          href={cardLink}>
+          href={cardLink}
+        >
           PORPOSE A PARTNERSHIP
         </Link>
       </div>
