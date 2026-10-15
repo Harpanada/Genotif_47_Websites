@@ -1,0 +1,22 @@
+// use prisma-8
+model Peserta {
+  id            String      @id @default(uuid())
+  namaLengkap   String
+  email         String      @unique
+  noWhatsapp    String
+  asalSekolah   String
+  
+  lomba         DataLomba?
+}
+
+model DataLomba {
+  id            String    @id @default(uuid())
+  jenisLomba    String
+  statusBayar   String    @default("PENDING")
+  
+  orderId       String    @unique @default(uuid())
+  paymentUrl    String?
+
+  pesertaId     String    @unique
+  peserta       Peserta   @relation(fields: [pesertaId], references: [id])
+}
