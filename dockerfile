@@ -12,6 +12,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
+
+# Generate contract Prisma 8 sebelum Next.js di-build
+RUN npx prisma contract emit
+
 RUN npm run build
 
 # 3. Production image
