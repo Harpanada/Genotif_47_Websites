@@ -13,6 +13,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Create .env file
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
+          echo "DIRECT_URL=${{ secrets.DIRECT_URL }}" >> .env
+
       - name: Deploy with Docker Compose
         run: |
           # 1. Reset file lokal server agar selalu sesuai commit terbaru
