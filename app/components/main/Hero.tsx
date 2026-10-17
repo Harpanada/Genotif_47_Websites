@@ -19,7 +19,7 @@ export default function Hero() {
             duration={0.8}
             ease={"easeInOut"}
           >
-            <h3 className="font-['body-bold'] md:mt-0 md:text-xl lg:text-2xl xl:text-3xl text-md">
+            <h3 className="font-['body-bold'] md:mt-0 md:text-xl lg:text-2xl xl:text-3xl text-xl">
               <q>Three Generations. One Journey. Everlasting Memories. </q>
             </h3>
           </AnimatedSection>

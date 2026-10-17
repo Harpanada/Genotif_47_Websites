@@ -14,8 +14,9 @@ export default function AnimatedSection({
       className={customStyle}
       initial={{ opacity: 0, y: direction_y, x: direction_x }}
       animate={{ opacity: 1, y: 0, x: 0 }}
-      transition={{ duration: duration, ease: ease }}
-      viewport={{ once: true }}>
+      transition={{ duration: duration, ease: ease, delay: 1.5 }}
+      viewport={{ once: true }}
+    >
       {children}
     </motion.section>
   );
