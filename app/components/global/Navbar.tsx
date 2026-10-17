@@ -2,6 +2,7 @@
 import { useState } from "react";
 import LinkNav from "@/app/components/main/nav/LinkNav";
 import { motion } from "motion/react";
+import Image from "next/image";
 import AnimatedSection from "@/app/components/animation/AnimatedSection";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,11 +13,17 @@ export default function Navbar() {
           className={`fixed top-0 right-0 left-0 z-50  border-white  h-16 m-6  rounded-full flex flex-row p-8 justify-between items-center transition-all ease-in-out duration-200  ${isOpen ? "" : " bg-white/50 border backdrop-blur-xs shadow-xs   "} `}
         >
           <div
-            className={`transition-all duration-300 ease-in-out ${isOpen ? "opacity-0 " : ""}`}
+            className={` transition-all duration-300 ease-in-out ${isOpen ? "opacity-0 " : ""}`}
           >
-            <h1 className=" text-xl md:text-2xl text-[#00354E] font-extrabold font-['Telma-Medium']">
-              Genotif
-            </h1>
+            <Image
+              width={50}
+              height={50}
+              alt="logo-G47"
+              src={"/icon/g47Logo.png"}
+            ></Image>
+            {/* <h1 className=" text-xl md:text-2xl text-[#00354E] font-extrabold font-['Telma-Medium']">
+                Genotif
+              </h1> */}
           </div>{" "}
           <ul className=" hidden lg:flex justify-center items-center text-lg gap-10 mr-5   text-[#00354E] font-['body-regular'] font-bold">
             <LinkNav contain={"Home"} linkInput="/"></LinkNav>

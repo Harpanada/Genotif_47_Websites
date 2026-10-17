@@ -72,14 +72,14 @@ export default function Registration() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen brightness-95  bg-[url(/content/regist-hero.jpg)] bg-cover bg-center  w-screen  h-screen bg-no-repeat  z-0 bg-fixed">
+      <div className="min-h-screen brightness-95  bg-[url(/content/regist-hero.jpg)] bg-cover bg-center  min-w-screen   bg-no-repeat  z-0 bg-fixed">
         {" "}
-        <div className="h-screen   backdrop-blur-sm  p-6 flex flex-col text-center gap-14 items-center ">
+        <div className="min-h-screen  backdrop-blur-sm  p-6 flex flex-col text-center gap-14 items-center ">
           <h1 className="mt-20 font-['Telma-Bold'] text-5xl  text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3]  md:text-6xl lg:text-8xl   ">
             Pra-Event Registration
           </h1>
           <form
-            className="  flex flex-col gap-2 w-screen justify-center items-center  "
+            className="flex flex-col gap-2 w-4/5 justify-center items-center mb-20 "
             onSubmit={handleSubmit}
           >
             {/* Notifikasi feedback */}
@@ -94,7 +94,7 @@ export default function Registration() {
                 {responseMsg.text}
               </div>
             )}
-            <div className="text-left flex flex-col ">
+            <div className="text-left flex flex-col w-full ">
               <label className="w-full p-2.5  font-['body-medium']  text-[#00354E] text-shadow-sm font-bold">
                 Nama Lengkap
               </label>
@@ -107,7 +107,7 @@ export default function Registration() {
                 className="w-full p-2.5 rounded-4xl font-['body-regular']  text-[#00354E] bg-white ring ring-[#30B5D8] shadow-lg  "
               />
             </div>
-            <div className="text-left  flex flex-col ">
+            <div className="text-left  flex flex-col    w-full ">
               <label className="w-full p-2.5  font-['body-medium']  text-[#00354E] text-shadow-sm font-bold">
                 Email
               </label>
@@ -120,7 +120,7 @@ export default function Registration() {
                 className="w-full p-2.5 rounded-4xl font-['body-regular']  text-[#00354E] bg-white ring ring-[#30B5D8] shadow-lg  "
               />
             </div>
-            <div className="text-left  flex flex-col">
+            <div className="text-left  flex flex-col   w-full">
               <label className="w-full p-2.5  font-['body-medium']  text-[#00354E] text-shadow-sm font-bold">
                 No Whatsapp
               </label>
@@ -133,7 +133,7 @@ export default function Registration() {
                 className="w-full p-2.5 rounded-4xl font-['body-regular']  text-[#00354E] bg-white ring ring-[#30B5D8] shadow-lg  "
               />
             </div>
-            <div className="text-left  flex flex-col">
+            <div className="text-left  flex flex-col  w-full">
               <label className="w-full p-2.5  font-['body-medium']  text-[#00354E] text-shadow-sm font-bold">
                 Asal Sekolah
               </label>
@@ -146,8 +146,8 @@ export default function Registration() {
                 className="w-full p-2.5 rounded-4xl font-['body-regular']  text-[#00354E] bg-white ring ring-[#30B5D8] shadow-lg  "
               />
             </div>
-            <div className="text-left flex flex-col">
-              <label className="w-full p-2.5  font-['body-medium']  text-[#00354E] text-shadow-sm font-bold">
+            <div className="text-left flex flex-col w-full">
+              <label className="w-full p-2.5  font-['body-medium']  text-[#00354E] text-shadow-sm font-bold ">
                 Pilih Lomba
               </label>
               <select
