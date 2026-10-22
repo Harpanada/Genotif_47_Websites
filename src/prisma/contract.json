@@ -4,8 +4,28 @@
   "target": "postgres",
   "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
   "roots": {
+    "AnggotaCerdasCermat": {
+      "model": "AnggotaCerdasCermat",
+      "namespace": "public"
+    },
+    "AnggotaSTMS": {
+      "model": "AnggotaSTMS",
+      "namespace": "public"
+    },
     "DataLomba": {
       "model": "DataLomba",
+      "namespace": "public"
+    },
+    "DetailCerdasCermat": {
+      "model": "DetailCerdasCermat",
+      "namespace": "public"
+    },
+    "DetailMewarnai": {
+      "model": "DetailMewarnai",
+      "namespace": "public"
+    },
+    "DetailSTMS": {
+      "model": "DetailSTMS",
       "namespace": "public"
     },
     "Peserta": {
@@ -17,6 +37,142 @@
     "namespaces": {
       "public": {
         "models": {
+          "AnggotaCerdasCermat": {
+            "fields": {
+              "detailCerdasCermatId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "jabatan": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "kelas": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "namaLengkap": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "detailCerdasCermat": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "detailCerdasCermatId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "DetailCerdasCermat",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "detailCerdasCermatId": {
+                  "column": "detailCerdasCermatId"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "jabatan": {
+                  "column": "jabatan"
+                },
+                "kelas": {
+                  "column": "kelas"
+                },
+                "namaLengkap": {
+                  "column": "namaLengkap"
+                }
+              },
+              "namespaceId": "public",
+              "table": "AnggotaCerdasCermat"
+            }
+          },
+          "AnggotaSTMS": {
+            "fields": {
+              "detailSTMSId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "namaLengkap": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "detailSTMS": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "detailSTMSId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "DetailSTMS",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "detailSTMSId": {
+                  "column": "detailSTMSId"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "namaLengkap": {
+                  "column": "namaLengkap"
+                }
+              },
+              "namespaceId": "public",
+              "table": "AnggotaSTMS"
+            }
+          },
           "DataLomba": {
             "fields": {
               "id": {
@@ -63,6 +219,54 @@
               }
             },
             "relations": {
+              "detailCerdasCermat": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "dataLombaId"
+                  ]
+                },
+                "to": {
+                  "model": "DetailCerdasCermat",
+                  "namespace": "public"
+                }
+              },
+              "detailMewarnai": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "dataLombaId"
+                  ]
+                },
+                "to": {
+                  "model": "DetailMewarnai",
+                  "namespace": "public"
+                }
+              },
+              "detailSTMS": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "dataLombaId"
+                  ]
+                },
+                "to": {
+                  "model": "DetailSTMS",
+                  "namespace": "public"
+                }
+              },
               "peserta": {
                 "cardinality": "N:1",
                 "nullable": false,
@@ -105,7 +309,110 @@
               "table": "DataLomba"
             }
           },
-          "Peserta": {
+          "DetailCerdasCermat": {
+            "fields": {
+              "alamatSekolah": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "dataLombaId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "namaGuruPendamping": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "namaSekolah": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "whatsappPendamping": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "anggota": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "detailCerdasCermatId"
+                  ]
+                },
+                "to": {
+                  "model": "AnggotaCerdasCermat",
+                  "namespace": "public"
+                }
+              },
+              "dataLomba": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "dataLombaId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "DataLomba",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "alamatSekolah": {
+                  "column": "alamatSekolah"
+                },
+                "dataLombaId": {
+                  "column": "dataLombaId"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "namaGuruPendamping": {
+                  "column": "namaGuruPendamping"
+                },
+                "namaSekolah": {
+                  "column": "namaSekolah"
+                },
+                "whatsappPendamping": {
+                  "column": "whatsappPendamping"
+                }
+              },
+              "namespaceId": "public",
+              "table": "DetailCerdasCermat"
+            }
+          },
+          "DetailMewarnai": {
             "fields": {
               "asalSekolah": {
                 "nullable": false,
@@ -114,6 +421,230 @@
                   "kind": "scalar"
                 }
               },
+              "dataLombaId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "kelas": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "namaOrangTua": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "paketLomba": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "tanggalLahir": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "usia": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "whatsappOrangTua": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "dataLomba": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "dataLombaId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "DataLomba",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "asalSekolah": {
+                  "column": "asalSekolah"
+                },
+                "dataLombaId": {
+                  "column": "dataLombaId"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "kelas": {
+                  "column": "kelas"
+                },
+                "namaOrangTua": {
+                  "column": "namaOrangTua"
+                },
+                "paketLomba": {
+                  "column": "paketLomba"
+                },
+                "tanggalLahir": {
+                  "column": "tanggalLahir"
+                },
+                "usia": {
+                  "column": "usia"
+                },
+                "whatsappOrangTua": {
+                  "column": "whatsappOrangTua"
+                }
+              },
+              "namespaceId": "public",
+              "table": "DetailMewarnai"
+            }
+          },
+          "DetailSTMS": {
+            "fields": {
+              "dataLombaId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "jenisBakat": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "jumlahAnggota": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "kelas": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "menggunakanMusik": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/bool@1",
+                  "kind": "scalar"
+                }
+              },
+              "perlengkapan": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "anggota": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "detailSTMSId"
+                  ]
+                },
+                "to": {
+                  "model": "AnggotaSTMS",
+                  "namespace": "public"
+                }
+              },
+              "dataLomba": {
+                "cardinality": "N:1",
+                "nullable": false,
+                "on": {
+                  "localFields": [
+                    "dataLombaId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "DataLomba",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "dataLombaId": {
+                  "column": "dataLombaId"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "jenisBakat": {
+                  "column": "jenisBakat"
+                },
+                "jumlahAnggota": {
+                  "column": "jumlahAnggota"
+                },
+                "kelas": {
+                  "column": "kelas"
+                },
+                "menggunakanMusik": {
+                  "column": "menggunakanMusik"
+                },
+                "perlengkapan": {
+                  "column": "perlengkapan"
+                }
+              },
+              "namespaceId": "public",
+              "table": "DetailSTMS"
+            }
+          },
+          "Peserta": {
+            "fields": {
               "email": {
                 "nullable": false,
                 "type": {
@@ -163,9 +694,6 @@
             },
             "storage": {
               "fields": {
-                "asalSekolah": {
-                  "column": "asalSekolah"
-                },
                 "email": {
                   "column": "email"
                 },
@@ -192,6 +720,128 @@
       "public": {
         "entries": {
           "table": {
+            "AnggotaCerdasCermat": {
+              "columns": {
+                "detailCerdasCermatId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "jabatan": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "kelas": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "namaLengkap": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184"
+                  },
+                  "source": {
+                    "columns": [
+                      "detailCerdasCermatId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "AnggotaCerdasCermat"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "DetailCerdasCermat"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "detailCerdasCermatId"
+                  ],
+                  "name": "AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184",
+                  "prefix": "AnggotaCerdasCermat_detailCerdasCermatId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            },
+            "AnggotaSTMS": {
+              "columns": {
+                "detailSTMSId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "namaLengkap": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "index": {
+                    "name": "AnggotaSTMS_detailSTMSId_idx_950314ad"
+                  },
+                  "source": {
+                    "columns": [
+                      "detailSTMSId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "AnggotaSTMS"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "DetailSTMS"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "detailSTMSId"
+                  ],
+                  "name": "AnggotaSTMS_detailSTMSId_idx_950314ad",
+                  "prefix": "AnggotaSTMS_detailSTMSId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            },
             "DataLomba": {
               "columns": {
                 "id": {
@@ -271,13 +921,242 @@
                 }
               ]
             },
-            "Peserta": {
+            "DetailCerdasCermat": {
+              "columns": {
+                "alamatSekolah": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "dataLombaId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "namaGuruPendamping": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "namaSekolah": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "whatsappPendamping": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "index": {
+                    "unique": [
+                      "dataLombaId"
+                    ]
+                  },
+                  "source": {
+                    "columns": [
+                      "dataLombaId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "DetailCerdasCermat"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "DataLomba"
+                  }
+                }
+              ],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "dataLombaId"
+                  ]
+                }
+              ]
+            },
+            "DetailMewarnai": {
               "columns": {
                 "asalSekolah": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
                   "nullable": false
                 },
+                "dataLombaId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "kelas": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "namaOrangTua": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "paketLomba": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "tanggalLahir": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true
+                },
+                "usia": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": true
+                },
+                "whatsappOrangTua": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "index": {
+                    "unique": [
+                      "dataLombaId"
+                    ]
+                  },
+                  "source": {
+                    "columns": [
+                      "dataLombaId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "DetailMewarnai"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "DataLomba"
+                  }
+                }
+              ],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "dataLombaId"
+                  ]
+                }
+              ]
+            },
+            "DetailSTMS": {
+              "columns": {
+                "dataLombaId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "jenisBakat": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "jumlahAnggota": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": false
+                },
+                "kelas": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "menggunakanMusik": {
+                  "codecId": "pg/bool@1",
+                  "dataType": "pg/bool",
+                  "default": {
+                    "kind": "literal",
+                    "value": false
+                  },
+                  "nullable": false
+                },
+                "perlengkapan": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                }
+              },
+              "foreignKeys": [
+                {
+                  "index": {
+                    "unique": [
+                      "dataLombaId"
+                    ]
+                  },
+                  "source": {
+                    "columns": [
+                      "dataLombaId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "DetailSTMS"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "DataLomba"
+                  }
+                }
+              ],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "dataLombaId"
+                  ]
+                }
+              ]
+            },
+            "Peserta": {
+              "columns": {
                 "email": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
@@ -320,12 +1199,34 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "e88b68f529ec93821148f52a3a7fa8235517d19f617c42a261cc154671442923"
+    "storageHash": "47fe91d450fbe308b7350e983abfa7597d285ec06d4f984bacd6eb6cd2416e6c"
   },
   "execution": {
-    "executionHash": "1af9f4bac6f8078652764af707e01f83402eb37b52ca4f7939aa0614a6e7953f",
+    "executionHash": "3666f82e8e1ddf68a0c87c140b14d265d46dc417ecba10e157ac4191a864e0e6",
     "mutations": {
       "defaults": [
+        {
+          "onCreate": {
+            "id": "uuidv4",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "AnggotaCerdasCermat",
+            "field": "id",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "uuidv4",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "AnggotaSTMS",
+            "field": "id",
+            "namespace": "public"
+          }
+        },
         {
           "onCreate": {
             "id": "uuidv4",
@@ -345,6 +1246,39 @@
           "ref": {
             "entry": "DataLomba",
             "field": "orderId",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "uuidv4",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "DetailCerdasCermat",
+            "field": "id",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "uuidv4",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "DetailMewarnai",
+            "field": "id",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "uuidv4",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "DetailSTMS",
+            "field": "id",
             "namespace": "public"
           }
         },
