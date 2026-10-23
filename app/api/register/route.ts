@@ -103,9 +103,7 @@ export async function POST(req: Request) {
         await db.orm.public.DetailMewarnai.create({
           asalSekolah: data.asalSekolah,
           kelas: data.kelas,
-          tanggalLahir: data.tanggalLahir
-            ? Temporal.Instant.from(`${data.tanggalLahir}T00:00:00Z`)
-            : null,
+          tanggalLahir: data.tanggalLahir ? null : null,
           usia: data.usia ?? null,
           paketLomba: data.paketLomba,
           namaOrangTua: data.namaOrangTua,

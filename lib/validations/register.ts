@@ -3,7 +3,7 @@ import { z } from "zod";
 // Data umum yang wajib ada untuk semua kategori.
 const commonSchema = z.object({
   namaLengkap: z.string().trim().min(1, "Nama lengkap wajib diisi"),
-  email: z.string().trim().email("Format email tidak valid"),
+  email: z.email("Format email tidak valid"),
   noWhatsapp: z
     .string()
     .trim()
