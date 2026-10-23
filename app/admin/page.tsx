@@ -2,6 +2,9 @@ import AdminHeader from "@/app/components/admin/AdminHeader";
 import StatCard from "@/app/components/admin/StatCard";
 import PaymentStatusBadge from "@/app/components/admin/PaymentStatusBadge";
 import { getAdminDashboardData } from "@/lib/admin/registration";
+import AdminAutoRefresh from "@/app/components/admin/AdminAutoRefresh";
+
+export const dynamic = "force-dynamic";
 
 function formatJenisLomba(jenis: string) {
   const labels: Record<string, string> = {
@@ -48,6 +51,7 @@ export default async function AdminDashboardPage() {
 
   return (
     <>
+      <AdminAutoRefresh />
       <AdminHeader
         title="Dashboard"
         description="Ringkasan pendaftaran Genotif."

@@ -1,12 +1,16 @@
 import AdminHeader from "@/app/components/admin/AdminHeader";
 import RegistrationManagement from "@/app/components/admin/RegistrationManagement";
 import { getAdminRegistrations } from "@/lib/admin/registration";
+import AdminAutoRefresh from "@/app/components/admin/AdminAutoRefresh";
+
+export const dynamic = "force-dynamic";
 
 export default async function PendaftaranPage() {
   const registrations = await getAdminRegistrations();
 
   return (
     <>
+      <AdminAutoRefresh />
       <AdminHeader
         title="Manajemen Pendaftaran"
         description="Kelola dan pantau seluruh pendaftaran lomba Genotif."
