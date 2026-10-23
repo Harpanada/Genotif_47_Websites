@@ -4,3 +4,6 @@ dist
 .git
 .github
 README.md
+.env
+.env.*
+!.env.example
