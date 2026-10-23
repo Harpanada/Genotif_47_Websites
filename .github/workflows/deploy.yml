@@ -17,6 +17,8 @@ jobs:
         run: |
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
           echo "DIRECT_URL=${{ secrets.DIRECT_URL }}" >> .env
+          echo "DATABASE_URL=${{ secrets.ADMIN_PASSWORD_HASH }}" > .env
+          echo "DIRECT_URL=${{ secrets.AUTH_SECRET }}" >> .env
 
       - name: Deploy with Docker Compose
         run: |
