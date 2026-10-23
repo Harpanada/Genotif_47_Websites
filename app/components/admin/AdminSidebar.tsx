@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import LogoutButton from "@/app/components/admin/LogoutButton";
 
 const navigation = [
   {
@@ -25,7 +26,7 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex w-64 shrink-0 flex-col bg-[#00354E] text-white">
+    <aside className="flex w-64 shrink-0 flex-col bg-[#00354E] text-white ">
       <div className="border-b border-white/10 px-6 py-7">
         <p className="text-xl font-bold tracking-wide">GENOTIF</p>
         <p className="mt-1 text-xs text-white/60">Administration Panel</p>
@@ -59,7 +60,7 @@ export default function AdminSidebar() {
           );
         })}
       </nav>
-
+      <LogoutButton />
       <div className="border-t border-white/10 p-5">
         <p className="text-xs text-white/50">Genotif · Admin</p>
         <p className="mt-1 text-xs text-white/40">SMA Negeri 1 Ciranjang</p>

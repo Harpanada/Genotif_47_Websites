@@ -19,27 +19,6 @@ function getSessionSecret(): Uint8Array {
   return new TextEncoder().encode(secret);
 }
 
-// export async function verifyAdminCredentials(
-//   username: string,
-//   password: string,
-// ): Promise<boolean> {
-//   const adminUsername = process.env.ADMIN_USERNAME;
-//   const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-
-//   if (!adminUsername || !passwordHash || !username || !password) {
-//     return false;
-//   }
-
-//   if (username !== adminUsername) {
-//     return false;
-//   }
-
-//   try {
-//     return await compare(password, passwordHash);
-//   } catch {
-//     return false;
-//   }
-// }
 export async function verifyAdminCredentials(
   username: string,
   password: string,
@@ -47,30 +26,16 @@ export async function verifyAdminCredentials(
   const adminUsername = process.env.ADMIN_USERNAME;
   const passwordHash = process.env.ADMIN_PASSWORD_HASH;
 
-  console.log("[AUTH DEBUG]", {
-    usernameProvided: Boolean(username),
-    adminUsernameConfigured: Boolean(adminUsername),
-    usernameMatches:
-      Boolean(adminUsername) && username.trim() === adminUsername?.trim(),
-    passwordHashConfigured: Boolean(passwordHash),
-    passwordHashLength: passwordHash?.length ?? 0,
-  });
-
   if (!adminUsername || !passwordHash || !username || !password) {
     return false;
   }
 
-  if (username.trim() !== adminUsername.trim()) {
+  if (username !== adminUsername) {
     return false;
   }
 
   try {
-    // return await compare(password, passwordHash);
-    const passwordMatches = await compare(password, passwordHash);
-
-    console.log("[AUTH DEBUG] Password matches:", passwordMatches);
-
-    return passwordMatches;
+    return await compare(password, passwordHash);
   } catch {
     return false;
   }
