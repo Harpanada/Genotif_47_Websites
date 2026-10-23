@@ -14,26 +14,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create .env file
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DIRECT_URL: ${{ secrets.DIRECT_URL }}
-          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
-          ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-        shell: bash
         run: |
-          set -eu
-          umask 077
-
-          {
-            printf "DATABASE_URL='%s'\n" "$DATABASE_URL"
-            printf "DIRECT_URL='%s'\n" "$DIRECT_URL"
-            printf "ADMIN_USERNAME='%s'\n" "$ADMIN_USERNAME"
-            printf "ADMIN_PASSWORD_HASH='%s'\n" "$ADMIN_PASSWORD_HASH"
-            printf "AUTH_SECRET='%s'\n" "$AUTH_SECRET"
-          } > .env
-
-          test -s .env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
+          echo "DIRECT_URL=${{ secrets.DIRECT_URL }}" >> .env
+          echo "ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}" >> .env
+          echo "ADMIN_PASSWORD_HASH=${{ secrets.ADMIN_PASSWORD_HASH }}" >> .env
+          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env
 
       - name: Deploy with Docker Compose
         run: |
