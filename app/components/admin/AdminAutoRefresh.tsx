@@ -9,7 +9,7 @@ export default function AdminAutoRefresh() {
   useEffect(() => {
     const interval = window.setInterval(() => {
       router.refresh();
-    }, 15000);
+    }, 60000);
 
     return () => window.clearInterval(interval);
   }, [router]);
