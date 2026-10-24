@@ -1,22 +1,11 @@
 // use prisma-8
 
-model Peserta {
-  id          String    @id @default(uuid())
-  namaLengkap String
-  email       String
-  noWhatsapp  String
-  lomba       DataLomba?
-}
-
 model DataLomba {
   id          String   @id @default(uuid())
   jenisLomba  String
   statusBayar String   @default("PENDING")
   orderId     String   @unique @default(uuid())
   paymentUrl  String?
-
-  pesertaId   String   @unique
-  peserta     Peserta  @relation(fields: [pesertaId], references: [id])
 
   detailFunRun       DetailFunRun?
   detailSTMS         DetailSTMS?
@@ -25,22 +14,26 @@ model DataLomba {
 }
 
 model DetailFunRun {
-  id                 String    @id @default(uuid())
-  jenisKelamin       String
-  kontakDarurat      String
-  dataLombaId        String    @unique
-  dataLomba          DataLomba @relation(fields: [dataLombaId], references: [id])
+  id            String    @id @default(uuid())
+  namaLengkap   String
+  jenisKelamin  String
+  kontakDarurat String
+  email         String
+  noWhatsapp    String
+  dataLombaId   String    @unique
+  dataLomba     DataLomba @relation(fields: [dataLombaId], references: [id])
 }
 
 model DetailSTMS {
-  id               String    @id @default(uuid())
+  id               String        @id @default(uuid())
+  namaPerwakilan   String
   kelas            String
   jenisBakat       String
   jumlahAnggota    Int
   perlengkapan     String?
-  menggunakanMusik Boolean   @default(false)
-  dataLombaId      String    @unique
-  dataLomba        DataLomba @relation(fields: [dataLombaId], references: [id])
+  menggunakanMusik Boolean       @default(false)
+  dataLombaId      String        @unique
+  dataLomba        DataLomba     @relation(fields: [dataLombaId], references: [id])
   anggota          AnggotaSTMS[]
 }
 
@@ -52,36 +45,35 @@ model AnggotaSTMS {
 }
 
 model DetailCerdasCermat {
-  id                 String    @id @default(uuid())
+  id                 String                @id @default(uuid())
   namaSekolah        String
   alamatSekolah      String
   namaGuruPendamping String
   emailPendamping    String
   whatsappPendamping String
-  dataLombaId        String    @unique
-  dataLomba          DataLomba @relation(fields: [dataLombaId], references: [id])
+  dataLombaId        String                @unique
+  dataLomba          DataLomba             @relation(fields: [dataLombaId], references: [id])
   anggota            AnggotaCerdasCermat[]
 }
 
 model AnggotaCerdasCermat {
-  id                   String              @id @default(uuid())
+  id                   String             @id @default(uuid())
   namaLengkap          String
   kelas                String
-  jabatan              String
   detailCerdasCermatId String
-  detailCerdasCermat   DetailCerdasCermat  @relation(fields: [detailCerdasCermatId], references: [id])
+  detailCerdasCermat   DetailCerdasCermat @relation(fields: [detailCerdasCermatId], references: [id])
 }
 
 model DetailMewarnai {
   id               String    @id @default(uuid())
+  namaPeserta      String
   asalSekolah      String
   kelas            String
-  tanggalLahir     DateTime?
-  usia             Int?
-  paketLomba       String
+  usia             Int
   namaOrangTua     String
-  emailOrangTua    String
   whatsappOrangTua String
+  emailOrangTua    String
+  paketLomba       String
   dataLombaId      String    @unique
   dataLomba        DataLomba @relation(fields: [dataLombaId], references: [id])
 }
