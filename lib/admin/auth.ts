@@ -18,19 +18,18 @@ function getSessionSecret(): Uint8Array {
 
   return new TextEncoder().encode(secret);
 }
-
 export async function verifyAdminCredentials(
   username: string,
   password: string,
 ): Promise<boolean> {
-  const adminUsername = process.env.ADMIN_USERNAME;
+  const adminUsername = process.env.ADMIN_USERNAME?.trim();
   const passwordHash = process.env.ADMIN_PASSWORD_HASH;
 
   if (!adminUsername || !passwordHash || !username || !password) {
     return false;
   }
 
-  if (username !== adminUsername) {
+  if (username.trim() !== adminUsername) {
     return false;
   }
 

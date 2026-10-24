@@ -5,7 +5,7 @@ type AdminHeaderProps = {
 
 export default function AdminHeader({ title, description }: AdminHeaderProps) {
   return (
-    <header className="flex flex-col gap-3 border-b border-slate-200 bg-white px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+    <header className="mt-20 flex flex-col gap-3 border-b border-slate-200 bg-white px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
       <div>
         <h1 className="text-xl font-bold text-[#00354E] sm:text-2xl">
           {title}
