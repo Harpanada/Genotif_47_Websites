@@ -1,12 +1,38 @@
 import { NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
+import {
+  generateRegistrationId,
+  formatDetailId,
+  formatMemberId,
+} from "@/lib/registration-id";
 import { registrationSchema } from "@/lib/validations/register";
 import { db } from "@/src/prisma/db";
+
+type JenisLomba = "FUN_RUN" | "STMS" | "CERDAS_CERMAT" | "MEWARNAI";
+
+const LOMBA_CONFIG: Record<JenisLomba, { sequence: string; prefix: string }> = {
+  FUN_RUN: {
+    sequence: "seq_pe_fun_run",
+    prefix: "G47-PEFR",
+  },
+  STMS: {
+    sequence: "seq_pe_stms",
+    prefix: "G47-PESTMS",
+  },
+  CERDAS_CERMAT: {
+    sequence: "seq_pe_lcc",
+    prefix: "G47-PELCC",
+  },
+  MEWARNAI: {
+    sequence: "seq_pe_mewarnai",
+    prefix: "G47-PEMW",
+  },
+};
 
 export async function POST(req: Request) {
   try {
     const body: unknown = await req.json();
 
-    // 1. Validasi data dari frontend
     const validation = registrationSchema.safeParse(body);
 
     if (!validation.success) {
@@ -20,54 +46,56 @@ export async function POST(req: Request) {
     }
 
     const data = validation.data;
+    const jenisLomba = data.jenisLomba;
 
-    // 2. Cek email yang sudah terdaftar
-    const existingPeserta = await db.orm.public.Peserta.where({
-      email: data.email,
-    }).first();
+    // 1. Generate ID utama.
+    const registrationId = await generateRegistrationId(jenisLomba);
 
-    if (existingPeserta) {
-      return NextResponse.json(
-        { error: "Email ini sudah terdaftar!" },
-        { status: 409 },
-      );
-    }
-
-    // 3. Simpan data peserta
-    const newPeserta = await db.orm.public.Peserta.create({
-      namaLengkap: data.namaLengkap,
-      email: data.email,
-      noWhatsapp: data.noWhatsapp,
-    });
-
-    // 4. Simpan data lomba utama
+    // 2. Simpan data lomba utama.
     const newLomba = await db.orm.public.DataLomba.create({
-      jenisLomba: data.jenisLomba,
+      id: registrationId,
+      jenisLomba,
       statusBayar: "PENDING",
-      pesertaId: newPeserta.id,
+      orderId: randomUUID(),
+      paymentUrl: null,
+      createdAt: Temporal.Now.instant(),
     });
 
-    // 5. Simpan detail sesuai jenis lomba
-    switch (data.jenisLomba) {
+    const detailId = formatDetailId(registrationId);
+
+    // 3. Simpan detail sesuai jenis lomba.
+    switch (jenisLomba) {
       case "FUN_RUN": {
-        // Belum ada model DetailFunRun di schema.
-        // Tidak ada jenisKelamin atau kontakDarurat.
+        await db.orm.public.DetailFunRun.create({
+          id: detailId,
+          namaLengkap: data.namaLengkap,
+          jenisKelamin: data.jenisKelamin,
+          kontakDarurat: data.kontakDarurat,
+          email: data.email,
+          noWhatsapp: data.noWhatsapp,
+          dataLombaId: newLomba.id,
+        });
+
         break;
       }
 
       case "STMS": {
         const detail = await db.orm.public.DetailSTMS.create({
+          id: detailId,
+          namaPerwakilan: data.namaPerwakilan,
           kelas: data.kelas,
           jenisBakat: data.jenisBakat,
           jumlahAnggota: data.jumlahAnggota,
-          perlengkapan: data.perlengkapan || null,
+          perlengkapan: data.perlengkapan.trim() || null,
           menggunakanMusik: data.menggunakanMusik,
+          email: data.email,
+          noWhatsapp: data.noWhatsapp,
           dataLombaId: newLomba.id,
         });
 
-        // Simpan nama anggota tambahan satu per satu.
-        for (const anggota of data.anggota) {
+        for (const [index, anggota] of data.anggota.entries()) {
           await db.orm.public.AnggotaSTMS.create({
+            id: formatMemberId(registrationId, index + 1),
             namaLengkap: anggota.namaLengkap,
             detailSTMSId: detail.id,
           });
@@ -78,20 +106,20 @@ export async function POST(req: Request) {
 
       case "CERDAS_CERMAT": {
         const detail = await db.orm.public.DetailCerdasCermat.create({
+          id: detailId,
           namaSekolah: data.namaSekolah,
           alamatSekolah: data.alamatSekolah,
           namaGuruPendamping: data.namaGuruPendamping,
+          emailPendamping: data.emailPendamping,
           whatsappPendamping: data.whatsappPendamping,
           dataLombaId: newLomba.id,
         });
 
-        // Schema mewajibkan kolom jabatan.
-        // Karena form belum meminta jabatan, gunakan nilai default.
         for (const [index, anggota] of data.anggota.entries()) {
           await db.orm.public.AnggotaCerdasCermat.create({
+            id: formatMemberId(registrationId, index + 1),
             namaLengkap: anggota.namaLengkap,
             kelas: anggota.kelas,
-            jabatan: index === 0 ? "KETUA" : "ANGGOTA",
             detailCerdasCermatId: detail.id,
           });
         }
@@ -101,13 +129,15 @@ export async function POST(req: Request) {
 
       case "MEWARNAI": {
         await db.orm.public.DetailMewarnai.create({
+          id: detailId,
+          namaPeserta: data.namaPeserta,
           asalSekolah: data.asalSekolah,
           kelas: data.kelas,
-          tanggalLahir: data.tanggalLahir ? null : null,
-          usia: data.usia ?? null,
-          paketLomba: data.paketLomba,
+          usia: data.usia,
           namaOrangTua: data.namaOrangTua,
           whatsappOrangTua: data.whatsappOrangTua,
+          emailOrangTua: data.emailOrangTua,
+          paketLomba: data.paketLomba,
           dataLombaId: newLomba.id,
         });
 
@@ -115,16 +145,11 @@ export async function POST(req: Request) {
       }
     }
 
-    // 6. Respons sukses
     return NextResponse.json(
       {
         success: true,
-        message: "Registrasi dan detail lomba berhasil disimpan.",
+        message: "Registrasi berhasil disimpan.",
         data: {
-          id: newPeserta.id,
-          namaLengkap: newPeserta.namaLengkap,
-          email: newPeserta.email,
-          noWhatsapp: newPeserta.noWhatsapp,
           lomba: newLomba,
         },
       },
@@ -139,8 +164,6 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         error: "Gagal menyimpan pendaftaran.",
-        // Berguna untuk debugging lokal.
-        // Jangan tampilkan detail internal ini ke publik di production.
         details: process.env.NODE_ENV === "development" ? message : undefined,
       },
       { status: 500 },

@@ -18,9 +18,9 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'47fe91d450fbe308b7350e983abfa7597d285ec06d4f984bacd6eb6cd2416e6c'>;
+  StorageHashBase<'b9cf89ff90ce82a500024d7d9816cfd1512f0dc0f60bae15f5332dc1559badd1'>;
 export type ExecutionHash =
-  ExecutionHashBase<'3666f82e8e1ddf68a0c87c140b14d265d46dc417ecba10e157ac4191a864e0e6'>;
+  ExecutionHashBase<'6a03bd6b3718ecc1a90d1716b3119ea07b463f3f2ec0f6cae24ac9c1630d5be8'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -237,7 +237,6 @@ export type FieldOutputTypes = {
     readonly AnggotaCerdasCermat: {
       readonly detailCerdasCermatId: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
-      readonly jabatan: CodecTypes['pg/text@1']['output'];
       readonly kelas: CodecTypes['pg/text@1']['output'];
       readonly namaLengkap: CodecTypes['pg/text@1']['output'];
     };
@@ -247,46 +246,54 @@ export type FieldOutputTypes = {
       readonly namaLengkap: CodecTypes['pg/text@1']['output'];
     };
     readonly DataLomba: {
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly jenisLomba: CodecTypes['pg/text@1']['output'];
       readonly orderId: CodecTypes['pg/text@1']['output'];
       readonly paymentUrl: CodecTypes['pg/text@1']['output'] | null;
-      readonly pesertaId: CodecTypes['pg/text@1']['output'];
       readonly statusBayar: CodecTypes['pg/text@1']['output'];
     };
     readonly DetailCerdasCermat: {
       readonly alamatSekolah: CodecTypes['pg/text@1']['output'];
       readonly dataLombaId: CodecTypes['pg/text@1']['output'];
+      readonly emailPendamping: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly namaGuruPendamping: CodecTypes['pg/text@1']['output'];
       readonly namaSekolah: CodecTypes['pg/text@1']['output'];
       readonly whatsappPendamping: CodecTypes['pg/text@1']['output'];
     };
+    readonly DetailFunRun: {
+      readonly dataLombaId: CodecTypes['pg/text@1']['output'];
+      readonly email: CodecTypes['pg/text@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly jenisKelamin: CodecTypes['pg/text@1']['output'];
+      readonly kontakDarurat: CodecTypes['pg/text@1']['output'];
+      readonly namaLengkap: CodecTypes['pg/text@1']['output'];
+      readonly noWhatsapp: CodecTypes['pg/text@1']['output'];
+    };
     readonly DetailMewarnai: {
       readonly asalSekolah: CodecTypes['pg/text@1']['output'];
       readonly dataLombaId: CodecTypes['pg/text@1']['output'];
+      readonly emailOrangTua: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
-      readonly kelas: CodecTypes['pg/text@1']['output'];
+      readonly kelas: CodecTypes['pg/int4@1']['output'];
       readonly namaOrangTua: CodecTypes['pg/text@1']['output'];
+      readonly namaPeserta: CodecTypes['pg/text@1']['output'];
       readonly paketLomba: CodecTypes['pg/text@1']['output'];
-      readonly tanggalLahir: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
-      readonly usia: CodecTypes['pg/int4@1']['output'] | null;
+      readonly usia: CodecTypes['pg/int4@1']['output'];
       readonly whatsappOrangTua: CodecTypes['pg/text@1']['output'];
     };
     readonly DetailSTMS: {
       readonly dataLombaId: CodecTypes['pg/text@1']['output'];
+      readonly email: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly jenisBakat: CodecTypes['pg/text@1']['output'];
       readonly jumlahAnggota: CodecTypes['pg/int4@1']['output'];
       readonly kelas: CodecTypes['pg/text@1']['output'];
       readonly menggunakanMusik: CodecTypes['pg/bool@1']['output'];
-      readonly perlengkapan: CodecTypes['pg/text@1']['output'] | null;
-    };
-    readonly Peserta: {
-      readonly email: CodecTypes['pg/text@1']['output'];
-      readonly id: CodecTypes['pg/text@1']['output'];
-      readonly namaLengkap: CodecTypes['pg/text@1']['output'];
+      readonly namaPerwakilan: CodecTypes['pg/text@1']['output'];
       readonly noWhatsapp: CodecTypes['pg/text@1']['output'];
+      readonly perlengkapan: CodecTypes['pg/text@1']['output'] | null;
     };
   };
 };
@@ -295,7 +302,6 @@ export type FieldInputTypes = {
     readonly AnggotaCerdasCermat: {
       readonly detailCerdasCermatId: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
-      readonly jabatan: CodecTypes['pg/text@1']['input'];
       readonly kelas: CodecTypes['pg/text@1']['input'];
       readonly namaLengkap: CodecTypes['pg/text@1']['input'];
     };
@@ -305,46 +311,54 @@ export type FieldInputTypes = {
       readonly namaLengkap: CodecTypes['pg/text@1']['input'];
     };
     readonly DataLomba: {
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly jenisLomba: CodecTypes['pg/text@1']['input'];
       readonly orderId: CodecTypes['pg/text@1']['input'];
       readonly paymentUrl: CodecTypes['pg/text@1']['input'] | null;
-      readonly pesertaId: CodecTypes['pg/text@1']['input'];
       readonly statusBayar: CodecTypes['pg/text@1']['input'];
     };
     readonly DetailCerdasCermat: {
       readonly alamatSekolah: CodecTypes['pg/text@1']['input'];
       readonly dataLombaId: CodecTypes['pg/text@1']['input'];
+      readonly emailPendamping: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly namaGuruPendamping: CodecTypes['pg/text@1']['input'];
       readonly namaSekolah: CodecTypes['pg/text@1']['input'];
       readonly whatsappPendamping: CodecTypes['pg/text@1']['input'];
     };
+    readonly DetailFunRun: {
+      readonly dataLombaId: CodecTypes['pg/text@1']['input'];
+      readonly email: CodecTypes['pg/text@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly jenisKelamin: CodecTypes['pg/text@1']['input'];
+      readonly kontakDarurat: CodecTypes['pg/text@1']['input'];
+      readonly namaLengkap: CodecTypes['pg/text@1']['input'];
+      readonly noWhatsapp: CodecTypes['pg/text@1']['input'];
+    };
     readonly DetailMewarnai: {
       readonly asalSekolah: CodecTypes['pg/text@1']['input'];
       readonly dataLombaId: CodecTypes['pg/text@1']['input'];
+      readonly emailOrangTua: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
-      readonly kelas: CodecTypes['pg/text@1']['input'];
+      readonly kelas: CodecTypes['pg/int4@1']['input'];
       readonly namaOrangTua: CodecTypes['pg/text@1']['input'];
+      readonly namaPeserta: CodecTypes['pg/text@1']['input'];
       readonly paketLomba: CodecTypes['pg/text@1']['input'];
-      readonly tanggalLahir: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
-      readonly usia: CodecTypes['pg/int4@1']['input'] | null;
+      readonly usia: CodecTypes['pg/int4@1']['input'];
       readonly whatsappOrangTua: CodecTypes['pg/text@1']['input'];
     };
     readonly DetailSTMS: {
       readonly dataLombaId: CodecTypes['pg/text@1']['input'];
+      readonly email: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly jenisBakat: CodecTypes['pg/text@1']['input'];
       readonly jumlahAnggota: CodecTypes['pg/int4@1']['input'];
       readonly kelas: CodecTypes['pg/text@1']['input'];
       readonly menggunakanMusik: CodecTypes['pg/bool@1']['input'];
-      readonly perlengkapan: CodecTypes['pg/text@1']['input'] | null;
-    };
-    readonly Peserta: {
-      readonly email: CodecTypes['pg/text@1']['input'];
-      readonly id: CodecTypes['pg/text@1']['input'];
-      readonly namaLengkap: CodecTypes['pg/text@1']['input'];
+      readonly namaPerwakilan: CodecTypes['pg/text@1']['input'];
       readonly noWhatsapp: CodecTypes['pg/text@1']['input'];
+      readonly perlengkapan: CodecTypes['pg/text@1']['input'] | null;
     };
   };
 };
@@ -353,7 +367,6 @@ export type StorageColumnTypes = {
     readonly AnggotaCerdasCermat: {
       readonly detailCerdasCermatId: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
-      readonly jabatan: CodecTypes['pg/text@1']['output'];
       readonly kelas: CodecTypes['pg/text@1']['output'];
       readonly namaLengkap: CodecTypes['pg/text@1']['output'];
     };
@@ -363,46 +376,54 @@ export type StorageColumnTypes = {
       readonly namaLengkap: CodecTypes['pg/text@1']['output'];
     };
     readonly DataLomba: {
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly jenisLomba: CodecTypes['pg/text@1']['output'];
       readonly orderId: CodecTypes['pg/text@1']['output'];
       readonly paymentUrl: CodecTypes['pg/text@1']['output'] | null;
-      readonly pesertaId: CodecTypes['pg/text@1']['output'];
       readonly statusBayar: CodecTypes['pg/text@1']['output'];
     };
     readonly DetailCerdasCermat: {
       readonly alamatSekolah: CodecTypes['pg/text@1']['output'];
       readonly dataLombaId: CodecTypes['pg/text@1']['output'];
+      readonly emailPendamping: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly namaGuruPendamping: CodecTypes['pg/text@1']['output'];
       readonly namaSekolah: CodecTypes['pg/text@1']['output'];
       readonly whatsappPendamping: CodecTypes['pg/text@1']['output'];
     };
+    readonly DetailFunRun: {
+      readonly dataLombaId: CodecTypes['pg/text@1']['output'];
+      readonly email: CodecTypes['pg/text@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly jenisKelamin: CodecTypes['pg/text@1']['output'];
+      readonly kontakDarurat: CodecTypes['pg/text@1']['output'];
+      readonly namaLengkap: CodecTypes['pg/text@1']['output'];
+      readonly noWhatsapp: CodecTypes['pg/text@1']['output'];
+    };
     readonly DetailMewarnai: {
       readonly asalSekolah: CodecTypes['pg/text@1']['output'];
       readonly dataLombaId: CodecTypes['pg/text@1']['output'];
+      readonly emailOrangTua: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
-      readonly kelas: CodecTypes['pg/text@1']['output'];
+      readonly kelas: CodecTypes['pg/int4@1']['output'];
       readonly namaOrangTua: CodecTypes['pg/text@1']['output'];
+      readonly namaPeserta: CodecTypes['pg/text@1']['output'];
       readonly paketLomba: CodecTypes['pg/text@1']['output'];
-      readonly tanggalLahir: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
-      readonly usia: CodecTypes['pg/int4@1']['output'] | null;
+      readonly usia: CodecTypes['pg/int4@1']['output'];
       readonly whatsappOrangTua: CodecTypes['pg/text@1']['output'];
     };
     readonly DetailSTMS: {
       readonly dataLombaId: CodecTypes['pg/text@1']['output'];
+      readonly email: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly jenisBakat: CodecTypes['pg/text@1']['output'];
       readonly jumlahAnggota: CodecTypes['pg/int4@1']['output'];
       readonly kelas: CodecTypes['pg/text@1']['output'];
       readonly menggunakanMusik: CodecTypes['pg/bool@1']['output'];
-      readonly perlengkapan: CodecTypes['pg/text@1']['output'] | null;
-    };
-    readonly Peserta: {
-      readonly email: CodecTypes['pg/text@1']['output'];
-      readonly id: CodecTypes['pg/text@1']['output'];
-      readonly namaLengkap: CodecTypes['pg/text@1']['output'];
+      readonly namaPerwakilan: CodecTypes['pg/text@1']['output'];
       readonly noWhatsapp: CodecTypes['pg/text@1']['output'];
+      readonly perlengkapan: CodecTypes['pg/text@1']['output'] | null;
     };
   };
 };
@@ -411,7 +432,6 @@ export type StorageColumnInputTypes = {
     readonly AnggotaCerdasCermat: {
       readonly detailCerdasCermatId: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
-      readonly jabatan: CodecTypes['pg/text@1']['input'];
       readonly kelas: CodecTypes['pg/text@1']['input'];
       readonly namaLengkap: CodecTypes['pg/text@1']['input'];
     };
@@ -421,46 +441,54 @@ export type StorageColumnInputTypes = {
       readonly namaLengkap: CodecTypes['pg/text@1']['input'];
     };
     readonly DataLomba: {
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly jenisLomba: CodecTypes['pg/text@1']['input'];
       readonly orderId: CodecTypes['pg/text@1']['input'];
       readonly paymentUrl: CodecTypes['pg/text@1']['input'] | null;
-      readonly pesertaId: CodecTypes['pg/text@1']['input'];
       readonly statusBayar: CodecTypes['pg/text@1']['input'];
     };
     readonly DetailCerdasCermat: {
       readonly alamatSekolah: CodecTypes['pg/text@1']['input'];
       readonly dataLombaId: CodecTypes['pg/text@1']['input'];
+      readonly emailPendamping: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly namaGuruPendamping: CodecTypes['pg/text@1']['input'];
       readonly namaSekolah: CodecTypes['pg/text@1']['input'];
       readonly whatsappPendamping: CodecTypes['pg/text@1']['input'];
     };
+    readonly DetailFunRun: {
+      readonly dataLombaId: CodecTypes['pg/text@1']['input'];
+      readonly email: CodecTypes['pg/text@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly jenisKelamin: CodecTypes['pg/text@1']['input'];
+      readonly kontakDarurat: CodecTypes['pg/text@1']['input'];
+      readonly namaLengkap: CodecTypes['pg/text@1']['input'];
+      readonly noWhatsapp: CodecTypes['pg/text@1']['input'];
+    };
     readonly DetailMewarnai: {
       readonly asalSekolah: CodecTypes['pg/text@1']['input'];
       readonly dataLombaId: CodecTypes['pg/text@1']['input'];
+      readonly emailOrangTua: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
-      readonly kelas: CodecTypes['pg/text@1']['input'];
+      readonly kelas: CodecTypes['pg/int4@1']['input'];
       readonly namaOrangTua: CodecTypes['pg/text@1']['input'];
+      readonly namaPeserta: CodecTypes['pg/text@1']['input'];
       readonly paketLomba: CodecTypes['pg/text@1']['input'];
-      readonly tanggalLahir: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
-      readonly usia: CodecTypes['pg/int4@1']['input'] | null;
+      readonly usia: CodecTypes['pg/int4@1']['input'];
       readonly whatsappOrangTua: CodecTypes['pg/text@1']['input'];
     };
     readonly DetailSTMS: {
       readonly dataLombaId: CodecTypes['pg/text@1']['input'];
+      readonly email: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly jenisBakat: CodecTypes['pg/text@1']['input'];
       readonly jumlahAnggota: CodecTypes['pg/int4@1']['input'];
       readonly kelas: CodecTypes['pg/text@1']['input'];
       readonly menggunakanMusik: CodecTypes['pg/bool@1']['input'];
-      readonly perlengkapan: CodecTypes['pg/text@1']['input'] | null;
-    };
-    readonly Peserta: {
-      readonly email: CodecTypes['pg/text@1']['input'];
-      readonly id: CodecTypes['pg/text@1']['input'];
-      readonly namaLengkap: CodecTypes['pg/text@1']['input'];
+      readonly namaPerwakilan: CodecTypes['pg/text@1']['input'];
       readonly noWhatsapp: CodecTypes['pg/text@1']['input'];
+      readonly perlengkapan: CodecTypes['pg/text@1']['input'] | null;
     };
   };
 };
@@ -469,7 +497,6 @@ export namespace Models {
   export type public_AnggotaCerdasCermat = {
     detailCerdasCermatId: CodecTypes['pg/text@1']['output'];
     id: CodecTypes['pg/text@1']['output'];
-    jabatan: CodecTypes['pg/text@1']['output'];
     kelas: CodecTypes['pg/text@1']['output'];
     namaLengkap: CodecTypes['pg/text@1']['output'];
     detailCerdasCermat: public_DetailCerdasCermat;
@@ -483,21 +510,22 @@ export namespace Models {
     readonly [RelationKeys]?: 'detailSTMS';
   };
   export type public_DataLomba = {
+    createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
     id: CodecTypes['pg/text@1']['output'];
     jenisLomba: CodecTypes['pg/text@1']['output'];
     orderId: CodecTypes['pg/text@1']['output'];
     paymentUrl: CodecTypes['pg/text@1']['output'] | null;
-    pesertaId: CodecTypes['pg/text@1']['output'];
     statusBayar: CodecTypes['pg/text@1']['output'];
-    detailCerdasCermat: public_DetailCerdasCermat | null;
-    detailMewarnai: public_DetailMewarnai | null;
-    detailSTMS: public_DetailSTMS | null;
-    peserta: public_Peserta;
-    readonly [RelationKeys]?: 'detailCerdasCermat' | 'detailMewarnai' | 'detailSTMS' | 'peserta';
+    cerdasCermat: public_DetailCerdasCermat | null;
+    funRun: public_DetailFunRun | null;
+    mewarnai: public_DetailMewarnai | null;
+    stms: public_DetailSTMS | null;
+    readonly [RelationKeys]?: 'cerdasCermat' | 'funRun' | 'mewarnai' | 'stms';
   };
   export type public_DetailCerdasCermat = {
     alamatSekolah: CodecTypes['pg/text@1']['output'];
     dataLombaId: CodecTypes['pg/text@1']['output'];
+    emailPendamping: CodecTypes['pg/text@1']['output'];
     id: CodecTypes['pg/text@1']['output'];
     namaGuruPendamping: CodecTypes['pg/text@1']['output'];
     namaSekolah: CodecTypes['pg/text@1']['output'];
@@ -506,38 +534,45 @@ export namespace Models {
     dataLomba: public_DataLomba;
     readonly [RelationKeys]?: 'anggota' | 'dataLomba';
   };
+  export type public_DetailFunRun = {
+    dataLombaId: CodecTypes['pg/text@1']['output'];
+    email: CodecTypes['pg/text@1']['output'];
+    id: CodecTypes['pg/text@1']['output'];
+    jenisKelamin: CodecTypes['pg/text@1']['output'];
+    kontakDarurat: CodecTypes['pg/text@1']['output'];
+    namaLengkap: CodecTypes['pg/text@1']['output'];
+    noWhatsapp: CodecTypes['pg/text@1']['output'];
+    dataLomba: public_DataLomba;
+    readonly [RelationKeys]?: 'dataLomba';
+  };
   export type public_DetailMewarnai = {
     asalSekolah: CodecTypes['pg/text@1']['output'];
     dataLombaId: CodecTypes['pg/text@1']['output'];
+    emailOrangTua: CodecTypes['pg/text@1']['output'];
     id: CodecTypes['pg/text@1']['output'];
-    kelas: CodecTypes['pg/text@1']['output'];
+    kelas: CodecTypes['pg/int4@1']['output'];
     namaOrangTua: CodecTypes['pg/text@1']['output'];
+    namaPeserta: CodecTypes['pg/text@1']['output'];
     paketLomba: CodecTypes['pg/text@1']['output'];
-    tanggalLahir: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
-    usia: CodecTypes['pg/int4@1']['output'] | null;
+    usia: CodecTypes['pg/int4@1']['output'];
     whatsappOrangTua: CodecTypes['pg/text@1']['output'];
     dataLomba: public_DataLomba;
     readonly [RelationKeys]?: 'dataLomba';
   };
   export type public_DetailSTMS = {
     dataLombaId: CodecTypes['pg/text@1']['output'];
+    email: CodecTypes['pg/text@1']['output'];
     id: CodecTypes['pg/text@1']['output'];
     jenisBakat: CodecTypes['pg/text@1']['output'];
     jumlahAnggota: CodecTypes['pg/int4@1']['output'];
     kelas: CodecTypes['pg/text@1']['output'];
     menggunakanMusik: CodecTypes['pg/bool@1']['output'];
+    namaPerwakilan: CodecTypes['pg/text@1']['output'];
+    noWhatsapp: CodecTypes['pg/text@1']['output'];
     perlengkapan: CodecTypes['pg/text@1']['output'] | null;
     anggota: public_AnggotaSTMS[];
     dataLomba: public_DataLomba;
     readonly [RelationKeys]?: 'anggota' | 'dataLomba';
-  };
-  export type public_Peserta = {
-    email: CodecTypes['pg/text@1']['output'];
-    id: CodecTypes['pg/text@1']['output'];
-    namaLengkap: CodecTypes['pg/text@1']['output'];
-    noWhatsapp: CodecTypes['pg/text@1']['output'];
-    lomba: public_DataLomba | null;
-    readonly [RelationKeys]?: 'lomba';
   };
 }
 
@@ -547,9 +582,9 @@ export declare const models: {
     AnggotaSTMS: Models.public_AnggotaSTMS;
     DataLomba: Models.public_DataLomba;
     DetailCerdasCermat: Models.public_DetailCerdasCermat;
+    DetailFunRun: Models.public_DetailFunRun;
     DetailMewarnai: Models.public_DetailMewarnai;
     DetailSTMS: Models.public_DetailSTMS;
-    Peserta: Models.public_Peserta;
   };
 };
 
@@ -580,12 +615,6 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly id: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
-                  readonly nullable: false;
-                  readonly many: false;
-                };
-                readonly jabatan: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
@@ -677,6 +706,13 @@ type ContractBase = Omit<
             };
             readonly DataLomba: {
               columns: {
+                readonly createdAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                  readonly many: false;
+                };
                 readonly id: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
@@ -701,12 +737,6 @@ type ContractBase = Omit<
                   readonly nullable: true;
                   readonly many: false;
                 };
-                readonly pesertaId: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
-                  readonly nullable: false;
-                  readonly many: false;
-                };
                 readonly statusBayar: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
@@ -719,25 +749,9 @@ type ContractBase = Omit<
                 };
               };
               primaryKey: { readonly columns: readonly ['id'] };
-              uniques: readonly [
-                { readonly columns: readonly ['orderId'] },
-                { readonly columns: readonly ['pesertaId'] },
-              ];
+              uniques: readonly [{ readonly columns: readonly ['orderId'] }];
               indexes: readonly [];
-              foreignKeys: readonly [
-                {
-                  readonly source: {
-                    readonly namespaceId: 'public' & NamespaceId;
-                    readonly tableName: 'DataLomba';
-                    readonly columns: readonly ['pesertaId'];
-                  };
-                  readonly target: {
-                    readonly namespaceId: 'public' & NamespaceId;
-                    readonly tableName: 'Peserta';
-                    readonly columns: readonly ['id'];
-                  };
-                },
-              ];
+              foreignKeys: readonly [];
             };
             readonly DetailCerdasCermat: {
               columns: {
@@ -748,6 +762,12 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly dataLombaId: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly emailPendamping: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
@@ -796,6 +816,69 @@ type ContractBase = Omit<
                 },
               ];
             };
+            readonly DetailFunRun: {
+              columns: {
+                readonly dataLombaId: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly email: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly id: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly jenisKelamin: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly kontakDarurat: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly namaLengkap: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly noWhatsapp: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [{ readonly columns: readonly ['dataLombaId'] }];
+              indexes: readonly [];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'DetailFunRun';
+                    readonly columns: readonly ['dataLombaId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'DataLomba';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+              ];
+            };
             readonly DetailMewarnai: {
               columns: {
                 readonly asalSekolah: {
@@ -810,6 +893,12 @@ type ContractBase = Omit<
                   readonly nullable: false;
                   readonly many: false;
                 };
+                readonly emailOrangTua: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
                 readonly id: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
@@ -817,12 +906,18 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly kelas: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly namaOrangTua: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
                   readonly many: false;
                 };
-                readonly namaOrangTua: {
+                readonly namaPeserta: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
@@ -834,16 +929,10 @@ type ContractBase = Omit<
                   readonly nullable: false;
                   readonly many: false;
                 };
-                readonly tanggalLahir: {
-                  readonly dataType: 'pg/timestamptz';
-                  readonly codecId: 'pg/timestamptz-temporal@1';
-                  readonly nullable: true;
-                  readonly many: false;
-                };
                 readonly usia: {
                   readonly dataType: 'pg/int4';
                   readonly codecId: 'pg/int4@1';
-                  readonly nullable: true;
+                  readonly nullable: false;
                   readonly many: false;
                 };
                 readonly whatsappOrangTua: {
@@ -874,6 +963,12 @@ type ContractBase = Omit<
             readonly DetailSTMS: {
               columns: {
                 readonly dataLombaId: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly email: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
@@ -913,6 +1008,18 @@ type ContractBase = Omit<
                   };
                   readonly many: false;
                 };
+                readonly namaPerwakilan: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly noWhatsapp: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
                 readonly perlengkapan: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
@@ -938,38 +1045,6 @@ type ContractBase = Omit<
                 },
               ];
             };
-            readonly Peserta: {
-              columns: {
-                readonly email: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
-                  readonly nullable: false;
-                  readonly many: false;
-                };
-                readonly id: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
-                  readonly nullable: false;
-                  readonly many: false;
-                };
-                readonly namaLengkap: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
-                  readonly nullable: false;
-                  readonly many: false;
-                };
-                readonly noWhatsapp: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
-                  readonly nullable: false;
-                  readonly many: false;
-                };
-              };
-              primaryKey: { readonly columns: readonly ['id'] };
-              uniques: readonly [{ readonly columns: readonly ['email'] }];
-              indexes: readonly [];
-              foreignKeys: readonly [];
-            };
           };
         };
       };
@@ -994,6 +1069,10 @@ type ContractBase = Omit<
       readonly namespace: 'public' & NamespaceId;
       readonly model: 'DetailCerdasCermat';
     };
+    readonly DetailFunRun: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'DetailFunRun';
+    };
     readonly DetailMewarnai: {
       readonly namespace: 'public' & NamespaceId;
       readonly model: 'DetailMewarnai';
@@ -1002,7 +1081,6 @@ type ContractBase = Omit<
       readonly namespace: 'public' & NamespaceId;
       readonly model: 'DetailSTMS';
     };
-    readonly Peserta: { readonly namespace: 'public' & NamespaceId; readonly model: 'Peserta' };
   };
   readonly domain: {
     readonly namespaces: {
@@ -1015,10 +1093,6 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly id: {
-                readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
-              };
-              readonly jabatan: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
@@ -1051,7 +1125,6 @@ type ContractBase = Omit<
               readonly fields: {
                 readonly detailCerdasCermatId: { readonly column: 'detailCerdasCermatId' };
                 readonly id: { readonly column: 'id' };
-                readonly jabatan: { readonly column: 'jabatan' };
                 readonly kelas: { readonly column: 'kelas' };
                 readonly namaLengkap: { readonly column: 'namaLengkap' };
               };
@@ -1098,6 +1171,13 @@ type ContractBase = Omit<
           };
           readonly DataLomba: {
             readonly fields: {
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
+              };
               readonly id: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
@@ -1114,17 +1194,13 @@ type ContractBase = Omit<
                 readonly nullable: true;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
-              readonly pesertaId: {
-                readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
-              };
               readonly statusBayar: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
             };
             readonly relations: {
-              readonly detailCerdasCermat: {
+              readonly cerdasCermat: {
                 readonly to: {
                   readonly namespace: 'public' & NamespaceId;
                   readonly model: 'DetailCerdasCermat';
@@ -1136,7 +1212,19 @@ type ContractBase = Omit<
                   readonly targetFields: readonly ['dataLombaId'];
                 };
               };
-              readonly detailMewarnai: {
+              readonly funRun: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'DetailFunRun';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['dataLombaId'];
+                };
+              };
+              readonly mewarnai: {
                 readonly to: {
                   readonly namespace: 'public' & NamespaceId;
                   readonly model: 'DetailMewarnai';
@@ -1148,7 +1236,7 @@ type ContractBase = Omit<
                   readonly targetFields: readonly ['dataLombaId'];
                 };
               };
-              readonly detailSTMS: {
+              readonly stms: {
                 readonly to: {
                   readonly namespace: 'public' & NamespaceId;
                   readonly model: 'DetailSTMS';
@@ -1160,28 +1248,16 @@ type ContractBase = Omit<
                   readonly targetFields: readonly ['dataLombaId'];
                 };
               };
-              readonly peserta: {
-                readonly to: {
-                  readonly namespace: 'public' & NamespaceId;
-                  readonly model: 'Peserta';
-                };
-                readonly cardinality: 'N:1';
-                readonly nullable: false;
-                readonly on: {
-                  readonly localFields: readonly ['pesertaId'];
-                  readonly targetFields: readonly ['id'];
-                };
-              };
             };
             readonly storage: {
               readonly table: 'DataLomba';
               readonly namespaceId: 'public';
               readonly fields: {
+                readonly createdAt: { readonly column: 'createdAt' };
                 readonly id: { readonly column: 'id' };
                 readonly jenisLomba: { readonly column: 'jenisLomba' };
                 readonly orderId: { readonly column: 'orderId' };
                 readonly paymentUrl: { readonly column: 'paymentUrl' };
-                readonly pesertaId: { readonly column: 'pesertaId' };
                 readonly statusBayar: { readonly column: 'statusBayar' };
               };
             };
@@ -1193,6 +1269,10 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly dataLombaId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly emailPendamping: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
@@ -1244,10 +1324,70 @@ type ContractBase = Omit<
               readonly fields: {
                 readonly alamatSekolah: { readonly column: 'alamatSekolah' };
                 readonly dataLombaId: { readonly column: 'dataLombaId' };
+                readonly emailPendamping: { readonly column: 'emailPendamping' };
                 readonly id: { readonly column: 'id' };
                 readonly namaGuruPendamping: { readonly column: 'namaGuruPendamping' };
                 readonly namaSekolah: { readonly column: 'namaSekolah' };
                 readonly whatsappPendamping: { readonly column: 'whatsappPendamping' };
+              };
+            };
+          };
+          readonly DetailFunRun: {
+            readonly fields: {
+              readonly dataLombaId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly email: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly jenisKelamin: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly kontakDarurat: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly namaLengkap: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly noWhatsapp: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+            };
+            readonly relations: {
+              readonly dataLomba: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'DataLomba';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: false;
+                readonly on: {
+                  readonly localFields: readonly ['dataLombaId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'DetailFunRun';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly dataLombaId: { readonly column: 'dataLombaId' };
+                readonly email: { readonly column: 'email' };
+                readonly id: { readonly column: 'id' };
+                readonly jenisKelamin: { readonly column: 'jenisKelamin' };
+                readonly kontakDarurat: { readonly column: 'kontakDarurat' };
+                readonly namaLengkap: { readonly column: 'namaLengkap' };
+                readonly noWhatsapp: { readonly column: 'noWhatsapp' };
               };
             };
           };
@@ -1261,15 +1401,23 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
+              readonly emailOrangTua: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
               readonly id: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly kelas: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
               };
               readonly namaOrangTua: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly namaPeserta: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
@@ -1277,15 +1425,8 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
-              readonly tanggalLahir: {
-                readonly nullable: true;
-                readonly type: {
-                  readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamptz-temporal@1';
-                };
-              };
               readonly usia: {
-                readonly nullable: true;
+                readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
               };
               readonly whatsappOrangTua: {
@@ -1313,11 +1454,12 @@ type ContractBase = Omit<
               readonly fields: {
                 readonly asalSekolah: { readonly column: 'asalSekolah' };
                 readonly dataLombaId: { readonly column: 'dataLombaId' };
+                readonly emailOrangTua: { readonly column: 'emailOrangTua' };
                 readonly id: { readonly column: 'id' };
                 readonly kelas: { readonly column: 'kelas' };
                 readonly namaOrangTua: { readonly column: 'namaOrangTua' };
+                readonly namaPeserta: { readonly column: 'namaPeserta' };
                 readonly paketLomba: { readonly column: 'paketLomba' };
-                readonly tanggalLahir: { readonly column: 'tanggalLahir' };
                 readonly usia: { readonly column: 'usia' };
                 readonly whatsappOrangTua: { readonly column: 'whatsappOrangTua' };
               };
@@ -1326,6 +1468,10 @@ type ContractBase = Omit<
           readonly DetailSTMS: {
             readonly fields: {
               readonly dataLombaId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly email: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
@@ -1348,6 +1494,14 @@ type ContractBase = Omit<
               readonly menggunakanMusik: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/bool@1' };
+              };
+              readonly namaPerwakilan: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly noWhatsapp: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly perlengkapan: {
                 readonly nullable: true;
@@ -1384,56 +1538,15 @@ type ContractBase = Omit<
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly dataLombaId: { readonly column: 'dataLombaId' };
+                readonly email: { readonly column: 'email' };
                 readonly id: { readonly column: 'id' };
                 readonly jenisBakat: { readonly column: 'jenisBakat' };
                 readonly jumlahAnggota: { readonly column: 'jumlahAnggota' };
                 readonly kelas: { readonly column: 'kelas' };
                 readonly menggunakanMusik: { readonly column: 'menggunakanMusik' };
-                readonly perlengkapan: { readonly column: 'perlengkapan' };
-              };
-            };
-          };
-          readonly Peserta: {
-            readonly fields: {
-              readonly email: {
-                readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
-              };
-              readonly id: {
-                readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
-              };
-              readonly namaLengkap: {
-                readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
-              };
-              readonly noWhatsapp: {
-                readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
-              };
-            };
-            readonly relations: {
-              readonly lomba: {
-                readonly to: {
-                  readonly namespace: 'public' & NamespaceId;
-                  readonly model: 'DataLomba';
-                };
-                readonly cardinality: '1:1';
-                readonly nullable: true;
-                readonly on: {
-                  readonly localFields: readonly ['id'];
-                  readonly targetFields: readonly ['pesertaId'];
-                };
-              };
-            };
-            readonly storage: {
-              readonly table: 'Peserta';
-              readonly namespaceId: 'public';
-              readonly fields: {
-                readonly email: { readonly column: 'email' };
-                readonly id: { readonly column: 'id' };
-                readonly namaLengkap: { readonly column: 'namaLengkap' };
+                readonly namaPerwakilan: { readonly column: 'namaPerwakilan' };
                 readonly noWhatsapp: { readonly column: 'noWhatsapp' };
+                readonly perlengkapan: { readonly column: 'perlengkapan' };
               };
             };
           };
@@ -1476,64 +1589,8 @@ type ContractBase = Omit<
         {
           readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
           readonly ref: {
-            readonly entry: 'AnggotaCerdasCermat';
-            readonly field: 'id';
-            readonly namespace: 'public';
-          };
-        },
-        {
-          readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
-          readonly ref: {
-            readonly entry: 'AnggotaSTMS';
-            readonly field: 'id';
-            readonly namespace: 'public';
-          };
-        },
-        {
-          readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
-          readonly ref: {
-            readonly entry: 'DataLomba';
-            readonly field: 'id';
-            readonly namespace: 'public';
-          };
-        },
-        {
-          readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
-          readonly ref: {
             readonly entry: 'DataLomba';
             readonly field: 'orderId';
-            readonly namespace: 'public';
-          };
-        },
-        {
-          readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
-          readonly ref: {
-            readonly entry: 'DetailCerdasCermat';
-            readonly field: 'id';
-            readonly namespace: 'public';
-          };
-        },
-        {
-          readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
-          readonly ref: {
-            readonly entry: 'DetailMewarnai';
-            readonly field: 'id';
-            readonly namespace: 'public';
-          };
-        },
-        {
-          readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
-          readonly ref: {
-            readonly entry: 'DetailSTMS';
-            readonly field: 'id';
-            readonly namespace: 'public';
-          };
-        },
-        {
-          readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
-          readonly ref: {
-            readonly entry: 'Peserta';
-            readonly field: 'id';
             readonly namespace: 'public';
           };
         },

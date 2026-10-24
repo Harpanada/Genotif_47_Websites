@@ -1,105 +1,113 @@
 "use client";
+
 import Navbar from "@/app/components/global/Navbar";
 import Footer from "@/app/components/global/Footer";
 import { registrationSchema } from "@/lib/validations/register";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-export interface LccAnggota {
+
+type JenisLomba = "FUN_RUN" | "LCC_SD" | "TALENT_SHOW" | "MEWARNAI";
+
+interface LccAnggota {
   nama: string;
-  kelas: string;
+  kelas: "4" | "5" | "6";
 }
 
-export interface RegistrationFormData {
+interface RegistrationFormData {
+  jenisLomba: JenisLomba;
+
+  // Fun Run
   namaLengkap: string;
-  email: string;
-  noWhatsapp: string;
-  jenisLomba: "FUN_RUN" | "LCC_SD" | "TALENT_SHOW" | "MEWARNAI";
+  jenisKelamin: "L" | "P" | "";
+  kontakDarurat: string;
+  emailFunRun: string;
+  whatsappFunRun: string;
 
   // STMS
+  namaPerwakilan: string;
+  emailStms: string;
+  whatsappStms: string;
   kelasStms: string;
   jenisBakat: string;
   jumlahAnggotaStms: number;
   namaAnggotaStms: string[];
   alatPerlengkapan: string;
-  butuhMusik: string;
+  butuhMusik: "Ya" | "Tidak";
 
-  // LCC
+  // Cerdas Cermat
   namaSekolah: string;
   alamatSekolah: string;
   namaGuruPendamping: string;
+  emailPendamping: string;
   noWaGuru: string;
   anggotaLcc: LccAnggota[];
 
   // Mewarnai
+  namaPeserta: string;
   asalSekolahMewarnai: string;
   kelasMewarnai: string;
-  tglLahirUsiaMewarnai: string;
+  usiaMewarnai: string;
   paketMewarnai: "PAKET_A" | "PAKET_B";
   namaOrtuMewarnai: string;
   noWaOrtuMewarnai: string;
+  emailOrtuMewarnai: string;
 }
 
-function parseTanggalAtauUsia(input: string): {
-  tanggalLahir?: string;
-  usia?: number;
-} {
-  const value = input.trim();
+const initialFormData: RegistrationFormData = {
+  jenisLomba: "FUN_RUN",
 
-  // Format tanggal: YYYY-MM-DD
-  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    return { tanggalLahir: value };
-  }
+  namaLengkap: "",
+  jenisKelamin: "",
+  kontakDarurat: "",
+  emailFunRun: "",
+  whatsappFunRun: "",
 
-  // Format tanggal: DD/MM/YYYY
-  const dateMatch = value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  namaPerwakilan: "",
+  emailStms: "",
+  whatsappStms: "",
+  kelasStms: "",
+  jenisBakat: "",
+  jumlahAnggotaStms: 1,
+  namaAnggotaStms: [],
+  alatPerlengkapan: "",
+  butuhMusik: "Tidak",
 
-  if (dateMatch) {
-    const [, day, month, year] = dateMatch;
-    return {
-      tanggalLahir: `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`,
-    };
-  }
+  namaSekolah: "",
+  alamatSekolah: "",
+  namaGuruPendamping: "",
+  emailPendamping: "",
+  noWaGuru: "",
+  anggotaLcc: [
+    { nama: "", kelas: "4" },
+    { nama: "", kelas: "4" },
+    { nama: "", kelas: "4" },
+  ],
 
-  // Format usia: "8", "8 tahun", "8 thn", atau "8 th"
-  const ageMatch = value.match(/^(\d{1,2})(?:\s*(?:tahun|thn|th))?$/i);
+  namaPeserta: "",
+  asalSekolahMewarnai: "",
+  kelasMewarnai: "",
+  usiaMewarnai: "",
+  paketMewarnai: "PAKET_A",
+  namaOrtuMewarnai: "",
+  noWaOrtuMewarnai: "",
+  emailOrtuMewarnai: "",
+};
 
-  if (ageMatch) {
-    return { usia: Number(ageMatch[1]) };
-  }
+const inputClass =
+  "w-full p-2.5 rounded-2xl font-['body-regular'] text-[#00354E] bg-white ring ring-[#30B5D8] shadow-sm";
 
-  return {};
-}
+const labelClass =
+  "block w-full p-1 font-['body-medium'] text-xs font-bold text-[#00354E]";
+
+const sectionClass =
+  "w-full flex flex-col gap-4 p-4 md:p-6 rounded-3xl bg-white/60 backdrop-blur-md ring ring-[#30B5D8] text-left";
+
+const sectionTitleClass =
+  "font-['body-bold'] text-[#00354E] text-lg underline decoration-[#f0ac2d] underline-offset-4";
+
 export default function Registration() {
-  const [formData, setFormData] = useState<RegistrationFormData>({
-    namaLengkap: "",
-    email: "",
-    noWhatsapp: "",
-    jenisLomba: "FUN_RUN",
-
-    kelasStms: "",
-    jenisBakat: "",
-    jumlahAnggotaStms: 1,
-    namaAnggotaStms: [],
-    alatPerlengkapan: "",
-    butuhMusik: "Tidak",
-
-    namaSekolah: "",
-    alamatSekolah: "",
-    namaGuruPendamping: "",
-    noWaGuru: "",
-    anggotaLcc: [
-      { nama: "", kelas: "4" },
-      { nama: "", kelas: "4" },
-      { nama: "", kelas: "4" },
-    ],
-
-    asalSekolahMewarnai: "",
-    kelasMewarnai: "",
-    tglLahirUsiaMewarnai: "",
-    paketMewarnai: "PAKET_A",
-    namaOrtuMewarnai: "",
-    noWaOrtuMewarnai: "",
-  });
+  const [formData, setFormData] =
+    useState<RegistrationFormData>(initialFormData);
 
   const [loading, setLoading] = useState(false);
 
@@ -127,21 +135,22 @@ export default function Registration() {
       delete next[name];
       return next;
     });
+
+    setResponseMsg(null);
   };
 
-  const handleJenisLombaChange = (
-    jenisLomba: RegistrationFormData["jenisLomba"],
-  ) => {
+  const handleJenisLombaChange = (jenisLomba: JenisLomba) => {
     setFormData((prev) => ({
-      ...prev,
+      ...initialFormData,
       jenisLomba,
     }));
 
     setFieldErrors({});
     setResponseMsg(null);
   };
+
   const handleJumlahAnggotaStmsChange = (jumlah: number) => {
-    const total = Math.max(1, Math.min(10, Math.floor(jumlah)));
+    const total = Math.max(1, Math.min(10, Math.floor(jumlah || 1)));
 
     setFormData((prev) => ({
       ...prev,
@@ -155,10 +164,10 @@ export default function Registration() {
     setFieldErrors({});
   };
 
-  const handleAnggotaStmsChange = (index: number, nama: string) => {
+  const handleAnggotaStmsChange = (index: number, namaLengkap: string) => {
     setFormData((prev) => {
       const anggota = [...prev.namaAnggotaStms];
-      anggota[index] = nama;
+      anggota[index] = namaLengkap;
 
       return {
         ...prev,
@@ -168,8 +177,8 @@ export default function Registration() {
 
     setFieldErrors((prev) => {
       const next = { ...prev };
-      delete next[`namaAnggotaStms.${index}`];
       delete next[`anggota.${index}.namaLengkap`];
+      delete next[`namaAnggotaStms.${index}`];
       return next;
     });
   };
@@ -184,7 +193,7 @@ export default function Registration() {
 
       anggota[index] = {
         ...anggota[index],
-        [field]: value,
+        [field]: value as LccAnggota[typeof field],
       };
 
       return {
@@ -195,31 +204,33 @@ export default function Registration() {
 
     setFieldErrors((prev) => {
       const next = { ...prev };
+      delete next[
+        `anggota.${index}.${field === "nama" ? "namaLengkap" : "kelas"}`
+      ];
       delete next[`anggotaLcc.${index}.${field}`];
       return next;
     });
   };
-  const buildRegistrationPayload = () => {
-    const common = {
-      namaLengkap: formData.namaLengkap.trim(),
-      email: formData.email.trim(),
-      noWhatsapp: formData.noWhatsapp.trim(),
-    };
 
+  const buildRegistrationPayload = () => {
     switch (formData.jenisLomba) {
       case "FUN_RUN":
         return {
-          ...common,
           jenisLomba: "FUN_RUN" as const,
+          namaLengkap: formData.namaLengkap.trim(),
+          jenisKelamin: formData.jenisKelamin,
+          kontakDarurat: formData.kontakDarurat.trim(),
+          email: formData.emailFunRun.trim(),
+          noWhatsapp: formData.whatsappFunRun.trim(),
         };
 
       case "LCC_SD":
         return {
-          ...common,
           jenisLomba: "CERDAS_CERMAT" as const,
           namaSekolah: formData.namaSekolah.trim(),
           alamatSekolah: formData.alamatSekolah.trim(),
           namaGuruPendamping: formData.namaGuruPendamping.trim(),
+          emailPendamping: formData.emailPendamping.trim(),
           whatsappPendamping: formData.noWaGuru.trim(),
           anggota: formData.anggotaLcc.map((anggota) => ({
             namaLengkap: anggota.nama.trim(),
@@ -229,37 +240,84 @@ export default function Registration() {
 
       case "TALENT_SHOW":
         return {
-          ...common,
           jenisLomba: "STMS" as const,
+          namaPerwakilan: formData.namaPerwakilan.trim(),
+          email: formData.emailStms.trim(),
+          noWhatsapp: formData.whatsappStms.trim(),
           kelas: formData.kelasStms.trim(),
           jenisBakat: formData.jenisBakat.trim(),
-          jumlahAnggota: Number(formData.jumlahAnggotaStms),
-          anggota: formData.namaAnggotaStms.map((nama) => ({
-            namaLengkap: nama.trim(),
+          jumlahAnggota: formData.jumlahAnggotaStms,
+          anggota: formData.namaAnggotaStms.map((namaLengkap) => ({
+            namaLengkap: namaLengkap.trim(),
           })),
           perlengkapan: formData.alatPerlengkapan.trim(),
           menggunakanMusik: formData.butuhMusik === "Ya",
         };
 
-      case "MEWARNAI": {
-        const tanggalUsia = parseTanggalAtauUsia(formData.tglLahirUsiaMewarnai);
-
-        const kelas = formData.kelasMewarnai.match(/\d+/)?.[0] ?? "";
-
+      case "MEWARNAI":
         return {
-          ...common,
           jenisLomba: "MEWARNAI" as const,
+          namaPeserta: formData.namaPeserta.trim(),
           asalSekolah: formData.asalSekolahMewarnai.trim(),
-          kelas,
-          ...tanggalUsia,
+          kelas: Number(formData.kelasMewarnai),
+          usia: Number(formData.usiaMewarnai),
           paketLomba: formData.paketMewarnai,
           namaOrangTua: formData.namaOrtuMewarnai.trim(),
           whatsappOrangTua: formData.noWaOrtuMewarnai.trim(),
+          emailOrangTua: formData.emailOrtuMewarnai.trim(),
         };
-      }
     }
   };
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+
+  const mapErrorPath = (path: string, jenisLomba: JenisLomba): string => {
+    const directMappings: Record<string, string> = {
+      namaPerwakilan: "namaPerwakilan",
+      noWhatsapp: "whatsappStms",
+      kelas: jenisLomba === "TALENT_SHOW" ? "kelasStms" : "kelasMewarnai",
+      jumlahAnggota: "jumlahAnggotaStms",
+      perlengkapan: "alatPerlengkapan",
+      menggunakanMusik: "butuhMusik",
+      whatsappPendamping: "noWaGuru",
+      emailPendamping: "emailPendamping",
+      asalSekolah: "asalSekolahMewarnai",
+      paketLomba: "paketMewarnai",
+      namaOrangTua: "namaOrtuMewarnai",
+      whatsappOrangTua: "noWaOrtuMewarnai",
+      emailOrangTua: "emailOrtuMewarnai",
+      namaPeserta: "namaPeserta",
+      namaLengkap: "namaLengkap",
+      jenisKelamin: "jenisKelamin",
+      kontakDarurat: "kontakDarurat",
+      email: "emailFunRun",
+    };
+
+    const anggotaMatch = path.match(/^anggota\.(\d+)\.(namaLengkap|kelas)$/);
+
+    if (anggotaMatch) {
+      const [, index, field] = anggotaMatch;
+
+      if (jenisLomba === "LCC_SD") {
+        return `anggotaLcc.${index}.${field === "namaLengkap" ? "nama" : "kelas"}`;
+      }
+
+      if (jenisLomba === "TALENT_SHOW") {
+        return `namaAnggotaStms.${index}`;
+      }
+    }
+
+    if (path === "anggota") {
+      return jenisLomba === "LCC_SD" ? "anggotaLcc" : "namaAnggotaStms";
+    }
+
+    if (path === "namaSekolah") return "namaSekolah";
+    if (path === "alamatSekolah") return "alamatSekolah";
+    if (path === "namaGuruPendamping") return "namaGuruPendamping";
+    if (path === "jenisBakat") return "jenisBakat";
+
+    return directMappings[path] ?? path;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (loading) return;
@@ -277,51 +335,7 @@ export default function Registration() {
 
         for (const issue of validation.error.issues) {
           const path = issue.path.map(String).join(".");
-          let uiPath = path;
-
-          // Mapping error schema ke nama field pada UI.
-          if (path === "kelas" && formData.jenisLomba === "TALENT_SHOW") {
-            uiPath = "kelasStms";
-          } else if (path === "kelas" && formData.jenisLomba === "MEWARNAI") {
-            uiPath = "kelasMewarnai";
-          } else if (path === "jumlahAnggota") {
-            uiPath = "jumlahAnggotaStms";
-          } else if (path === "perlengkapan") {
-            uiPath = "alatPerlengkapan";
-          } else if (path === "menggunakanMusik") {
-            uiPath = "butuhMusik";
-          } else if (path === "whatsappPendamping") {
-            uiPath = "noWaGuru";
-          } else if (path === "asalSekolah") {
-            uiPath = "asalSekolahMewarnai";
-          } else if (path === "paketLomba") {
-            uiPath = "paketMewarnai";
-          } else if (path === "tanggalLahir" || path === "usia") {
-            uiPath = "tglLahirUsiaMewarnai";
-          } else if (path === "namaOrangTua") {
-            uiPath = "namaOrtuMewarnai";
-          } else if (path === "whatsappOrangTua") {
-            uiPath = "noWaOrtuMewarnai";
-          } else {
-            const lccMatch = path.match(
-              /^anggota\.(\d+)\.(namaLengkap|kelas)$/,
-            );
-
-            const stmsMatch = path.match(/^anggota\.(\d+)\.namaLengkap$/);
-
-            if (lccMatch && formData.jenisLomba === "LCC_SD") {
-              uiPath = `anggotaLcc.${lccMatch[1]}.${
-                lccMatch[2] === "namaLengkap" ? "nama" : "kelas"
-              }`;
-            } else if (stmsMatch && formData.jenisLomba === "TALENT_SHOW") {
-              uiPath = `namaAnggotaStms.${stmsMatch[1]}`;
-            } else if (path === "anggota") {
-              uiPath =
-                formData.jenisLomba === "LCC_SD"
-                  ? "anggotaLcc"
-                  : "namaAnggotaStms";
-            }
-          }
+          const uiPath = mapErrorPath(path, formData.jenisLomba);
 
           errors[uiPath] ??= issue.message;
         }
@@ -359,7 +373,7 @@ export default function Registration() {
 
           for (const issue of result.issues) {
             const path = issue.path.map(String).join(".");
-            errors[path] ??= issue.message;
+            errors[mapErrorPath(path, formData.jenisLomba)] ??= issue.message;
           }
 
           setFieldErrors(errors);
@@ -376,8 +390,6 @@ export default function Registration() {
           ? `Pendaftaran berhasil disimpan. ID: ${result.data.id}`
           : "Pendaftaran berhasil disimpan.",
       });
-
-      console.log("Data pendaftaran tersimpan:", result.data);
     } catch (error: unknown) {
       setResponseMsg({
         type: "error",
@@ -390,286 +402,352 @@ export default function Registration() {
       setLoading(false);
     }
   };
+
+  const renderError = (name: string) =>
+    fieldErrors[name] ? (
+      <p className="mt-1 text-sm text-red-600">{fieldErrors[name]}</p>
+    ) : null;
+
+  const renderInput = (
+    label: string,
+    name: keyof RegistrationFormData,
+    value: string,
+    placeholder: string,
+    type = "text",
+    required = true,
+  ) => (
+    <div className="w-full">
+      <label className={labelClass} htmlFor={name}>
+        {label}
+      </label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        value={value}
+        onChange={handleChange}
+        placeholder={placeholder}
+        required={required}
+        className={inputClass}
+      />
+      {renderError(name)}
+    </div>
+  );
+
+  const renderSelect = (
+    label: string,
+    name: keyof RegistrationFormData,
+    value: string,
+    options: Array<{ label: string; value: string }>,
+    required = true,
+  ) => (
+    <div className="w-full">
+      <label className={labelClass} htmlFor={name}>
+        {label}
+      </label>
+      <select
+        id={name}
+        name={name}
+        value={value}
+        onChange={handleChange}
+        required={required}
+        className={`${inputClass} cursor-pointer`}>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      {renderError(name)}
+    </div>
+  );
+
   return (
     <>
       <Navbar />
-      <div className="min-h-screen brightness-95 bg-[url(/content/regist-hero.jpg)] bg-cover bg-center min-w-screen bg-no-repeat z-0 bg-fixed">
-        <div className="min-h-screen backdrop-blur-sm p-6 flex flex-col text-center gap-14 items-center">
+
+      <div className="min-h-screen bg-[url(/content/regist-hero.jpg)] bg-cover bg-center bg-no-repeat bg-fixed">
+        <div className="min-h-screen backdrop-blur-sm p-4 md:p-6 flex flex-col text-center gap-10 items-center">
           <h1 className="mt-20 font-['Telma-Bold'] text-5xl text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3] md:text-6xl lg:text-8xl">
             Pra-Event Registration
           </h1>
 
           <form
-            className="flex flex-col gap-3 w-full max-w-2xl justify-center items-center mb-20 px-2"
+            className="flex flex-col gap-5 w-full max-w-2xl justify-center items-center mb-20 px-2"
             onSubmit={handleSubmit}>
-            {/* Notifikasi feedback */}
             {responseMsg && (
               <div
-                className={`p-3 rounded text-sm w-full ${
+                role="alert"
+                className={`p-3 rounded-xl text-sm w-full ${
                   responseMsg.type === "success"
-                    ? "bg-green-500/20 text-green-300 border border-green-500"
-                    : "bg-red-500/20 text-red-300 border border-red-500"
+                    ? "bg-green-100 text-green-800 border border-green-400"
+                    : "bg-red-100 text-red-800 border border-red-400"
                 }`}>
                 {responseMsg.text}
               </div>
             )}
 
-            {/* --- FIELD UMUM --- */}
-            <div className="text-left flex flex-col w-full">
-              <label className="w-full p-2 font-['body-medium'] text-[#00354E] text-shadow-sm font-bold">
-                Nama Lengkap / Perwakilan
+            {/* Hanya pilihan lomba yang ditampilkan di awal */}
+            <div className="w-full text-left">
+              <label className={labelClass} htmlFor="jenisLomba">
+                Pilih Jenis Pra-Event
               </label>
-              <input
-                type="text"
-                name="namaLengkap"
-                value={formData.namaLengkap}
-                onChange={handleChange}
-                required
-                placeholder="Masukkan nama lengkap"
-                className="w-full p-2.5 rounded-4xl font-['body-regular'] text-[#00354E] bg-white ring ring-[#30B5D8] shadow-lg"
-              />
-            </div>
 
-            <div className="text-left flex flex-col w-full">
-              <label className="w-full p-2 font-['body-medium'] text-[#00354E] text-shadow-sm font-bold">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="email@domain.com"
-                className="w-full p-2.5 rounded-4xl font-['body-regular'] text-[#00354E] bg-white ring ring-[#30B5D8] shadow-lg"
-              />
-            </div>
-
-            <div className="text-left flex flex-col w-full">
-              <label className="w-full p-2 font-['body-medium'] text-[#00354E] text-shadow-sm font-bold">
-                No Whatsapp
-              </label>
-              <input
-                type="text"
-                name="noWhatsapp"
-                value={formData.noWhatsapp}
-                onChange={handleChange}
-                required
-                placeholder="08xxxxxxxxxx"
-                className="w-full p-2.5 rounded-4xl font-['body-regular'] text-[#00354E] bg-white ring ring-[#30B5D8] shadow-lg"
-              />
-            </div>
-
-            <div className="text-left flex flex-col w-full">
-              <label className="w-full p-2 font-['body-medium'] text-[#00354E] text-shadow-sm font-bold">
-                Pilih Perlombaan
-              </label>
               <select
+                id="jenisLomba"
                 name="jenisLomba"
                 value={formData.jenisLomba}
-                onChange={handleChange}
-                className="w-full p-2.5 rounded-4xl font-['body-regular'] text-[#00354E] bg-white ring ring-[#30B5D8] shadow-lg cursor-pointer">
-                <option value="FUN_RUN">Fun Run 7K </option>
+                onChange={(e) =>
+                  handleJenisLombaChange(e.target.value as JenisLomba)
+                }
+                className={`${inputClass} cursor-pointer`}>
+                <option value="FUN_RUN">Fun Run 7K</option>
                 <option value="LCC_SD">Lomba Cerdas Cermat SD</option>
-                <option value="TALENT_SHOW">Smancir Talent Mini Show</option>
+                <option value="TALENT_SHOW">
+                  Smancir Talent Mini Show (STMS)
+                </option>
                 <option value="MEWARNAI">Lomba Mewarnai & Menggambar SD</option>
               </select>
             </div>
 
-            {/* --- DYNAMIC SUB-FORMS --- */}
             <AnimatePresence mode="wait">
-              {/* 2. DYNAMIC FORM: LOMBA CERDAS CERMAT SD */}
-              {formData.jenisLomba === "LCC_SD" && (
-                <motion.div
-                  key="lcc_sd"
+              {/* FUN RUN */}
+              {formData.jenisLomba === "FUN_RUN" && (
+                <motion.section
+                  key="fun-run"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="w-full flex flex-col gap-3 my-2 p-4 rounded-3xl bg-white/40 backdrop-blur-md ring ring-[#30B5D8] text-left">
-                  <h3 className="font-['body-bold'] text-[#00354E] text-sm underline decoration-[#f0ac2d]">
-                    Identitas Sekolah & Tim (LCC SD)
-                  </h3>
+                  className={sectionClass}>
+                  <h2 className={sectionTitleClass}>Data Peserta Fun Run</h2>
 
-                  <div>
-                    <label className="block text-xs font-bold text-[#00354E] p-1">
-                      Nama Sekolah
-                    </label>
-                    <input
-                      type="text"
-                      name="namaSekolah"
-                      placeholder="Contoh: SDN 1 Ciranjang"
-                      value={formData.namaSekolah}
-                      onChange={handleChange}
-                      required
-                      className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                    />
-                  </div>
+                  {renderInput(
+                    "Nama Lengkap",
+                    "namaLengkap",
+                    formData.namaLengkap,
+                    "Masukkan nama lengkap peserta",
+                  )}
 
-                  <div>
-                    <label className="block text-xs font-bold text-[#00354E] p-1">
-                      Alamat Sekolah
-                    </label>
-                    <input
-                      type="text"
-                      name="alamatSekolah"
-                      placeholder="Alamat Lengkap Sekolah"
-                      value={formData.alamatSekolah}
-                      onChange={handleChange}
-                      required
-                      className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                    />
-                  </div>
+                  {renderSelect(
+                    "Jenis Kelamin",
+                    "jenisKelamin",
+                    formData.jenisKelamin,
+                    [
+                      { label: "Pilih jenis kelamin", value: "" },
+                      { label: "Laki-laki", value: "L" },
+                      { label: "Perempuan", value: "P" },
+                    ],
+                  )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold text-[#00354E] p-1">
-                        Nama Guru Pendamping
-                      </label>
-                      <input
-                        type="text"
-                        name="namaGuruPendamping"
-                        placeholder="Nama Guru & Gelar"
-                        value={formData.namaGuruPendamping}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-[#00354E] p-1">
-                        WhatsApp Guru / Perwakilan
-                      </label>
-                      <input
-                        type="text"
-                        name="noWaGuru"
-                        placeholder="08xxxxxxxxxx"
-                        value={formData.noWaGuru}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                      />
-                    </div>
-                  </div>
+                  {renderInput(
+                    "Kontak Darurat",
+                    "kontakDarurat",
+                    formData.kontakDarurat,
+                    "Nomor keluarga atau kontak darurat",
+                  )}
 
-                  <h4 className="font-bold text-[#00354E] text-xs mt-2">
-                    Data 3 Anggota Tim LCC:
-                  </h4>
-                  {[0, 1, 2].map((idx) => (
-                    <div
-                      key={idx}
-                      className="p-3 bg-white/90 rounded-2xl ring ring-[#30B5D8]/40 flex flex-col gap-2">
-                      <span className="text-xs font-bold text-[#00354E]">
-                        {idx === 0
-                          ? "Anggota 1 (Ketua Tim)"
-                          : `Anggota ${idx + 1}`}
-                      </span>
-                      <div className="grid grid-cols-3 gap-2">
-                        <input
-                          type="text"
-                          placeholder="Nama Lengkap Anggota"
-                          required
-                          value={formData.anggotaLcc[idx]?.nama || ""}
-                          onChange={(e) =>
-                            handleAnggotaLccChange(idx, "nama", e.target.value)
-                          }
-                          className="col-span-2 p-2 rounded-xl bg-white ring ring-[#30B5D8]/50 text-xs text-[#00354E]"
-                        />
-                        <select
-                          value={formData.anggotaLcc[idx]?.kelas || "4"}
-                          onChange={(e) =>
-                            handleAnggotaLccChange(idx, "kelas", e.target.value)
-                          }
-                          className="p-2 rounded-xl bg-white ring ring-[#30B5D8]/50 text-xs text-[#00354E]">
-                          <option value="4">Kelas 4</option>
-                          <option value="5">Kelas 5</option>
-                          <option value="6">Kelas 6</option>
-                        </select>
-                      </div>
-                    </div>
-                  ))}
-                </motion.div>
+                  {renderInput(
+                    "Email",
+                    "emailFunRun",
+                    formData.emailFunRun,
+                    "email@domain.com",
+                    "email",
+                  )}
+
+                  {renderInput(
+                    "Nomor WhatsApp",
+                    "whatsappFunRun",
+                    formData.whatsappFunRun,
+                    "08xxxxxxxxxx",
+                  )}
+                </motion.section>
               )}
 
-              {/* 3. DYNAMIC FORM: SMANCIR TALENT MINI SHOW (STMS) */}
+              {/* CERDAS CERMAT */}
+              {formData.jenisLomba === "LCC_SD" && (
+                <motion.section
+                  key="cerdas-cermat"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className={sectionClass}>
+                  <h2 className={sectionTitleClass}>
+                    Identitas Sekolah & Tim Cerdas Cermat
+                  </h2>
+
+                  {renderInput(
+                    "Nama Sekolah",
+                    "namaSekolah",
+                    formData.namaSekolah,
+                    "Contoh: SDN 1 Ciranjang",
+                  )}
+
+                  {renderInput(
+                    "Alamat Sekolah",
+                    "alamatSekolah",
+                    formData.alamatSekolah,
+                    "Alamat lengkap sekolah",
+                  )}
+
+                  {renderInput(
+                    "Nama Guru Pendamping",
+                    "namaGuruPendamping",
+                    formData.namaGuruPendamping,
+                    "Nama guru dan gelar",
+                  )}
+
+                  {renderInput(
+                    "Email Guru Pendamping",
+                    "emailPendamping",
+                    formData.emailPendamping,
+                    "guru@sekolah.sch.id",
+                    "email",
+                  )}
+
+                  {renderInput(
+                    "WhatsApp Guru Pendamping",
+                    "noWaGuru",
+                    formData.noWaGuru,
+                    "08xxxxxxxxxx",
+                  )}
+
+                  <div className="w-full flex flex-col gap-3">
+                    <h3 className="font-bold text-sm text-[#00354E]">
+                      Data Tiga Anggota Tim
+                    </h3>
+
+                    {formData.anggotaLcc.map((anggota, index) => (
+                      <div
+                        key={index}
+                        className="p-3 bg-white/90 rounded-2xl ring ring-[#30B5D8]/40 flex flex-col gap-2">
+                        <span className="text-xs font-bold text-[#00354E]">
+                          Anggota {index + 1}
+                        </span>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                          <div className="sm:col-span-2">
+                            <input
+                              type="text"
+                              value={anggota.nama}
+                              onChange={(e) =>
+                                handleAnggotaLccChange(
+                                  index,
+                                  "nama",
+                                  e.target.value,
+                                )
+                              }
+                              placeholder="Nama lengkap anggota"
+                              required
+                              className={inputClass}
+                            />
+                            {renderError(`anggotaLcc.${index}.nama`)}
+                          </div>
+
+                          <div>
+                            <select
+                              value={anggota.kelas}
+                              onChange={(e) =>
+                                handleAnggotaLccChange(
+                                  index,
+                                  "kelas",
+                                  e.target.value,
+                                )
+                              }
+                              className={inputClass}>
+                              <option value="4">Kelas 4</option>
+                              <option value="5">Kelas 5</option>
+                              <option value="6">Kelas 6</option>
+                            </select>
+                            {renderError(`anggotaLcc.${index}.kelas`)}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+
+                    {renderError("anggotaLcc")}
+                  </div>
+                </motion.section>
+              )}
+
+              {/* STMS */}
               {formData.jenisLomba === "TALENT_SHOW" && (
-                <motion.div
+                <motion.section
                   key="stms"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="w-full flex flex-col gap-3 my-2 p-4 rounded-3xl bg-white/40 backdrop-blur-md ring ring-[#30B5D8] text-left">
-                  <h3 className="font-['body-bold'] text-[#00354E] text-sm underline decoration-[#f0ac2d]">
-                    Detail Pendaftaran STMS (Mini Show)
-                  </h3>
+                  className={sectionClass}>
+                  <h2 className={sectionTitleClass}>Data Pendaftaran STMS</h2>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold text-[#00354E] p-1">
-                        Kelas Peserta
-                      </label>
-                      <input
-                        type="text"
-                        name="kelasStms"
-                        placeholder="Contoh: XII-F2A"
-                        value={formData.kelasStms}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold text-[#00354E] p-1">
-                        Jenis Bakat
-                      </label>
-                      <input
-                        type="text"
-                        name="jenisBakat"
-                        placeholder="Contoh: Band / Tari / Vocal"
-                        value={formData.jenisBakat}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                      />
-                    </div>
+                  {renderInput(
+                    "Nama Perwakilan / Peserta Utama",
+                    "namaPerwakilan",
+                    formData.namaPerwakilan,
+                    "Nama lengkap perwakilan",
+                  )}
+
+                  {renderInput(
+                    "Email Perwakilan",
+                    "emailStms",
+                    formData.emailStms,
+                    "email@domain.com",
+                    "email",
+                  )}
+
+                  {renderInput(
+                    "WhatsApp Perwakilan",
+                    "whatsappStms",
+                    formData.whatsappStms,
+                    "08xxxxxxxxxx",
+                  )}
+
+                  {renderInput(
+                    "Kelas",
+                    "kelasStms",
+                    formData.kelasStms,
+                    "Contoh: XII-F2A",
+                  )}
+
+                  {renderInput(
+                    "Jenis Bakat",
+                    "jenisBakat",
+                    formData.jenisBakat,
+                    "Contoh: Band, tari, vokal",
+                  )}
+
+                  <div>
+                    <label className={labelClass} htmlFor="jumlahAnggotaStms">
+                      Jumlah Total Anggota
+                    </label>
+                    <input
+                      id="jumlahAnggotaStms"
+                      type="number"
+                      min={1}
+                      max={10}
+                      value={formData.jumlahAnggotaStms}
+                      onChange={(e) =>
+                        handleJumlahAnggotaStmsChange(Number(e.target.value))
+                      }
+                      required
+                      className={inputClass}
+                    />
+                    <p className="text-xs text-gray-600 mt-1">
+                      Termasuk perwakilan. Total anggota 1–10 orang.
+                    </p>
+                    {renderError("jumlahAnggotaStms")}
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold text-[#00354E] p-1">
-                        Jumlah Anggota (Jika Kelompok)
-                      </label>
-                      <input
-                        id="jumlahAnggotaStms"
-                        name="jumlahAnggotaStms"
-                        type="number"
-                        min={1}
-                        max={10}
-                        value={formData.jumlahAnggotaStms}
-                        onChange={(e) =>
-                          handleJumlahAnggotaStmsChange(
-                            Number(e.target.value) || 1,
-                          )
-                        }
-                        required
-                        className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                      />
-                      {fieldErrors.jumlahAnggotaStms && (
-                        <p className="text-sm text-red-500">
-                          {fieldErrors.jumlahAnggotaStms}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex flex-col gap-2 mt-1">
-                      <label className="text-xs font-bold text-[#00354E]">
-                        Nama Anggota Kelompok (Opsional 1-9):
-                      </label>
-                      <p className="text-sm text-gray-500">
-                        Peserta yang mendaftar dihitung sebagai anggota pertama.
-                        Isi nama anggota lainnya di bawah.
-                      </p>
+                  {formData.namaAnggotaStms.length > 0 && (
+                    <div className="flex flex-col gap-3">
+                      <h3 className="font-bold text-sm text-[#00354E]">
+                        Nama Anggota Tambahan
+                      </h3>
+
                       {formData.namaAnggotaStms.map((nama, index) => (
                         <div key={index}>
-                          <label htmlFor={`anggota-stms-${index}`}>
+                          <label
+                            className={labelClass}
+                            htmlFor={`anggota-stms-${index}`}>
                             Anggota {index + 2}
                           </label>
 
@@ -682,174 +760,153 @@ export default function Registration() {
                             }
                             placeholder={`Nama anggota ${index + 2}`}
                             required
-                            className="w-full rounded-lg border p-3"
+                            className={inputClass}
                           />
 
-                          {fieldErrors[`namaAnggotaStms.${index}`] && (
-                            <p className="text-sm text-red-500">
-                              {fieldErrors[`namaAnggotaStms.${index}`]}
-                            </p>
-                          )}
+                          {renderError(`namaAnggotaStms.${index}`)}
                         </div>
                       ))}
                     </div>
-                    <div>
-                      <label className="block text-xs font-bold text-[#00354E] p-1">
-                        Musik Pengiring?
-                      </label>
-                      <select
-                        name="butuhMusik"
-                        value={formData.butuhMusik}
-                        onChange={handleChange}
-                        className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]">
-                        <option value="Tidak">Tidak Membutuhkan</option>
-                        <option value="Ya">Ya, Membutuhkan</option>
-                      </select>
-                    </div>
-                  </div>
+                  )}
+
+                  {renderSelect(
+                    "Apakah Membutuhkan Musik Pengiring?",
+                    "butuhMusik",
+                    formData.butuhMusik,
+                    [
+                      { label: "Tidak membutuhkan", value: "Tidak" },
+                      { label: "Ya, membutuhkan", value: "Ya" },
+                    ],
+                  )}
 
                   <div>
-                    <label className="block text-xs font-bold text-[#00354E] p-1">
+                    <label className={labelClass} htmlFor="alatPerlengkapan">
                       Alat / Perlengkapan yang Dibutuhkan
                     </label>
                     <textarea
+                      id="alatPerlengkapan"
                       name="alatPerlengkapan"
-                      rows={2}
-                      placeholder="Contoh: 2 Stand Mic, 1 Cable Jack Gitar"
+                      rows={3}
                       value={formData.alatPerlengkapan}
                       onChange={handleChange}
-                      className="w-full p-2.5 rounded-2xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
+                      placeholder="Contoh: 2 stand mic, kabel jack gitar"
+                      className={inputClass}
                     />
+                    {renderError("alatPerlengkapan")}
                   </div>
-                </motion.div>
+                </motion.section>
               )}
 
-              {/* 4. DYNAMIC FORM: LOMBA MEWARNAI & MENGGAMBAR SD */}
+              {/* MEWARNAI */}
               {formData.jenisLomba === "MEWARNAI" && (
-                <motion.div
+                <motion.section
                   key="mewarnai"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="w-full flex flex-col gap-3 my-2 p-4 rounded-3xl bg-white/40 backdrop-blur-md ring ring-[#30B5D8] text-left">
-                  <h3 className="font-['body-bold'] text-[#00354E] text-sm underline decoration-[#f0ac2d]">
-                    Detail Khusus Lomba Mewarnai & Menggambar SD
-                  </h3>
+                  className={sectionClass}>
+                  <h2 className={sectionTitleClass}>
+                    Data Peserta Mewarnai & Menggambar
+                  </h2>
 
-                  <div>
-                    <label className="block text-xs font-bold text-[#00354E] p-1">
-                      Pilihan Paket Lomba
-                    </label>
-                    <select
-                      name="paketMewarnai"
-                      value={formData.paketMewarnai}
-                      onChange={handleChange}
-                      required
-                      className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]">
-                      <option value="PAKET_A">
-                        Paket A — Kelas 1–3 SD (Mewarnai)
-                      </option>
-                      <option value="PAKET_B">
-                        Paket B — Kelas 4–6 SD (Mewarnai & Menggambar)
-                      </option>
-                    </select>
+                  {renderInput(
+                    "Nama Lengkap Anak",
+                    "namaPeserta",
+                    formData.namaPeserta,
+                    "Nama lengkap peserta",
+                  )}
+
+                  {renderInput(
+                    "Asal Sekolah",
+                    "asalSekolahMewarnai",
+                    formData.asalSekolahMewarnai,
+                    "Contoh: SDN 1 Ciranjang",
+                  )}
+
+                  {renderSelect(
+                    "Paket Lomba",
+                    "paketMewarnai",
+                    formData.paketMewarnai,
+                    [
+                      {
+                        label: "Paket A — Kelas 1–3 SD (Mewarnai)",
+                        value: "PAKET_A",
+                      },
+                      {
+                        label: "Paket B — Kelas 4–6 SD (Mewarnai & Menggambar)",
+                        value: "PAKET_B",
+                      },
+                    ],
+                  )}
+
+                  {renderSelect(
+                    "Kelas",
+                    "kelasMewarnai",
+                    formData.kelasMewarnai,
+                    [
+                      { label: "Pilih kelas", value: "" },
+                      { label: "Kelas 1", value: "1" },
+                      { label: "Kelas 2", value: "2" },
+                      { label: "Kelas 3", value: "3" },
+                      { label: "Kelas 4", value: "4" },
+                      { label: "Kelas 5", value: "5" },
+                      { label: "Kelas 6", value: "6" },
+                    ],
+                  )}
+
+                  {renderInput(
+                    "Usia Anak",
+                    "usiaMewarnai",
+                    formData.usiaMewarnai,
+                    "Contoh: 8",
+                    "number",
+                  )}
+
+                  <p className="text-xs text-gray-600 -mt-2">
+                    Masukkan usia dalam tahun, misalnya 8.
+                  </p>
+
+                  <div className="border-t border-[#30B5D8]/50 pt-4 flex flex-col gap-4">
+                    <h3 className="font-bold text-sm text-[#00354E]">
+                      Data Orang Tua / Wali
+                    </h3>
+
+                    {renderInput(
+                      "Nama Orang Tua / Wali",
+                      "namaOrtuMewarnai",
+                      formData.namaOrtuMewarnai,
+                      "Nama lengkap orang tua/wali",
+                    )}
+
+                    {renderInput(
+                      "WhatsApp Orang Tua / Wali",
+                      "noWaOrtuMewarnai",
+                      formData.noWaOrtuMewarnai,
+                      "08xxxxxxxxxx",
+                    )}
+
+                    {renderInput(
+                      "Email Orang Tua / Wali",
+                      "emailOrtuMewarnai",
+                      formData.emailOrtuMewarnai,
+                      "orangtua@domain.com",
+                      "email",
+                    )}
                   </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold text-[#00354E] p-1">
-                        Asal Sekolah
-                      </label>
-                      <input
-                        type="text"
-                        name="asalSekolahMewarnai"
-                        placeholder="Contoh: SDN 1 Ciranjang"
-                        value={formData.asalSekolahMewarnai}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold text-[#00354E] p-1">
-                        Kelas
-                      </label>
-                      <select
-                        name="kelasMewarnai"
-                        value={formData.kelasMewarnai}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]">
-                        <option value="KELAS_1">1</option>
-                        <option value="KELAS_2">2</option>
-                        <option value="KELAS_3">3</option>
-                        <option value="KELAS_4">4</option>
-                        <option value="KELAS_5">5</option>
-                        <option value="KELAS_6">6</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-[#00354E] p-1">
-                      Usia
-                    </label>
-                    <input
-                      type="text"
-                      name="tglLahirUsiaMewarnai"
-                      placeholder="Contoh: 8"
-                      value={formData.tglLahirUsiaMewarnai}
-                      onChange={handleChange}
-                      required
-                      className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold text-[#00354E] p-1">
-                        Nama Orang Tua / Wali
-                      </label>
-                      <input
-                        type="text"
-                        name="namaOrtuMewarnai"
-                        placeholder="Nama Lengkap Orang Tua / Wali"
-                        value={formData.namaOrtuMewarnai}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold text-[#00354E] p-1">
-                        No. WhatsApp Orang Tua / Wali
-                      </label>
-                      <input
-                        type="text"
-                        name="noWaOrtuMewarnai"
-                        placeholder="08xxxxxxxxxx"
-                        value={formData.noWaOrtuMewarnai}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-sm text-[#00354E]"
-                      />
-                    </div>
-                  </div>
-                </motion.div>
+                </motion.section>
               )}
             </AnimatePresence>
 
             <button
               type="submit"
               disabled={loading}
-              className="mt-5 font-['body-bold'] bg-[#00354E] shadow-lg w-48 h-12 text-center p-2 text-white rounded-full transition-all hover:bg-[#002538] disabled:opacity-50 cursor-pointer">
+              className="mt-2 font-['body-bold'] bg-[#00354E] shadow-lg w-48 min-h-12 text-center p-3 text-white rounded-full transition-all hover:bg-[#002538] disabled:opacity-50 disabled:cursor-not-allowed">
               {loading ? "Memproses..." : "Daftar Sekarang"}
             </button>
           </form>
         </div>
       </div>
+
       <Footer />
     </>
   );

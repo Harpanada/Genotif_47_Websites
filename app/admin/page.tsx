@@ -25,9 +25,9 @@ export default async function AdminDashboardPage() {
 
   const stats = [
     {
-      title: "Total Peserta",
+      title: "Total Registrasi",
       value: data.totalPeserta,
-      description: "Jumlah data pada tabel Peserta",
+      description: "Jumlah pendaftaran individu dan tim",
       accent: "#30B5D8",
     },
     {
@@ -102,10 +102,10 @@ export default async function AdminDashboardPage() {
                       <tr key={item.id} className="hover:bg-slate-50">
                         <td className="px-6 py-4">
                           <p className="font-semibold text-slate-800">
-                            {item.peserta?.namaLengkap ?? "—"}
+                            {item.namaPeserta}
                           </p>
                           <p className="mt-1 text-xs text-slate-500">
-                            {item.peserta?.email ?? "—"}
+                            {item.email}
                           </p>
                         </td>
 

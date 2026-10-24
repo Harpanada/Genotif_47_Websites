@@ -1,87 +1,86 @@
+// use prisma-8
+model DataLomba {
+  id         String   @id
+  jenisLomba String
+  statusBayar String  @default("PENDING")
+  orderId    String   @unique @default(uuid())
+  paymentUrl String?
 
- // use prisma-8
+  funRun         DetailFunRun?
+  stms           DetailSTMS?
+  cerdasCermat   DetailCerdasCermat?
+  mewarnai       DetailMewarnai?
 
-model Peserta {
-  id          String     @id @default(uuid())
-  namaLengkap String
-  email       String     @unique
-  noWhatsapp  String
-
-  lomba       DataLomba?
+  createdAt DateTime @default(now())
 }
 
-model DataLomba {
-  id          String   @id @default(uuid())
-  jenisLomba  String
-  statusBayar String   @default("PENDING")
+model DetailFunRun {
+  id            String   @id
+  namaLengkap   String
+  jenisKelamin  String
+  kontakDarurat String
+  email         String
+  noWhatsapp    String
 
-  orderId     String   @unique @default(uuid())
-  paymentUrl  String?
-
-  pesertaId   String   @unique
-  peserta     Peserta  @relation(fields: [pesertaId], references: [id])
-
-  detailSTMS         DetailSTMS?
-  detailCerdasCermat DetailCerdasCermat?
-  detailMewarnai     DetailMewarnai?
+  dataLombaId String    @unique
+  dataLomba   DataLomba @relation(fields: [dataLombaId], references: [id], onDelete: Cascade)
 }
 
 model DetailSTMS {
-  id               String   @id @default(uuid())
-  kelas            String
-  jenisBakat       String
-  jumlahAnggota    Int
-  perlengkapan     String?
-  menggunakanMusik Boolean  @default(false)
+  id                 String   @id
+  namaPerwakilan     String
+  kelas              String
+  jenisBakat         String
+  jumlahAnggota      Int
+  perlengkapan       String?
+  noWhatsapp         String
+  email              String
+  menggunakanMusik   Boolean  @default(false)
 
-  dataLombaId      String    @unique
-  dataLomba        DataLomba @relation(fields: [dataLombaId], references: [id])
-
-  anggota          AnggotaSTMS[]
+  dataLombaId String    @unique
+  dataLomba   DataLomba @relation(fields: [dataLombaId], references: [id], onDelete: Cascade)
+  anggota     AnggotaSTMS[]
 }
 
 model AnggotaSTMS {
-  id           String     @id @default(uuid())
+  id           String     @id
   namaLengkap  String
-
   detailSTMSId String
-  detailSTMS   DetailSTMS @relation(fields: [detailSTMSId], references: [id])
+  detailSTMS   DetailSTMS @relation(fields: [detailSTMSId], references: [id], onDelete: Cascade)
 }
 
 model DetailCerdasCermat {
-  id                 String   @id @default(uuid())
-  namaSekolah        String
-  alamatSekolah      String
+  id                String   @id
+  namaSekolah       String
+  alamatSekolah     String
   namaGuruPendamping String
+  emailPendamping   String
   whatsappPendamping String
 
-  dataLombaId        String    @unique
-  dataLomba          DataLomba @relation(fields: [dataLombaId], references: [id])
-
-  anggota            AnggotaCerdasCermat[]
+  dataLombaId String    @unique
+  dataLomba   DataLomba @relation(fields: [dataLombaId], references: [id], onDelete: Cascade)
+  anggota     AnggotaCerdasCermat[]
 }
 
 model AnggotaCerdasCermat {
-  id                   String   @id @default(uuid())
+  id                   String             @id
   namaLengkap          String
   kelas                String
-  jabatan              String
-
   detailCerdasCermatId String
-  detailCerdasCermat   DetailCerdasCermat
-    @relation(fields: [detailCerdasCermatId], references: [id])
+  detailCerdasCermat   DetailCerdasCermat @relation(fields: [detailCerdasCermatId], references: [id], onDelete: Cascade)
 }
 
 model DetailMewarnai {
-  id               String   @id @default(uuid())
-  asalSekolah      String
-  kelas            String
-  tanggalLahir     DateTime?
-  usia             Int?
-  paketLomba       String
-  namaOrangTua     String
+  id             String   @id
+  namaPeserta    String
+  asalSekolah    String
+  kelas          Int
+  usia           Int
+  namaOrangTua   String
   whatsappOrangTua String
+  emailOrangTua  String
+  paketLomba     String
 
-  dataLombaId      String    @unique
-  dataLomba        DataLomba @relation(fields: [dataLombaId], references: [id])
+  dataLombaId String    @unique
+  dataLomba   DataLomba @relation(fields: [dataLombaId], references: [id], onDelete: Cascade)
 }
