@@ -13,6 +13,8 @@ export interface RegistrationFormData {
   namaLengkap: string;
   email: string;
   noWhatsapp: string;
+  jenisKelamin: "L" | "P";
+  kontakDarurat: string;
   jenisLomba: "FUN_RUN" | "LCC_SD" | "TALENT_SHOW" | "MEWARNAI";
 
   // STMS
@@ -74,6 +76,8 @@ export default function Registration() {
     namaLengkap: "",
     email: "",
     noWhatsapp: "",
+    jenisKelamin: "L",
+    kontakDarurat: "",
     jenisLomba: "FUN_RUN",
 
     kelasStms: "",
@@ -211,6 +215,8 @@ export default function Registration() {
         return {
           ...common,
           jenisLomba: "FUN_RUN" as const,
+          jenisKelamin: formData.jenisKelamin,
+          kontakDarurat: formData.kontakDarurat.trim(),
         };
 
       case "LCC_SD":
@@ -220,6 +226,7 @@ export default function Registration() {
           namaSekolah: formData.namaSekolah.trim(),
           alamatSekolah: formData.alamatSekolah.trim(),
           namaGuruPendamping: formData.namaGuruPendamping.trim(),
+          emailPendamping: formData.email.trim(),
           whatsappPendamping: formData.noWaGuru.trim(),
           anggota: formData.anggotaLcc.map((anggota) => ({
             namaLengkap: anggota.nama.trim(),
@@ -254,6 +261,7 @@ export default function Registration() {
           ...tanggalUsia,
           paketLomba: formData.paketMewarnai,
           namaOrangTua: formData.namaOrtuMewarnai.trim(),
+          emailOrangTua: formData.email.trim(),
           whatsappOrangTua: formData.noWaOrtuMewarnai.trim(),
         };
       }
@@ -475,6 +483,19 @@ export default function Registration() {
                 <option value="MEWARNAI">Lomba Mewarnai & Menggambar SD</option>
               </select>
             </div>
+
+            {formData.jenisLomba === "FUN_RUN" && (
+              <motion.div key="fun-run" className="w-full flex flex-col gap-3 p-4 rounded-3xl bg-white/40 ring ring-[#30B5D8] text-left">
+                <h3 className="font-bold text-[#00354E]">Data Fun Run</h3>
+                <label className="text-sm font-bold text-[#00354E]">Jenis Kelamin</label>
+                <select name="jenisKelamin" value={formData.jenisKelamin} onChange={handleChange} required className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-[#00354E]">
+                  <option value="L">Laki-laki</option><option value="P">Perempuan</option>
+                </select>
+                <label className="text-sm font-bold text-[#00354E]">Nomor WhatsApp Kontak Darurat</label>
+                <input name="kontakDarurat" value={formData.kontakDarurat} onChange={handleChange} required placeholder="08xxxxxxxxxx" className="w-full p-2.5 rounded-4xl bg-white ring ring-[#30B5D8] text-[#00354E]" />
+                {fieldErrors.kontakDarurat && <p className="text-sm text-red-500">{fieldErrors.kontakDarurat}</p>}
+              </motion.div>
+            )}
 
             {/* --- DYNAMIC SUB-FORMS --- */}
             <AnimatePresence mode="wait">
