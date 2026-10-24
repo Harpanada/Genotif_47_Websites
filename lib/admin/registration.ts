@@ -1,144 +1,68 @@
 import { db } from "@/src/prisma/db";
 
+type Member = { namaLengkap: string; kelas?: string; jabatan?: string };
+
 export async function getAdminDashboardData() {
-  const [peserta, pendaftaran] = await Promise.all([
-    db.orm.public.Peserta.where({}).all(),
-    db.orm.public.DataLomba.where({}).include("peserta").all(),
-  ]);
-
-  const normalizedStatuses = pendaftaran.map((item) =>
-    String(item.statusBayar ?? "UNKNOWN").toUpperCase(),
-  );
-
-  const totalPending = normalizedStatuses.filter(
-    (status) => status === "PENDING",
-  ).length;
-
-  const totalPaid = normalizedStatuses.filter(
-    (status) => status === "SETTLEMENT" || status === "CAPTURE",
-  ).length;
-
-  const jenisLombaAktif = new Set(pendaftaran.map((item) => item.jenisLomba))
-    .size;
-
+  const pendaftaran = await db.orm.public.DataLomba.where({}).all();
+  const statuses = pendaftaran.map(item => String(item.statusBayar ?? "UNKNOWN").toUpperCase());
   return {
-    totalPeserta: peserta.length,
+    totalPeserta: pendaftaran.length,
     totalPendaftaran: pendaftaran.length,
-    totalPending,
-    totalPaid,
-    jenisLombaAktif,
+    totalPending: statuses.filter(status => status === "PENDING").length,
+    totalPaid: statuses.filter(status => status === "SETTLEMENT" || status === "CAPTURE").length,
+    jenisLombaAktif: new Set(pendaftaran.map(item => item.jenisLomba)).size,
     pendaftaran: pendaftaran.slice(0, 8),
   };
 }
 
 export async function getAdminRegistrations() {
-  const pendaftaran = await db.orm.public.DataLomba.where({})
-    .include("peserta")
-    .all();
-
-  return pendaftaran.map((item) => ({
-    id: item.id,
-    namaLengkap: item.peserta?.namaLengkap ?? "—",
-    email: item.peserta?.email ?? "—",
-    noWhatsapp: item.peserta?.noWhatsapp ?? "—",
-    jenisLomba: String(item.jenisLomba),
-    orderId: String(item.orderId),
-    statusBayar: String(item.statusBayar ?? "PENDING").toUpperCase(),
+  const pendaftaran = await db.orm.public.DataLomba.where({}).all();
+  return Promise.all(pendaftaran.map(async item => {
+    const jenisLomba = String(item.jenisLomba);
+    let namaLengkap = "—", email = "—", noWhatsapp = "—";
+    if (jenisLomba === "FUN_RUN") {
+      const d = await db.orm.public.DetailFunRun.where({dataLombaId:item.id}).first();
+      if (d) { namaLengkap = d.namaLengkap; email = d.email; noWhatsapp = d.noWhatsapp; }
+    } else if (jenisLomba === "STMS") {
+      const d = await db.orm.public.DetailSTMS.where({dataLombaId:item.id}).first();
+      if (d) namaLengkap = d.namaPerwakilan;
+    } else if (jenisLomba === "CERDAS_CERMAT") {
+      const d = await db.orm.public.DetailCerdasCermat.where({dataLombaId:item.id}).first();
+      if (d) { namaLengkap = d.namaSekolah; email = d.emailPendamping; noWhatsapp = d.whatsappPendamping; }
+    } else if (jenisLomba === "MEWARNAI") {
+      const d = await db.orm.public.DetailMewarnai.where({dataLombaId:item.id}).first();
+      if (d) { namaLengkap = d.namaPeserta; email = d.emailOrangTua; noWhatsapp = d.whatsappOrangTua; }
+    }
+    return { id:item.id, namaLengkap, email, noWhatsapp, jenisLomba, orderId:String(item.orderId), statusBayar:String(item.statusBayar ?? "PENDING").toUpperCase() };
   }));
 }
 
 export async function getAdminRegistrationDetail(id: string) {
-  const pendaftaran = await db.orm.public.DataLomba.where({ id })
-    .include("peserta")
-    .first();
-
-  if (!pendaftaran) {
-    return null;
-  }
-
+  const pendaftaran = await db.orm.public.DataLomba.where({id}).first();
+  if (!pendaftaran) return null;
   const jenisLomba = String(pendaftaran.jenisLomba);
   let detail: Record<string, string | number | boolean | null> | null = null;
-  let anggota: Array<{
-    namaLengkap: string;
-    kelas?: string;
-    jabatan?: string;
-  }> = [];
+  let anggota: Member[] = [];
 
-  if (jenisLomba === "STMS" || jenisLomba === "TALENT_SHOW") {
-    const result = await db.orm.public.DetailSTMS.where({
-      dataLombaId: pendaftaran.id,
-    }).first();
-
-    if (result) {
-      detail = {
-        jenisBakat: result.jenisBakat,
-        jumlahAnggota: result.jumlahAnggota,
-        kelas: result.kelas,
-        menggunakanMusik: result.menggunakanMusik,
-        perlengkapan: result.perlengkapan,
-      };
-
-      const members = await db.orm.public.AnggotaSTMS.where({
-        detailSTMSId: result.id,
-      }).all();
-
-      anggota = members.map((member) => ({
-        namaLengkap: member.namaLengkap,
-      }));
+  if (jenisLomba === "FUN_RUN") {
+    const d = await db.orm.public.DetailFunRun.where({dataLombaId: id}).first();
+    if (d) detail = { namaLengkap:d.namaLengkap, jenisKelamin:d.jenisKelamin, kontakDarurat:d.kontakDarurat, email:d.email, noWhatsapp:d.noWhatsapp };
+  } else if (jenisLomba === "STMS") {
+    const d = await db.orm.public.DetailSTMS.where({dataLombaId:id}).first();
+    if (d) {
+      detail = { namaPerwakilan:d.namaPerwakilan, kelas:d.kelas, jenisBakat:d.jenisBakat, jumlahAnggota:d.jumlahAnggota, menggunakanMusik:d.menggunakanMusik, perlengkapan:d.perlengkapan };
+      anggota = (await db.orm.public.AnggotaSTMS.where({detailSTMSId:d.id}).all()).map(m=>({namaLengkap:m.namaLengkap}));
     }
-  } else if (jenisLomba === "LCC_SD" || jenisLomba === "CERDAS_CERMAT") {
-    const result = await db.orm.public.DetailCerdasCermat.where({
-      dataLombaId: pendaftaran.id,
-    }).first();
-
-    if (result) {
-      detail = {
-        namaSekolah: result.namaSekolah,
-        alamatSekolah: result.alamatSekolah,
-        namaGuruPendamping: result.namaGuruPendamping,
-        whatsappPendamping: result.whatsappPendamping,
-      };
-
-      const members = await db.orm.public.AnggotaCerdasCermat.where({
-        detailCerdasCermatId: result.id,
-      }).all();
-
-      anggota = members.map((member) => ({
-        namaLengkap: member.namaLengkap,
-        kelas: member.kelas,
-        jabatan: member.jabatan,
-      }));
+  } else if (jenisLomba === "CERDAS_CERMAT") {
+    const d = await db.orm.public.DetailCerdasCermat.where({dataLombaId:id}).first();
+    if (d) {
+      detail = { namaSekolah:d.namaSekolah, alamatSekolah:d.alamatSekolah, namaGuruPendamping:d.namaGuruPendamping, emailPendamping:d.emailPendamping, whatsappPendamping:d.whatsappPendamping };
+      anggota = (await db.orm.public.AnggotaCerdasCermat.where({detailCerdasCermatId:d.id}).all()).map(m=>({namaLengkap:m.namaLengkap,kelas:m.kelas}));
     }
   } else if (jenisLomba === "MEWARNAI") {
-    const result = await db.orm.public.DetailMewarnai.where({
-      dataLombaId: pendaftaran.id,
-    }).first();
-
-    if (result) {
-      detail = {
-        asalSekolah: result.asalSekolah,
-        kelas: result.kelas,
-        namaOrangTua: result.namaOrangTua,
-        paketLomba: result.paketLomba,
-        whatsappOrangTua: result.whatsappOrangTua,
-        tanggalLahir: result.tanggalLahir ? String(result.tanggalLahir) : null,
-        usia: result.usia,
-      };
-    }
+    const d = await db.orm.public.DetailMewarnai.where({dataLombaId:id}).first();
+    if (d) detail = { namaPeserta:d.namaPeserta, asalSekolah:d.asalSekolah, kelas:d.kelas, usia:d.usia, namaOrangTua:d.namaOrangTua, whatsappOrangTua:d.whatsappOrangTua, emailOrangTua:d.emailOrangTua, paketLomba:d.paketLomba };
   }
 
-  return {
-    id: pendaftaran.id,
-    jenisLomba,
-    orderId: String(pendaftaran.orderId),
-    statusBayar: String(pendaftaran.statusBayar ?? "PENDING").toUpperCase(),
-    paymentUrl: pendaftaran.paymentUrl ?? null,
-    peserta: {
-      namaLengkap: pendaftaran.peserta?.namaLengkap ?? "—",
-      email: pendaftaran.peserta?.email ?? "—",
-      noWhatsapp: pendaftaran.peserta?.noWhatsapp ?? "—",
-    },
-    detail,
-    anggota,
-  };
+  return { id:pendaftaran.id, jenisLomba, orderId:String(pendaftaran.orderId), statusBayar:String(pendaftaran.statusBayar ?? "PENDING").toUpperCase(), paymentUrl:pendaftaran.paymentUrl ?? null, detail, anggota };
 }
