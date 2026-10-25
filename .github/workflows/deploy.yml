@@ -92,7 +92,7 @@ jobs:
             printf "ADMIN_PASSWORD_HASH='%s'\n" "$ADMIN_PASSWORD_HASH"
             printf "AUTH_SECRET='%s'\n" "$AUTH_SECRET"
             printf "MIDTRANS_SERVER_KEY='%s'\n" "$MIDTRANS_SERVER_KEY"
-            printf "NEXT_PUBLIC_MIDTRANS_CLIENT_KEY='%s'\n' "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
+            printf "NEXT_PUBLIC_MIDTRANS_CLIENT_KEY='%s'\n" "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
             printf "MIDTRANS_IS_PRODUCTION='%s'\n" "$MIDTRANS_IS_PRODUCTION"
           } > .env
 
