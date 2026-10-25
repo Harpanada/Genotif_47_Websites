@@ -2,6 +2,7 @@ import AdminHeader from "@/app/components/admin/AdminHeader";
 import StatCard from "@/app/components/admin/StatCard";
 import PaymentStatusBadge from "@/app/components/admin/PaymentStatusBadge";
 import { getAdminDashboardData } from "@/lib/admin/registration";
+import { formatTanggal } from "@/lib/format-date";
 import AdminAutoRefresh from "@/app/components/admin/AdminAutoRefresh";
 import AdminNavbar from "@/app/components/admin/AdminSidebar";
 
@@ -93,6 +94,8 @@ export default async function AdminDashboardPage() {
                       <th className="px-6 py-4">Nama Peserta</th>
                       <th className="px-6 py-4">Jenis Lomba</th>
                       <th className="px-6 py-4">Order ID</th>
+                      <th className="px-6 py-4">Regist ID</th>
+                      <th className="px-6 py-4">Waktu Pendaftaran</th>
                       <th className="px-6 py-4">Status Pembayaran</th>
                     </tr>
                   </thead>
@@ -115,6 +118,12 @@ export default async function AdminDashboardPage() {
 
                         <td className="px-6 py-4 font-mono text-xs text-slate-500">
                           {item.orderId}
+                        </td>
+                        <td className="px-6 py-4 font-mono text-xs text-slate-500">
+                          {item.id}
+                        </td>
+                        <td className="px-6 py-4 font-mono text-xs text-slate-500">
+                          {formatTanggal(item.createdAt)}
                         </td>
 
                         <td className="px-6 py-4">

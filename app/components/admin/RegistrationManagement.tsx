@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { formatTanggal } from "@/lib/format-date";
 
 type Registration = {
   id: string;
@@ -10,6 +11,7 @@ type Registration = {
   jenisLomba: string;
   orderId: string;
   statusBayar: string;
+  createdAt: string;
 };
 
 type RegistrationManagementProps = {
@@ -171,6 +173,8 @@ export default function RegistrationManagement({
                 <th className="px-5 py-4">Jenis Lomba</th>
                 <th className="px-5 py-4">WhatsApp</th>
                 <th className="px-5 py-4">Order ID</th>
+                <th className="px-5 py-4">Reg ID</th>
+                <th className="px-5 py-4">Waktu Pendaftaran</th>
                 <th className="px-5 py-4">Status Pembayaran</th>
                 <th className="px-5 py-4">Aksi</th>
               </tr>
@@ -198,6 +202,12 @@ export default function RegistrationManagement({
                     {item.orderId}
                   </td>
 
+                  <td className="px-5 py-4 font-mono text-xs text-slate-500">
+                    {item.id}
+                  </td>
+                  <td className="px-5 py-4 font-mono text-xs text-slate-500">
+                    {formatTanggal(item.createdAt)}
+                  </td>
                   <td className="px-5 py-4">
                     <span
                       className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${getStatusStyle(item.statusBayar)}`}>

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
 import AdminHeader from "@/app/components/admin/AdminHeader";
 import PaymentStatusBadge from "@/app/components/admin/PaymentStatusBadge";
 import { getAdminRegistrationDetail } from "@/lib/admin/registration";
@@ -11,29 +10,26 @@ type PageProps = {
 
 const lombaLabels: Record<string, string> = {
   FUN_RUN: "Fun Run 7K",
-  LCC_SD: "LCC SD",
   CERDAS_CERMAT: "Cerdas Cermat",
-  TALENT_SHOW: "Talent Show",
-  STMS: "STMS",
+  STMS: "Talent Show (STMS)",
   MEWARNAI: "Mewarnai",
 };
 
 function formatLabel(key: string) {
   const labels: Record<string, string> = {
+    jenisKelamin: "Jenis Kelamin",
+    kontakDarurat: "Kontak Darurat",
+    kelas: "Kelas",
     jenisBakat: "Jenis Bakat",
     jumlahAnggota: "Jumlah Anggota",
-    kelas: "Kelas",
     menggunakanMusik: "Menggunakan Musik",
     perlengkapan: "Perlengkapan",
     namaSekolah: "Nama Sekolah",
     alamatSekolah: "Alamat Sekolah",
     namaGuruPendamping: "Guru Pendamping",
-    whatsappPendamping: "WhatsApp Pendamping",
     asalSekolah: "Asal Sekolah",
     namaOrangTua: "Nama Orang Tua",
     paketLomba: "Paket Lomba",
-    whatsappOrangTua: "WhatsApp Orang Tua",
-    tanggalLahir: "Tanggal Lahir",
     usia: "Usia",
   };
 
@@ -76,6 +72,8 @@ export default async function PendaftaranDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const labelLomba = lombaLabels[data.jenisLomba] ?? data.jenisLomba;
+
   return (
     <>
       <AdminHeader
@@ -90,27 +88,28 @@ export default async function PendaftaranDetailPage({ params }: PageProps) {
           ← Kembali ke semua pendaftaran
         </Link>
 
-        {/* Data peserta */}
+        {/* Data pendaftar */}
         <section className="rounded-2xl border border-slate-200 bg-white p-6">
           <div className="mb-5">
-            <p className="text-sm text-slate-500">Peserta terdaftar</p>
+            <p className="text-sm text-slate-500">Pendaftar</p>
             <h2 className="mt-1 text-xl font-bold text-[#00354E]">
               {data.peserta.namaLengkap}
             </h2>
-            <p className="mt-1 text-sm text-slate-500">
-              {lombaLabels[data.jenisLomba] ?? data.jenisLomba}
+            <p className="mt-1 text-sm text-slate-500">{labelLomba}</p>
+            <p className="mt-2 break-all font-mono text-xs text-slate-400">
+              ID Registrasi: {data.id}
             </p>
           </div>
 
           <InfoGrid
             data={{
               Email: data.peserta.email,
-              "Nomor WhatsApp": data.peserta.noWhatsapp,
+              NomorWhatsApp: data.peserta.noWhatsapp,
             }}
           />
         </section>
 
-        {/* Informasi transaksi */}
+        {/* Informasi pembayaran */}
         <section className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="mb-5 text-lg font-bold text-[#00354E]">
             Informasi Pembayaran
@@ -136,20 +135,20 @@ export default async function PendaftaranDetailPage({ params }: PageProps) {
             <a
               href={data.paymentUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="mt-5 inline-flex rounded-xl bg-[#00354E] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#00516F]">
               Buka Halaman Pembayaran ↗
             </a>
           )}
         </section>
 
-        {/* Detail khusus lomba */}
+        {/* Detail sesuai jenis lomba */}
         <section className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="mb-5 text-lg font-bold text-[#00354E]">
-            Detail {lombaLabels[data.jenisLomba] ?? data.jenisLomba}
+            Detail {labelLomba}
           </h2>
 
-          {data.detail ? (
+          {data.detail && Object.keys(data.detail).length > 0 ? (
             <InfoGrid data={data.detail} />
           ) : (
             <p className="text-sm text-slate-500">
@@ -162,26 +161,26 @@ export default async function PendaftaranDetailPage({ params }: PageProps) {
               <h3 className="mb-3 font-semibold text-slate-800">Anggota Tim</h3>
 
               <div className="overflow-x-auto rounded-xl border border-slate-200">
-                <table className="w-full text-left text-sm">
+                <table className="w-full min-w-120 text-left text-sm">
                   <thead className="bg-slate-50 text-slate-500">
                     <tr>
+                      <th className="px-4 py-3">ID Anggota</th>
                       <th className="px-4 py-3">Nama</th>
                       <th className="px-4 py-3">Kelas</th>
-                      <th className="px-4 py-3">Jabatan</th>
                     </tr>
                   </thead>
 
                   <tbody className="divide-y divide-slate-100">
-                    {data.anggota.map((member, index) => (
-                      <tr key={`${member.namaLengkap}-${index}`}>
+                    {data.anggota.map((member) => (
+                      <tr key={member.id}>
+                        <td className="px-4 py-3 font-mono text-xs text-slate-500">
+                          {member.id}
+                        </td>
                         <td className="px-4 py-3 font-medium text-slate-800">
                           {member.namaLengkap}
                         </td>
                         <td className="px-4 py-3 text-slate-600">
                           {member.kelas ?? "—"}
-                        </td>
-                        <td className="px-4 py-3 text-slate-600">
-                          {member.jabatan ?? "—"}
                         </td>
                       </tr>
                     ))}

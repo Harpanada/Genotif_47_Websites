@@ -58,7 +58,6 @@ export async function POST(req: Request) {
       statusBayar: "PENDING",
       orderId: randomUUID(),
       paymentUrl: null,
-      createdAt: Temporal.Now.instant(),
     });
 
     const detailId = formatDetailId(registrationId);

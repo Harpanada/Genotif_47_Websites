@@ -194,6 +194,7 @@ export async function getAdminRegistrations() {
         jenisLomba: String(item.jenisLomba),
         orderId: String(item.orderId),
         statusBayar: normalizeStatus(item.statusBayar),
+        createdAt: item.createdAt.toString(),
       };
     }),
   );
@@ -202,23 +203,27 @@ export async function getAdminRegistrations() {
 }
 
 export async function getAdminRegistrationDetail(id: string) {
+  // 1. Ambil data registrasi utama berdasarkan DataLomba.id
   const pendaftaran = await db.orm.public.DataLomba.where({ id }).first();
 
   if (!pendaftaran) return null;
 
   const jenisLomba = String(pendaftaran.jenisLomba);
 
-  let detail: Record<string, string | number | boolean | null> | null = null;
-
-  let anggota: Array<{
-    namaLengkap: string;
-    kelas?: string;
-  }> = [];
-
+  // 2. Data umum pendaftar dan detail lomba
   let namaPeserta = "—";
   let email = "—";
   let noWhatsapp = "—";
 
+  let detail: Record<string, string | number | boolean | null> | null = null;
+
+  let anggota: Array<{
+    id: string;
+    namaLengkap: string;
+    kelas?: string;
+  }> = [];
+
+  // 3. Ambil detail sesuai jenis lomba
   switch (jenisLomba) {
     case "FUN_RUN": {
       const result = await db.orm.public.DetailFunRun.where({
@@ -246,21 +251,24 @@ export async function getAdminRegistrationDetail(id: string) {
 
       if (result) {
         namaPeserta = result.namaPerwakilan;
+        email = result.email;
         noWhatsapp = result.noWhatsapp;
 
         detail = {
           kelas: result.kelas,
           jenisBakat: result.jenisBakat,
           jumlahAnggota: result.jumlahAnggota,
-          menggunakanMusik: result.menggunakanMusik,
           perlengkapan: result.perlengkapan,
+          menggunakanMusik: result.menggunakanMusik,
         };
 
+        // Anggota terhubung ke DetailSTMS, bukan langsung ke DataLomba
         const members = await db.orm.public.AnggotaSTMS.where({
           detailSTMSId: result.id,
         }).all();
 
         anggota = members.map((member) => ({
+          id: member.id,
           namaLengkap: member.namaLengkap,
         }));
       }
@@ -283,11 +291,13 @@ export async function getAdminRegistrationDetail(id: string) {
           namaGuruPendamping: result.namaGuruPendamping,
         };
 
+        // Anggota terhubung ke DetailCerdasCermat
         const members = await db.orm.public.AnggotaCerdasCermat.where({
           detailCerdasCermatId: result.id,
         }).all();
 
         anggota = members.map((member) => ({
+          id: member.id,
           namaLengkap: member.namaLengkap,
           kelas: member.kelas,
         }));
@@ -319,17 +329,20 @@ export async function getAdminRegistrationDetail(id: string) {
     }
   }
 
+  // 4. Kembalikan data dalam struktur yang digunakan page.tsx
   return {
     id: pendaftaran.id,
     jenisLomba,
     orderId: String(pendaftaran.orderId),
     statusBayar: normalizeStatus(pendaftaran.statusBayar),
     paymentUrl: pendaftaran.paymentUrl ?? null,
+
     peserta: {
       namaLengkap: namaPeserta,
       email,
       noWhatsapp,
     },
+
     detail,
     anggota,
   };
