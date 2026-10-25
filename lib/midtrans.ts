@@ -2,6 +2,12 @@ import "server-only";
 import midtransClient from "midtrans-client";
 
 export type SnapParameters = {
+  item_details?: {
+    id: string;
+    price: number;
+    quantity: number;
+    name: string;
+  }[];
   transaction_details: {
     order_id: string;
     gross_amount: number;

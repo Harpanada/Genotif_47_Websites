@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
-import { createSnapTransaction, snap } from "@/lib/midtrans";
+import { createSnapTransaction } from "@/lib/midtrans";
 import { getHargaLomba } from "@/lib/pra-event/price";
 import type { RegistrationInput } from "@/lib/validations/register";
 import {
@@ -179,13 +179,33 @@ export async function POST(req: Request) {
       }
     }
 
-    const grossAmount = getHargaLomba(newLomba.jenisLomba);
+    const ADMIN_FEE_PERCENT = 2;
 
+    function calculateAdminFee(basePrice: number): number {
+      return Math.round((basePrice * ADMIN_FEE_PERCENT) / 100);
+    }
+
+    const basePrice = getHargaLomba(newLomba.jenisLomba);
+    const adminFee = calculateAdminFee(basePrice);
     const transaction = await createSnapTransaction({
       transaction_details: {
         order_id: newLomba.orderId,
-        gross_amount: grossAmount,
+        gross_amount: basePrice + adminFee,
       },
+      item_details: [
+        {
+          id: `registration-${newLomba.jenisLomba}`,
+          price: basePrice,
+          quantity: 1,
+          name: `Biaya Pendaftaran ${newLomba.jenisLomba}`,
+        },
+        {
+          id: "admin-fee",
+          price: adminFee,
+          quantity: 1,
+          name: "Biaya Administrasi (2%)",
+        },
+      ],
       customer_details: getCustomerDetails(data),
     });
 
