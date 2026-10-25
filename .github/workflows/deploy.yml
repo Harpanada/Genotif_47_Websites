@@ -1,13 +1,70 @@
+# name: Deploy NextJS App
+
+# on:
+#   push:
+#     branches:
+#       - main # Atau 'master', sesuaikan dengan branch utama repo kamu
+
+# jobs:
+#   deploy:
+#     runs-on: self-hosted # Menggunakan runner lokal di server kamu
+
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v4
+
+#       - name: Create .env file
+#         env:
+#           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+#           DIRECT_URL: ${{ secrets.DIRECT_URL }}
+#           ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+#           ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
+#           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+#           MIDTRANS_SERVER_KEY: ${{ secrets.MIDTRANS_SERVER_KEY }}
+#           NEXT_PUBLIC_MIDTRANS_CLIENT_KEY: ${{ secrets.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY }}
+#           MIDTRANS_IS_PRODUCTION: ${{ secrets.MIDTRANS_IS_PRODUCTION }}
+
+#         shell: bash
+#         run: |
+#           set -eu
+#           umask 077
+
+#           {
+#             printf "DATABASE_URL='%s'\n" "$DATABASE_URL"
+#             printf "DIRECT_URL='%s'\n" "$DIRECT_URL"
+#             printf "ADMIN_USERNAME='%s'\n" "$ADMIN_USERNAME"
+#             printf "ADMIN_PASSWORD_HASH='%s'\n" "$ADMIN_PASSWORD_HASH"
+#             printf "AUTH_SECRET='%s'\n" "$AUTH_SECRET"
+#             printf "MIDTRANS_SERVER_KEY='%s'\n" "$MIDTRANS_SERVER_KEY"
+#             printf "NEXT_PUBLIC_MIDTRANS_CLIENT_KEY='%s'\n" "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
+#             printf "MIDTRANS_IS_PRODUCTION='%s'\n" "$MIDTRANS_IS_PRODUCTION"
+#           } > .env
+
+#           test -s .env
+
+#       - name: Deploy with Docker Compose
+#         run: |
+#           # 1. Reset file lokal server agar selalu sesuai commit terbaru
+#           git fetch --all
+#           git reset --hard origin/main
+
+#           # 2. Build ulang container tanpa cache agar perubahan ter-apply bersih
+#           docker compose build --no-cache
+
+#           # 3. Restart container Next.js
+#           docker compose down
+#           docker compose up -d
+
 name: Deploy NextJS App
 
 on:
   push:
     branches:
-      - main # Atau 'master', sesuaikan dengan branch utama repo kamu
+      - main
 
 jobs:
   deploy:
-    runs-on: self-hosted # Menggunakan runner lokal di server kamu
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Repository
@@ -23,7 +80,6 @@ jobs:
           MIDTRANS_SERVER_KEY: ${{ secrets.MIDTRANS_SERVER_KEY }}
           NEXT_PUBLIC_MIDTRANS_CLIENT_KEY: ${{ secrets.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY }}
           MIDTRANS_IS_PRODUCTION: ${{ secrets.MIDTRANS_IS_PRODUCTION }}
-
         shell: bash
         run: |
           set -eu
@@ -36,21 +92,21 @@ jobs:
             printf "ADMIN_PASSWORD_HASH='%s'\n" "$ADMIN_PASSWORD_HASH"
             printf "AUTH_SECRET='%s'\n" "$AUTH_SECRET"
             printf "MIDTRANS_SERVER_KEY='%s'\n" "$MIDTRANS_SERVER_KEY"
-            printf "NEXT_PUBLIC_MIDTRANS_CLIENT_KEY='%s'\n" "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
+            printf "NEXT_PUBLIC_MIDTRANS_CLIENT_KEY='%s'\n' "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
             printf "MIDTRANS_IS_PRODUCTION='%s'\n" "$MIDTRANS_IS_PRODUCTION"
           } > .env
 
           test -s .env
+          test -n "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
 
-      - name: Deploy with Docker Compose
+      - name: Build and Deploy
+        env:
+          NEXT_PUBLIC_MIDTRANS_CLIENT_KEY: ${{ secrets.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY }}
+        shell: bash
         run: |
-          # 1. Reset file lokal server agar selalu sesuai commit terbaru
-          git fetch --all
-          git reset --hard origin/main
+          set -eu
 
-          # 2. Build ulang container tanpa cache agar perubahan ter-apply bersih
-          docker compose build --no-cache
+          docker compose build --no-cache \
+            --build-arg NEXT_PUBLIC_MIDTRANS_CLIENT_KEY="$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
 
-          # 3. Restart container Next.js
-          docker compose down
-          docker compose up -d
+          docker compose up -d --force-recreate
