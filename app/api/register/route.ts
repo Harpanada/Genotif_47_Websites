@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
+import { createSnapTransaction, snap } from "@/lib/midtrans";
+import { getHargaLomba } from "@/lib/pra-event/price";
+import type { RegistrationInput } from "@/lib/validations/register";
 import {
   generateRegistrationId,
   formatDetailId,
@@ -144,12 +147,55 @@ export async function POST(req: Request) {
       }
     }
 
+    function getCustomerDetails(data: RegistrationInput) {
+      switch (data.jenisLomba) {
+        case "FUN_RUN":
+          return {
+            first_name: data.namaLengkap,
+            email: data.email,
+            phone: data.noWhatsapp,
+          };
+
+        case "STMS":
+          return {
+            first_name: data.namaPerwakilan,
+            email: data.email,
+            phone: data.noWhatsapp,
+          };
+
+        case "CERDAS_CERMAT":
+          return {
+            first_name: data.namaGuruPendamping,
+            email: data.emailPendamping,
+            phone: data.whatsappPendamping,
+          };
+
+        case "MEWARNAI":
+          return {
+            first_name: data.namaPeserta,
+            email: data.emailOrangTua,
+            phone: data.whatsappOrangTua,
+          };
+      }
+    }
+
+    const grossAmount = getHargaLomba(newLomba.jenisLomba);
+
+    const transaction = await createSnapTransaction({
+      transaction_details: {
+        order_id: newLomba.orderId,
+        gross_amount: grossAmount,
+      },
+      customer_details: getCustomerDetails(data),
+    });
+
     return NextResponse.json(
       {
         success: true,
         message: "Registrasi berhasil disimpan.",
         data: {
           lomba: newLomba,
+          token: transaction.token,
         },
       },
       { status: 201 },

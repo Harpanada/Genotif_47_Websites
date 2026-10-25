@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/app/components/global/Navbar";
+import SnapProvider from "@/app/components/payment/SnapProvider";
 import Footer from "@/app/components/global/Footer";
 import { registrationSchema } from "@/lib/validations/register";
 import { useState } from "react";
@@ -317,7 +318,36 @@ export default function Registration() {
     return directMappings[path] ?? path;
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function openSnapPayment(token: string) {
+    if (!window.snap) {
+      throw new Error("Sistem pembayaran belum siap. Silakan coba lagi.");
+    }
+
+    window.snap.pay(token, {
+      onSuccess: (result) => {
+        console.log("Pembayaran berhasil diproses:", result);
+        alert(
+          "Pembayaran berhasil diproses. Status akhir akan dikonfirmasi oleh sistem.",
+        );
+      },
+
+      onPending: (result) => {
+        console.log("Pembayaran menunggu:", result);
+        alert("Pembayaran masih menunggu penyelesaian.");
+      },
+
+      onError: (result) => {
+        console.error("Pembayaran gagal:", result);
+        alert("Pembayaran gagal diproses. Silakan coba kembali.");
+      },
+
+      onClose: () => {
+        console.log("Popup pembayaran ditutup.");
+      },
+    });
+  }
+
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (loading) return;
@@ -360,7 +390,14 @@ export default function Registration() {
       const result: {
         message?: string;
         error?: string;
-        data?: { id?: string };
+        data?: {
+          id?: string;
+          token?: string;
+          lomba?: {
+            id: string;
+            orderId: string;
+          };
+        };
         issues?: Array<{
           path: (string | number)[];
           message: string;
@@ -384,11 +421,21 @@ export default function Registration() {
         );
       }
 
+      const token = result.data?.token;
+
+      if (typeof token !== "string" || !token) {
+        throw new Error(
+          "Pendaftaran tersimpan, tetapi token pembayaran tidak ditemukan.",
+        );
+      }
+
+      await openSnapPayment(token);
+
       setResponseMsg({
         type: "success",
-        text: result.data?.id
-          ? `Pendaftaran berhasil disimpan. ID: ${result.data.id}`
-          : "Pendaftaran berhasil disimpan.",
+        text: result.data?.lomba?.id
+          ? `Pendaftaran berhasil dibuat. ID: ${result.data.lomba.id}. Silakan selesaikan pembayaran melalui Snap.`
+          : "Pendaftaran berhasil dibuat. Silakan selesaikan pembayaran melalui Snap.",
       });
     } catch (error: unknown) {
       setResponseMsg({
@@ -464,8 +511,8 @@ export default function Registration() {
 
   return (
     <>
+      <SnapProvider />
       <Navbar />
-
       <div className="min-h-screen bg-[url(/content/regist-hero.jpg)] bg-cover bg-center bg-no-repeat bg-fixed">
         <div className="min-h-screen backdrop-blur-sm p-4 md:p-6 flex flex-col text-center gap-10 items-center">
           <h1 className="mt-20 font-['Telma-Bold'] text-5xl text-[#f0ac2d] text-shadow-lg text-shadow-[#f7edd3] md:text-6xl lg:text-8xl">
