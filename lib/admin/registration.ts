@@ -95,7 +95,7 @@ export async function getAdminDashboardData() {
   ).length;
 
   const totalPaid = normalizedStatuses.filter(
-    (status) => status === "SETTLEMENT" || status === "CAPTURE",
+    (status) => status === "PAID",
   ).length;
 
   const jenisLombaAktif = new Set(pendaftaran.map((item) => item.jenisLomba))
