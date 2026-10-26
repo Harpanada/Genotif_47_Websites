@@ -186,11 +186,11 @@ export async function POST(req: Request) {
     }
 
     const basePrice = getHargaLomba(newLomba.jenisLomba);
-    const adminFee = calculateAdminFee(basePrice);
+    // const adminFee = calculateAdminFee(basePrice);
     const transaction = await createSnapTransaction({
       transaction_details: {
         order_id: newLomba.orderId,
-        gross_amount: basePrice + adminFee,
+        gross_amount: basePrice,
       },
       item_details: [
         {
@@ -199,12 +199,12 @@ export async function POST(req: Request) {
           quantity: 1,
           name: `Biaya Pendaftaran ${newLomba.jenisLomba}`,
         },
-        {
-          id: "admin-fee",
-          price: adminFee,
-          quantity: 1,
-          name: "Biaya Administrasi (2%)",
-        },
+        // {
+        //   id: "admin-fee",
+        //   price: adminFee,
+        //   quantity: 1,
+        //   name: "Biaya Administrasi (2%)",
+        // },
       ],
       customer_details: getCustomerDetails(data),
     });
