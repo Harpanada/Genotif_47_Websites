@@ -4,7 +4,7 @@ import Navbar from "@/app/components/global/Navbar";
 import SnapProvider from "@/app/components/payment/SnapProvider";
 import Footer from "@/app/components/global/Footer";
 import { registrationSchema } from "@/lib/validations/register";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type JenisLomba = "FUN_RUN" | "LCC_SD" | "TALENT_SHOW" | "MEWARNAI";
@@ -111,6 +111,7 @@ export default function Registration() {
     useState<RegistrationFormData>(initialFormData);
 
   const [loading, setLoading] = useState(false);
+  const submittingRef = useRef(false);
 
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
@@ -350,7 +351,9 @@ export default function Registration() {
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (loading) return;
+    if (submittingRef.current) return;
+
+    submittingRef.current = true;
 
     setLoading(true);
     setFieldErrors({});
@@ -429,6 +432,20 @@ export default function Registration() {
         );
       }
 
+      // Pendaftaran sudah berhasil dibuat dan token pembayaran tersedia.
+      setFormData({
+        ...initialFormData,
+        jenisLomba: formData.jenisLomba,
+      });
+
+      setFieldErrors({});
+      setResponseMsg({
+        type: "success",
+        text: "Pendaftaran berhasil dibuat. Silakan lanjutkan pembayaran melalui Snap.",
+      });
+
+      await openSnapPayment(token);
+
       await openSnapPayment(token);
 
       setResponseMsg({
@@ -446,6 +463,7 @@ export default function Registration() {
             : "Terjadi kesalahan saat mengirim data.",
       });
     } finally {
+      submittingRef.current = false;
       setLoading(false);
     }
   };
