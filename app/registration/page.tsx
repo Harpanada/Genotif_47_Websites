@@ -326,12 +326,20 @@ export default function Registration() {
 
     window.snap.pay(token, {
       onSuccess: (result) => {
-        console.log("Pembayaran berhasil diproses:", result);
-        alert(
-          "Pembayaran berhasil diproses. Status akhir akan dikonfirmasi oleh sistem.",
+        const orderId: unknown = result.order_id;
+
+        if (typeof orderId !== "string" || !orderId.trim()) {
+          setResponseMsg({
+            type: "error",
+            text: "Pembayaran diproses, tetapi ID transaksi tidak ditemukan. Silakan hubungi panitia.",
+          });
+          return;
+        }
+
+        window.location.assign(
+          `/payment/confirmation?order_id=${encodeURIComponent(orderId)}`,
         );
       },
-
       onPending: (result) => {
         console.log("Pembayaran menunggu:", result);
         alert("Pembayaran masih menunggu penyelesaian.");
@@ -443,8 +451,6 @@ export default function Registration() {
         type: "success",
         text: "Pendaftaran berhasil dibuat. Silakan lanjutkan pembayaran melalui Snap.",
       });
-
-      await openSnapPayment(token);
 
       await openSnapPayment(token);
 
