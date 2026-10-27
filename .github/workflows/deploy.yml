@@ -99,11 +99,6 @@ jobs:
             printf "MIDTRANS_SERVER_KEY='%s'\n" "$MIDTRANS_SERVER_KEY"
             printf "NEXT_PUBLIC_MIDTRANS_CLIENT_KEY='%s'\n" "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
             printf "MIDTRANS_IS_PRODUCTION='%s'\n" "$MIDTRANS_IS_PRODUCTION"
-            printf "FONNTE_TOKEN='%s'\n" "$FONNTE_TOKEN"
-            printf "FONNTE_GROUP_FUN_RUN='%s'\n" "$FONNTE_GROUP_FUN_RUN"
-            printf "FONNTE_GROUP_STMS='%s'\n" "$FONNTE_GROUP_STMS"
-            printf "FONNTE_GROUP_CERDAS_CERMAT='%s'\n" "$FONNTE_GROUP_CERDAS_CERMAT"
-            printf "FONNTE_GROUP_MEWARNAI='%s'\n" "$FONNTE_GROUP_MEWARNAI"
           } > .env
 
           test -s .env
