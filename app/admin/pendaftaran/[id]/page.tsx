@@ -130,7 +130,7 @@ export default async function PendaftaranDetailPage({ params }: PageProps) {
               </dd>
             </div>
           </dl>
-
+          {/* 
           {data.paymentUrl && (
             <a
               href={data.paymentUrl}
@@ -139,7 +139,7 @@ export default async function PendaftaranDetailPage({ params }: PageProps) {
               className="mt-5 inline-flex rounded-xl bg-[#00354E] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#00516F]">
               Buka Halaman Pembayaran ↗
             </a>
-          )}
+          )} */}
         </section>
 
         {/* Detail sesuai jenis lomba */}
