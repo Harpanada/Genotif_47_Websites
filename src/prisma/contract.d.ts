@@ -18,7 +18,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'b9cf89ff90ce82a500024d7d9816cfd1512f0dc0f60bae15f5332dc1559badd1'>;
+  StorageHashBase<'62bfcba91801f58fcaefe1c99936c1ee9703805bb81ba31e25d36fb38d18e13f'>;
 export type ExecutionHash =
   ExecutionHashBase<'6a03bd6b3718ecc1a90d1716b3119ea07b463f3f2ec0f6cae24ac9c1630d5be8'>;
 export type ProfileHash =
@@ -250,7 +250,7 @@ export type FieldOutputTypes = {
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly jenisLomba: CodecTypes['pg/text@1']['output'];
       readonly orderId: CodecTypes['pg/text@1']['output'];
-      readonly paymentUrl: CodecTypes['pg/text@1']['output'] | null;
+      readonly snapToken: CodecTypes['pg/text@1']['output'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['output'];
     };
     readonly DetailCerdasCermat: {
@@ -315,7 +315,7 @@ export type FieldInputTypes = {
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly jenisLomba: CodecTypes['pg/text@1']['input'];
       readonly orderId: CodecTypes['pg/text@1']['input'];
-      readonly paymentUrl: CodecTypes['pg/text@1']['input'] | null;
+      readonly snapToken: CodecTypes['pg/text@1']['input'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['input'];
     };
     readonly DetailCerdasCermat: {
@@ -380,7 +380,7 @@ export type StorageColumnTypes = {
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly jenisLomba: CodecTypes['pg/text@1']['output'];
       readonly orderId: CodecTypes['pg/text@1']['output'];
-      readonly paymentUrl: CodecTypes['pg/text@1']['output'] | null;
+      readonly snapToken: CodecTypes['pg/text@1']['output'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['output'];
     };
     readonly DetailCerdasCermat: {
@@ -445,7 +445,7 @@ export type StorageColumnInputTypes = {
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly jenisLomba: CodecTypes['pg/text@1']['input'];
       readonly orderId: CodecTypes['pg/text@1']['input'];
-      readonly paymentUrl: CodecTypes['pg/text@1']['input'] | null;
+      readonly snapToken: CodecTypes['pg/text@1']['input'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['input'];
     };
     readonly DetailCerdasCermat: {
@@ -514,7 +514,7 @@ export namespace Models {
     id: CodecTypes['pg/text@1']['output'];
     jenisLomba: CodecTypes['pg/text@1']['output'];
     orderId: CodecTypes['pg/text@1']['output'];
-    paymentUrl: CodecTypes['pg/text@1']['output'] | null;
+    snapToken: CodecTypes['pg/text@1']['output'] | null;
     statusBayar: CodecTypes['pg/text@1']['output'];
     cerdasCermat: public_DetailCerdasCermat | null;
     funRun: public_DetailFunRun | null;
@@ -731,7 +731,7 @@ type ContractBase = Omit<
                   readonly nullable: false;
                   readonly many: false;
                 };
-                readonly paymentUrl: {
+                readonly snapToken: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: true;
@@ -1190,7 +1190,7 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
-              readonly paymentUrl: {
+              readonly snapToken: {
                 readonly nullable: true;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
@@ -1257,7 +1257,7 @@ type ContractBase = Omit<
                 readonly id: { readonly column: 'id' };
                 readonly jenisLomba: { readonly column: 'jenisLomba' };
                 readonly orderId: { readonly column: 'orderId' };
-                readonly paymentUrl: { readonly column: 'paymentUrl' };
+                readonly snapToken: { readonly column: 'snapToken' };
                 readonly statusBayar: { readonly column: 'statusBayar' };
               };
             };

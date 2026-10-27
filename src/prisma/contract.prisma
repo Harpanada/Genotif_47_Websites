@@ -4,14 +4,15 @@ model DataLomba {
   jenisLomba String
   statusBayar String  @default("PENDING")
   orderId    String   @unique @default(uuid())
-  paymentUrl String?
+  snapToken String?
+  createdAt DateTime @default(now())
 
   funRun         DetailFunRun?
   stms           DetailSTMS?
   cerdasCermat   DetailCerdasCermat?
   mewarnai       DetailMewarnai?
 
-  createdAt DateTime @default(now())
+ 
 }
 
 model DetailFunRun {

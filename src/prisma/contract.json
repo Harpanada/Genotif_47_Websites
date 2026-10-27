@@ -193,7 +193,7 @@
                   "kind": "scalar"
                 }
               },
-              "paymentUrl": {
+              "snapToken": {
                 "nullable": true,
                 "type": {
                   "codecId": "pg/text@1",
@@ -288,8 +288,8 @@
                 "orderId": {
                   "column": "orderId"
                 },
-                "paymentUrl": {
-                  "column": "paymentUrl"
+                "snapToken": {
+                  "column": "snapToken"
                 },
                 "statusBayar": {
                   "column": "statusBayar"
@@ -935,7 +935,7 @@
                   "dataType": "pg/text",
                   "nullable": false
                 },
-                "paymentUrl": {
+                "snapToken": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
                   "nullable": true
@@ -1309,7 +1309,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "b9cf89ff90ce82a500024d7d9816cfd1512f0dc0f60bae15f5332dc1559badd1"
+    "storageHash": "62bfcba91801f58fcaefe1c99936c1ee9703805bb81ba31e25d36fb38d18e13f"
   },
   "execution": {
     "executionHash": "6a03bd6b3718ecc1a90d1716b3119ea07b463f3f2ec0f6cae24ac9c1630d5be8",

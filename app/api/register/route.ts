@@ -11,27 +11,6 @@ import {
 import { registrationSchema } from "@/lib/validations/register";
 import { db } from "@/src/prisma/db";
 
-type JenisLomba = "FUN_RUN" | "STMS" | "CERDAS_CERMAT" | "MEWARNAI";
-
-const LOMBA_CONFIG: Record<JenisLomba, { sequence: string; prefix: string }> = {
-  FUN_RUN: {
-    sequence: "seq_pe_fun_run",
-    prefix: "G47-PEFR",
-  },
-  STMS: {
-    sequence: "seq_pe_stms",
-    prefix: "G47-PESTMS",
-  },
-  CERDAS_CERMAT: {
-    sequence: "seq_pe_lcc",
-    prefix: "G47-PELCC",
-  },
-  MEWARNAI: {
-    sequence: "seq_pe_mewarnai",
-    prefix: "G47-PEMW",
-  },
-};
-
 export async function POST(req: Request) {
   try {
     const body: unknown = await req.json();
@@ -60,7 +39,7 @@ export async function POST(req: Request) {
       jenisLomba,
       statusBayar: "PENDING",
       orderId: randomUUID(),
-      paymentUrl: null,
+      snapToken: null,
     });
 
     const detailId = formatDetailId(registrationId);
@@ -179,14 +158,7 @@ export async function POST(req: Request) {
       }
     }
 
-    const ADMIN_FEE_PERCENT = 2;
-
-    function calculateAdminFee(basePrice: number): number {
-      return Math.round((basePrice * ADMIN_FEE_PERCENT) / 100);
-    }
-
     const basePrice = getHargaLomba(newLomba.jenisLomba);
-    // const adminFee = calculateAdminFee(basePrice);
     const transaction = await createSnapTransaction({
       transaction_details: {
         order_id: newLomba.orderId,
@@ -199,22 +171,32 @@ export async function POST(req: Request) {
           quantity: 1,
           name: `Biaya Pendaftaran ${newLomba.jenisLomba}`,
         },
-        // {
-        //   id: "admin-fee",
-        //   price: adminFee,
-        //   quantity: 1,
-        //   name: "Biaya Administrasi (2%)",
-        // },
       ],
       customer_details: getCustomerDetails(data),
     });
+
+    // Simpan token Snap untuk pemulihan pembayaran.
+    const updatePlan = db.sql.public.DataLomba.update({
+      snapToken: transaction.token,
+    })
+      .where((fields, fns) => fns.eq(fields.orderId, newLomba.orderId))
+      .returning("id", "orderId", "statusBayar", "snapToken")
+      .build();
+
+    const updatedRows = await db.runtime().query(updatePlan);
+
+    if (!updatedRows.length) {
+      throw new Error("Gagal menyimpan token pembayaran.");
+    }
+
+    const updatedLomba = updatedRows[0];
 
     return NextResponse.json(
       {
         success: true,
         message: "Registrasi berhasil disimpan.",
         data: {
-          lomba: newLomba,
+          lomba: updatedLomba,
           token: transaction.token,
         },
       },
