@@ -335,7 +335,6 @@ export async function getAdminRegistrationDetail(id: string) {
     jenisLomba,
     orderId: String(pendaftaran.orderId),
     statusBayar: normalizeStatus(pendaftaran.statusBayar),
-    snapToken: pendaftaran.snapToken ?? null,
 
     peserta: {
       namaLengkap: namaPeserta,

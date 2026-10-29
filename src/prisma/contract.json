@@ -165,6 +165,13 @@
           },
           "DataLomba": {
             "fields": {
+              "checkedInAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
               "createdAt": {
                 "nullable": false,
                 "type": {
@@ -193,15 +200,15 @@
                   "kind": "scalar"
                 }
               },
-              "snapToken": {
-                "nullable": true,
+              "statusBayar": {
+                "nullable": false,
                 "type": {
                   "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               },
-              "statusBayar": {
-                "nullable": false,
+              "ticketToken": {
+                "nullable": true,
                 "type": {
                   "codecId": "pg/text@1",
                   "kind": "scalar"
@@ -276,6 +283,9 @@
             },
             "storage": {
               "fields": {
+                "checkedInAt": {
+                  "column": "checkedInAt"
+                },
                 "createdAt": {
                   "column": "createdAt"
                 },
@@ -288,11 +298,11 @@
                 "orderId": {
                   "column": "orderId"
                 },
-                "snapToken": {
-                  "column": "snapToken"
-                },
                 "statusBayar": {
                   "column": "statusBayar"
+                },
+                "ticketToken": {
+                  "column": "ticketToken"
                 }
               },
               "namespaceId": "public",
@@ -911,6 +921,11 @@
             },
             "DataLomba": {
               "columns": {
+                "checkedInAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true
+                },
                 "createdAt": {
                   "codecId": "pg/timestamptz-temporal@1",
                   "dataType": "pg/timestamptz",
@@ -935,11 +950,6 @@
                   "dataType": "pg/text",
                   "nullable": false
                 },
-                "snapToken": {
-                  "codecId": "pg/text@1",
-                  "dataType": "pg/text",
-                  "nullable": true
-                },
                 "statusBayar": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
@@ -948,6 +958,11 @@
                     "value": "PENDING"
                   },
                   "nullable": false
+                },
+                "ticketToken": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
                 }
               },
               "foreignKeys": [],
@@ -961,6 +976,11 @@
                 {
                   "columns": [
                     "orderId"
+                  ]
+                },
+                {
+                  "columns": [
+                    "ticketToken"
                   ]
                 }
               ]
@@ -1309,7 +1329,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "62bfcba91801f58fcaefe1c99936c1ee9703805bb81ba31e25d36fb38d18e13f"
+    "storageHash": "26c4a9cdfe767c5518742dcdaba378a49b34fcf77ce24feff576d20381ad2268"
   },
   "execution": {
     "executionHash": "6a03bd6b3718ecc1a90d1716b3119ea07b463f3f2ec0f6cae24ac9c1630d5be8",

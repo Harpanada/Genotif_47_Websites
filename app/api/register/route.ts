@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
-import { createSnapTransaction } from "@/lib/midtrans";
+import { createSnapTransaction } from "@/lib/validations/midtrans";
 import { getHargaLomba } from "@/lib/pra-event/price";
 import type { RegistrationInput } from "@/lib/validations/register";
 import {
   generateRegistrationId,
   formatDetailId,
   formatMemberId,
-} from "@/lib/registration-id";
+} from "@/lib/validations/registration-id";
 import { registrationSchema } from "@/lib/validations/register";
 import { db } from "@/src/prisma/db";
 
@@ -39,7 +39,6 @@ export async function POST(req: Request) {
       jenisLomba,
       statusBayar: "PENDING",
       orderId: randomUUID(),
-      snapToken: null,
     });
 
     const detailId = formatDetailId(registrationId);
@@ -175,28 +174,12 @@ export async function POST(req: Request) {
       customer_details: getCustomerDetails(data),
     });
 
-    // Simpan token Snap untuk pemulihan pembayaran.
-    const updatePlan = db.sql.public.DataLomba.update({
-      snapToken: transaction.token,
-    })
-      .where((fields, fns) => fns.eq(fields.orderId, newLomba.orderId))
-      .returning("id", "orderId", "statusBayar", "snapToken")
-      .build();
-
-    const updatedRows = await db.runtime().query(updatePlan);
-
-    if (!updatedRows.length) {
-      throw new Error("Gagal menyimpan token pembayaran.");
-    }
-
-    const updatedLomba = updatedRows[0];
-
     return NextResponse.json(
       {
         success: true,
         message: "Registrasi berhasil disimpan.",
         data: {
-          lomba: updatedLomba,
+          lomba: newLomba,
           token: transaction.token,
         },
       },

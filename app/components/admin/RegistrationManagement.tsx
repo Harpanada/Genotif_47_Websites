@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { formatTanggal } from "@/lib/format-date";
+import { formatTanggal } from "@/lib/validations/format-date";
 
 type Registration = {
   id: string;

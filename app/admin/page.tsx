@@ -2,7 +2,7 @@ import AdminHeader from "@/app/components/admin/AdminHeader";
 import StatCard from "@/app/components/admin/StatCard";
 import PaymentStatusBadge from "@/app/components/admin/PaymentStatusBadge";
 import { getAdminDashboardData } from "@/lib/admin/registration";
-import { formatTanggal } from "@/lib/format-date";
+import { formatTanggal } from "@/lib/validations/format-date";
 import AdminAutoRefresh from "@/app/components/admin/AdminAutoRefresh";
 import AdminNavbar from "@/app/components/admin/AdminSidebar";
 

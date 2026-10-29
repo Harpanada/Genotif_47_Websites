@@ -4,8 +4,11 @@ model DataLomba {
   jenisLomba String
   statusBayar String  @default("PENDING")
   orderId    String   @unique @default(uuid())
-  snapToken String?
   createdAt DateTime @default(now())
+
+// Ticketing
+  ticketToken String?   @unique
+  checkedInAt DateTime?
 
   funRun         DetailFunRun?
   stms           DetailSTMS?

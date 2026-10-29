@@ -18,7 +18,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'62bfcba91801f58fcaefe1c99936c1ee9703805bb81ba31e25d36fb38d18e13f'>;
+  StorageHashBase<'26c4a9cdfe767c5518742dcdaba378a49b34fcf77ce24feff576d20381ad2268'>;
 export type ExecutionHash =
   ExecutionHashBase<'6a03bd6b3718ecc1a90d1716b3119ea07b463f3f2ec0f6cae24ac9c1630d5be8'>;
 export type ProfileHash =
@@ -246,12 +246,13 @@ export type FieldOutputTypes = {
       readonly namaLengkap: CodecTypes['pg/text@1']['output'];
     };
     readonly DataLomba: {
+      readonly checkedInAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly jenisLomba: CodecTypes['pg/text@1']['output'];
       readonly orderId: CodecTypes['pg/text@1']['output'];
-      readonly snapToken: CodecTypes['pg/text@1']['output'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['output'];
+      readonly ticketToken: CodecTypes['pg/text@1']['output'] | null;
     };
     readonly DetailCerdasCermat: {
       readonly alamatSekolah: CodecTypes['pg/text@1']['output'];
@@ -311,12 +312,13 @@ export type FieldInputTypes = {
       readonly namaLengkap: CodecTypes['pg/text@1']['input'];
     };
     readonly DataLomba: {
+      readonly checkedInAt: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly jenisLomba: CodecTypes['pg/text@1']['input'];
       readonly orderId: CodecTypes['pg/text@1']['input'];
-      readonly snapToken: CodecTypes['pg/text@1']['input'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['input'];
+      readonly ticketToken: CodecTypes['pg/text@1']['input'] | null;
     };
     readonly DetailCerdasCermat: {
       readonly alamatSekolah: CodecTypes['pg/text@1']['input'];
@@ -376,12 +378,13 @@ export type StorageColumnTypes = {
       readonly namaLengkap: CodecTypes['pg/text@1']['output'];
     };
     readonly DataLomba: {
+      readonly checkedInAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly jenisLomba: CodecTypes['pg/text@1']['output'];
       readonly orderId: CodecTypes['pg/text@1']['output'];
-      readonly snapToken: CodecTypes['pg/text@1']['output'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['output'];
+      readonly ticketToken: CodecTypes['pg/text@1']['output'] | null;
     };
     readonly DetailCerdasCermat: {
       readonly alamatSekolah: CodecTypes['pg/text@1']['output'];
@@ -441,12 +444,13 @@ export type StorageColumnInputTypes = {
       readonly namaLengkap: CodecTypes['pg/text@1']['input'];
     };
     readonly DataLomba: {
+      readonly checkedInAt: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly jenisLomba: CodecTypes['pg/text@1']['input'];
       readonly orderId: CodecTypes['pg/text@1']['input'];
-      readonly snapToken: CodecTypes['pg/text@1']['input'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['input'];
+      readonly ticketToken: CodecTypes['pg/text@1']['input'] | null;
     };
     readonly DetailCerdasCermat: {
       readonly alamatSekolah: CodecTypes['pg/text@1']['input'];
@@ -510,12 +514,13 @@ export namespace Models {
     readonly [RelationKeys]?: 'detailSTMS';
   };
   export type public_DataLomba = {
+    checkedInAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
     createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
     id: CodecTypes['pg/text@1']['output'];
     jenisLomba: CodecTypes['pg/text@1']['output'];
     orderId: CodecTypes['pg/text@1']['output'];
-    snapToken: CodecTypes['pg/text@1']['output'] | null;
     statusBayar: CodecTypes['pg/text@1']['output'];
+    ticketToken: CodecTypes['pg/text@1']['output'] | null;
     cerdasCermat: public_DetailCerdasCermat | null;
     funRun: public_DetailFunRun | null;
     mewarnai: public_DetailMewarnai | null;
@@ -706,6 +711,12 @@ type ContractBase = Omit<
             };
             readonly DataLomba: {
               columns: {
+                readonly checkedInAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
                 readonly createdAt: {
                   readonly dataType: 'pg/timestamptz';
                   readonly codecId: 'pg/timestamptz-temporal@1';
@@ -731,12 +742,6 @@ type ContractBase = Omit<
                   readonly nullable: false;
                   readonly many: false;
                 };
-                readonly snapToken: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
-                  readonly nullable: true;
-                  readonly many: false;
-                };
                 readonly statusBayar: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
@@ -747,9 +752,18 @@ type ContractBase = Omit<
                   };
                   readonly many: false;
                 };
+                readonly ticketToken: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
               };
               primaryKey: { readonly columns: readonly ['id'] };
-              uniques: readonly [{ readonly columns: readonly ['orderId'] }];
+              uniques: readonly [
+                { readonly columns: readonly ['orderId'] },
+                { readonly columns: readonly ['ticketToken'] },
+              ];
               indexes: readonly [];
               foreignKeys: readonly [];
             };
@@ -1171,6 +1185,13 @@ type ContractBase = Omit<
           };
           readonly DataLomba: {
             readonly fields: {
+              readonly checkedInAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
+              };
               readonly createdAt: {
                 readonly nullable: false;
                 readonly type: {
@@ -1190,12 +1211,12 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
-              readonly snapToken: {
-                readonly nullable: true;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
-              };
               readonly statusBayar: {
                 readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly ticketToken: {
+                readonly nullable: true;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
             };
@@ -1253,12 +1274,13 @@ type ContractBase = Omit<
               readonly table: 'DataLomba';
               readonly namespaceId: 'public';
               readonly fields: {
+                readonly checkedInAt: { readonly column: 'checkedInAt' };
                 readonly createdAt: { readonly column: 'createdAt' };
                 readonly id: { readonly column: 'id' };
                 readonly jenisLomba: { readonly column: 'jenisLomba' };
                 readonly orderId: { readonly column: 'orderId' };
-                readonly snapToken: { readonly column: 'snapToken' };
                 readonly statusBayar: { readonly column: 'statusBayar' };
+                readonly ticketToken: { readonly column: 'ticketToken' };
               };
             };
           };
