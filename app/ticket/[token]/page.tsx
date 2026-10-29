@@ -159,11 +159,11 @@ export default async function TicketPage({ params }: TicketPageProps) {
                 height={70}
                 alt="Logo Genotif 47"
                 src="/icon/g47LogoWhitoutBr.png"
-                className="h-12 w-12 object-contain sm:h-14 sm:w-14 lg:h-[70px] lg:w-[70px]"
+                className="h-12 w-12 object-contain sm:h-14 sm:w-14 lg:h-17.5 lg:w-17.5"
                 priority
               />
 
-              <h2 className="min-w-0 break-words text-2xl font-black font-['Telma-Medium'] text-[#f0ac2d] sm:text-right sm:text-3xl lg:text-4xl">
+              <h2 className="min-w-0 wrap-break-word text-2xl font-black font-['Telma-Medium'] text-[#f0ac2d] sm:text-right sm:text-3xl lg:text-4xl">
                 {competitionNames[registration.jenisLomba] ??
                   registration.jenisLomba}
               </h2>
@@ -181,7 +181,7 @@ export default async function TicketPage({ params }: TicketPageProps) {
                     : "Nama Peserta"}
               </p>
 
-              <h3 className="mt-2 break-words text-2xl font-black font-['Telma-Medium'] sm:text-3xl lg:text-4xl">
+              <h3 className="mt-2 wrap-break-word text-2xl font-black font-['Telma-Medium'] sm:text-3xl lg:text-4xl">
                 {participantName}
               </h3>
 
@@ -202,7 +202,7 @@ export default async function TicketPage({ params }: TicketPageProps) {
                     <p className="text-sm text-slate-500 sm:text-base lg:text-lg">
                       Kategori
                     </p>
-                    <p className="mt-1 break-words text-sm font-semibold sm:text-base">
+                    <p className="mt-1 wrap-break-word text-sm font-semibold sm:text-base">
                       {category}
                     </p>
                   </div>
@@ -211,7 +211,7 @@ export default async function TicketPage({ params }: TicketPageProps) {
                     <p className="text-sm text-slate-500 sm:text-base lg:text-lg">
                       Kontak Terdaftar
                     </p>
-                    <p className="mt-1 break-words text-sm font-medium sm:text-base">
+                    <p className="mt-1 wrap-break-word text-sm font-medium sm:text-base">
                       {contact}
                     </p>
                   </div>
@@ -226,7 +226,7 @@ export default async function TicketPage({ params }: TicketPageProps) {
                     {details.map((detail, index) => (
                       <p
                         key={`${index}-${detail}`}
-                        className="break-words text-sm font-medium sm:text-base">
+                        className="wrap-break-word text-sm font-medium sm:text-base">
                         {detail}
                       </p>
                     ))}
@@ -239,7 +239,7 @@ export default async function TicketPage({ params }: TicketPageProps) {
                       Anggota Tim
                     </p>
 
-                    <ol className="list-inside list-decimal space-y-1 break-words text-sm sm:text-base">
+                    <ol className="list-inside list-decimal space-y-1 wrap-break-word text-sm sm:text-base">
                       {members.map((member, index) => (
                         <li key={`${member}-${index}`}>{member}</li>
                       ))}
@@ -263,7 +263,7 @@ export default async function TicketPage({ params }: TicketPageProps) {
                   alt="QR code tiket Genotif"
                   width={200}
                   height={200}
-                  className="h-40 w-40 sm:h-48 sm:w-48 lg:h-[200px] lg:w-[200px]"
+                  className="h-40 w-40 sm:h-48 sm:w-48 lg:h-50 lg:w-50"
                 />
               </div>
 

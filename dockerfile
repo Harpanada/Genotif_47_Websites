@@ -69,6 +69,9 @@ RUN test -n "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY" \
 RUN npx prisma contract emit
 RUN npm run build
 
+RUN test -f /app/.next/standalone/node_modules/playwright-core/browsers.json \
+    || (echo "ERROR: playwright-core/browsers.json tidak masuk standalone" && exit 1)
+
 # 3. Production image
 FROM base AS runner
 WORKDIR /app
