@@ -74,17 +74,22 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DIRECT_URL: ${{ secrets.DIRECT_URL }}
+
           ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
           ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+
           MIDTRANS_SERVER_KEY: ${{ secrets.MIDTRANS_SERVER_KEY }}
           NEXT_PUBLIC_MIDTRANS_CLIENT_KEY: ${{ secrets.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY }}
           MIDTRANS_IS_PRODUCTION: ${{ secrets.MIDTRANS_IS_PRODUCTION }}
+
           FONNTE_TOKEN: ${{ secrets.FONNTE_TOKEN }}
           FONNTE_GROUP_FUN_RUN: ${{ secrets.FONNTE_GROUP_FUN_RUN }}
           FONNTE_GROUP_STMS: ${{ secrets.FONNTE_GROUP_STMS }}
           FONNTE_GROUP_CERDAS_CERMAT: ${{ secrets.FONNTE_GROUP_CERDAS_CERMAT }}
           FONNTE_GROUP_MEWARNAI: ${{ secrets.FONNTE_GROUP_MEWARNAI }}
+
+          TICKET_PUBLIC_BASE_URL: ${{ secrets.TICKET_PUBLIC_BASE_URL }}
         shell: bash
         run: |
           set -eu
@@ -105,6 +110,9 @@ jobs:
             printf "FONNTE_GROUP_STMS='%s'\n" "$FONNTE_GROUP_STMS"
             printf "FONNTE_GROUP_CERDAS_CERMAT='%s'\n" "$FONNTE_GROUP_CERDAS_CERMAT"
             printf "FONNTE_GROUP_MEWARNAI='%s'\n" "$FONNTE_GROUP_MEWARNAI"
+
+            printf "TICKET_PUBLIC_BASE_URL='%s'\n" "$TICKET_PUBLIC_BASE_URL"
+            
           } > .env
 
           test -s .env
