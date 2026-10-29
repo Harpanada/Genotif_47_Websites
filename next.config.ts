@@ -4,10 +4,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
 
   outputFileTracingIncludes: {
-    "/api/ticket/[token]/pdf": [
-      "./node_modules/playwright-core/browsers.json",
-      "./node_modules/playwright-core/**/*",
-    ],
+    "/api/ticket/[token]/pdf": ["./node_modules/playwright-core/**"],
   },
 };
 
