@@ -435,13 +435,17 @@ export async function POST(request: NextRequest) {
           });
         }
       } catch (error) {
-        // Kegagalan WhatsApp tidak membatalkan pembayaran.
         console.error("FONNTE_SEND_ERROR:", {
           order_id,
           error,
         });
       }
     }
+
+    return NextResponse.json({
+      received: true,
+      updated: true,
+    });
   } catch (error) {
     console.error("Midtrans webhook error:", error);
 
