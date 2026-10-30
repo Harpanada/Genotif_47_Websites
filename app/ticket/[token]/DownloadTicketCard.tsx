@@ -35,17 +35,17 @@ export default function DownloadTicketCard({
       }}
       className="flex flex-col overflow-hidden rounded-xl bg-white text-[#00354E] shadow-xl ring-1 ring-slate-200">
       {/* Header tiket */}
-      <header className="flex h-[116px] shrink-0 items-center justify-between gap-8 bg-[#00354E] px-9 py-5 text-white">
+      <header className="flex h-29 shrink-0 items-center justify-between gap-8 bg-[#00354E] px-9 py-5 text-white">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           width={70}
           height={70}
           alt="Logo Genotif 47"
           src="/icon/g47LogoWhitoutBr.png"
-          className="h-[70px] w-[70px] shrink-0 object-contain"
+          className="h-17.5 w-17.5 shrink-0 object-contain"
         />
 
-        <h2 className="min-w-0 flex-1 break-words text-right font-['Telma-Medium'] text-4xl font-black text-[#f0ac2d]">
+        <h2 className="min-w-0 flex-1 wrap-break-word text-right font-['Telma-Medium'] text-4xl font-black text-[#f0ac2d]">
           {competitionName}
         </h2>
       </header>
@@ -57,7 +57,7 @@ export default function DownloadTicketCard({
             {participantLabel}
           </p>
 
-          <h3 className="mt-2 break-words font-['Telma-Medium'] text-4xl font-black">
+          <h3 className="mt-2 wrap-break-word font-['Telma-Medium'] text-4xl font-black">
             {participantName}
           </h3>
 
@@ -71,14 +71,14 @@ export default function DownloadTicketCard({
 
               <div className="min-w-0">
                 <p className="text-lg text-slate-500">Kategori</p>
-                <p className="mt-1 break-words text-base font-semibold">
+                <p className="mt-1 wrap-break-word text-base font-semibold">
                   {category}
                 </p>
               </div>
 
               <div className="min-w-0">
                 <p className="text-lg text-slate-500">Kontak Terdaftar</p>
-                <p className="mt-1 break-words text-base font-medium">
+                <p className="mt-1 wrap-break-word text-base font-medium">
                   {contact}
                 </p>
               </div>
@@ -91,7 +91,7 @@ export default function DownloadTicketCard({
                 {details.map((detail, index) => (
                   <p
                     key={`${index}-${detail}`}
-                    className="break-words text-base font-medium">
+                    className="wrap-break-word text-base font-medium">
                     {detail}
                   </p>
                 ))}
@@ -102,7 +102,7 @@ export default function DownloadTicketCard({
               <div className="flex min-w-0 flex-col gap-2 font-['body-bold']">
                 <p className="text-lg font-bold text-slate-500">Anggota Tim</p>
 
-                <ol className="list-inside list-decimal space-y-1 break-words text-base">
+                <ol className="list-inside list-decimal space-y-1 wrap-break-word text-base">
                   {members.map((member, index) => (
                     <li key={`${member}-${index}`}>{member}</li>
                   ))}
@@ -125,7 +125,7 @@ export default function DownloadTicketCard({
               alt="QR code tiket Genotif"
               width={200}
               height={200}
-              className="h-[200px] w-[200px]"
+              className="h-50 w-50"
             />
           </div>
 
@@ -133,14 +133,14 @@ export default function DownloadTicketCard({
             Scan at entrance
           </p>
 
-          <p className="max-w-[200px] font-['body-bold'] text-center text-xs leading-5 text-slate-500">
+          <p className="max-w-50 font-['body-bold'] text-center text-xs leading-5 text-slate-500">
             Tunjukkan QR ini kepada panitia.
           </p>
         </aside>
       </div>
 
       {/* Footer */}
-      <footer className="flex h-[54px] shrink-0 items-center justify-between gap-4 bg-[#00354E] px-9 text-white">
+      <footer className="flex h-13.5 shrink-0 items-center justify-between gap-4 bg-[#00354E] px-9 text-white">
         <p className="font-['body-bold'] text-xs font-bold uppercase tracking-[0.2em]">
           Fantasy Beyond The Peak
         </p>

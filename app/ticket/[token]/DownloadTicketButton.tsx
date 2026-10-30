@@ -90,7 +90,7 @@ export default function DownloadTicketButton({
         onClick={handleDownload}
         disabled={loading}
         aria-busy={loading}
-        className="inline-flex min-w-[200px] items-center justify-center gap-3 rounded-lg bg-[#00354E] px-6 py-3 font-bold text-white transition hover:bg-[#004b6b] disabled:cursor-not-allowed disabled:opacity-70">
+        className="inline-flex min-w-50 items-center justify-center gap-3 rounded-lg bg-[#00354E] px-6 py-3 font-bold text-white transition hover:bg-[#004b6b] disabled:cursor-not-allowed disabled:opacity-70">
         {loading && (
           <svg
             className="h-5 w-5 shrink-0 animate-spin"
