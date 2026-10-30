@@ -15,6 +15,14 @@ const lombaLabels: Record<string, string> = {
   MEWARNAI: "Mewarnai",
 };
 
+function formatTanggal(value: string) {
+  return new Intl.DateTimeFormat("id-ID", {
+    dateStyle: "long",
+    timeStyle: "short",
+    timeZone: "Asia/Jakarta",
+  }).format(new Date(value));
+}
+
 function formatLabel(key: string) {
   const labels: Record<string, string> = {
     jenisKelamin: "Jenis Kelamin",
@@ -130,16 +138,34 @@ export default async function PendaftaranDetailPage({ params }: PageProps) {
               </dd>
             </div>
           </dl>
-          {/* 
-          {data.paymentUrl && (
-            <a
-              href={data.paymentUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex rounded-xl bg-[#00354E] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#00516F]">
-              Buka Halaman Pembayaran ↗
-            </a>
-          )} */}
+          {/* Informasi Check-in */}
+          <section className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h2 className="mb-5 text-lg font-bold text-[#00354E]">
+              Informasi Check-in
+            </h2>
+
+            <div className="rounded-xl bg-slate-50 p-4">
+              <p className="text-sm text-slate-500">Status Check-in</p>
+
+              {data.checkedInAt ? (
+                <>
+                  <span className="mt-2 inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                    Sudah Check-in
+                  </span>
+
+                  <p className="mt-4 text-sm text-slate-500">Waktu Check-in</p>
+
+                  <p className="mt-1 font-semibold text-slate-800">
+                    {formatTanggal(data.checkedInAt)}
+                  </p>
+                </>
+              ) : (
+                <span className="mt-2 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                  Belum Check-in
+                </span>
+              )}
+            </div>
+          </section>
         </section>
 
         {/* Detail sesuai jenis lomba */}

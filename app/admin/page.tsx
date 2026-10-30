@@ -97,6 +97,8 @@ export default async function AdminDashboardPage() {
                       <th className="px-6 py-4">Regist ID</th>
                       <th className="px-6 py-4">Waktu Pendaftaran</th>
                       <th className="px-6 py-4">Status Pembayaran</th>
+                      <th className="px-5 py-4">Status Check-in</th>
+                      <th className="px-5 py-4">Waktu Check-in</th>
                     </tr>
                   </thead>
 
@@ -128,6 +130,23 @@ export default async function AdminDashboardPage() {
 
                         <td className="px-6 py-4">
                           <PaymentStatusBadge status={item.statusBayar} />
+                        </td>
+                        <td className="px-5 py-4">
+                          {item.checkedInAt ? (
+                            <span className="inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                              Sudah Check-in
+                            </span>
+                          ) : (
+                            <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                              Belum Check-in
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="px-5 py-4 text-xs text-slate-600">
+                          {item.checkedInAt
+                            ? formatTanggal(item.checkedInAt)
+                            : "—"}
                         </td>
                       </tr>
                     ))}

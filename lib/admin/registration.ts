@@ -124,6 +124,7 @@ export async function getAdminDashboardData() {
         orderId: String(item.orderId),
         statusBayar: normalizeStatus(item.statusBayar),
         createdAt: item.createdAt,
+        checkedInAt: item.checkedInAt ? item.checkedInAt.toString() : null,
       };
     }),
   );
@@ -195,6 +196,7 @@ export async function getAdminRegistrations() {
         orderId: String(item.orderId),
         statusBayar: normalizeStatus(item.statusBayar),
         createdAt: item.createdAt.toString(),
+        checkedInAt: item.checkedInAt ? item.checkedInAt.toString() : null,
       };
     }),
   );
@@ -335,6 +337,9 @@ export async function getAdminRegistrationDetail(id: string) {
     jenisLomba,
     orderId: String(pendaftaran.orderId),
     statusBayar: normalizeStatus(pendaftaran.statusBayar),
+    checkedInAt: pendaftaran.checkedInAt
+      ? pendaftaran.checkedInAt.toString()
+      : null,
 
     peserta: {
       namaLengkap: namaPeserta,

@@ -12,6 +12,7 @@ type Registration = {
   orderId: string;
   statusBayar: string;
   createdAt: string;
+  checkedInAt: string | null;
 };
 
 type RegistrationManagementProps = {
@@ -31,23 +32,70 @@ function formatJenisLomba(jenis: string) {
   return lombaLabels[jenis] ?? jenis.replaceAll("_", " ");
 }
 
+function normalizeStatus(status: string) {
+  return status.trim().toUpperCase();
+}
+
 function getStatusStyle(status: string) {
-  switch (status) {
+  switch (normalizeStatus(status)) {
+    // Berhasil
+    case "PAID":
     case "SETTLEMENT":
     case "CAPTURE":
-      return "bg-green-100 text-green-700";
+      return "bg-green-100 text-green-700 ring-1 ring-green-200";
 
+    // Menunggu pembayaran
     case "PENDING":
-      return "bg-amber-100 text-amber-700";
+    case "AUTHORIZE":
+      return "bg-amber-100 text-amber-700 ring-1 ring-amber-200";
 
-    case "EXPIRE":
-    case "CANCEL":
+    // Gagal atau dibatalkan
     case "DENY":
-      return "bg-red-100 text-red-700";
+    case "CANCEL":
+    case "EXPIRE":
+    case "FAILED":
+    case "FAILURE":
+      return "bg-red-100 text-red-700 ring-1 ring-red-200";
 
+    // Pengembalian dana
+    case "REFUND":
+    case "REFUNDED":
+    case "PARTIAL_REFUND":
+      return "bg-purple-100 text-purple-700 ring-1 ring-purple-200";
+
+    // Sengketa transaksi
+    case "CHARGEBACK":
+    case "PARTIAL_CHARGEBACK":
+      return "bg-orange-100 text-orange-700 ring-1 ring-orange-200";
+
+    // Status tidak dikenal
     default:
-      return "bg-slate-100 text-slate-600";
+      return "bg-slate-100 text-slate-600 ring-1 ring-slate-200";
   }
+}
+
+function getStatusLabel(status: string) {
+  const normalized = normalizeStatus(status);
+
+  const labels: Record<string, string> = {
+    PAID: "Lunas",
+    SETTLEMENT: "Lunas",
+    CAPTURE: "Berhasil",
+    PENDING: "Pending",
+    AUTHORIZE: "Menunggu Capture",
+    DENY: "Ditolak",
+    CANCEL: "Dibatalkan",
+    EXPIRE: "Kedaluwarsa",
+    FAILURE: "Gagal",
+    FAILED: "Gagal",
+    REFUND: "Refund",
+    REFUNDED: "Refund",
+    PARTIAL_REFUND: "Refund Sebagian",
+    CHARGEBACK: "Chargeback",
+    PARTIAL_CHARGEBACK: "Chargeback Sebagian",
+  };
+
+  return labels[normalized] ?? normalized.replaceAll("_", " ");
 }
 
 export default function RegistrationManagement({
@@ -130,7 +178,7 @@ export default function RegistrationManagement({
 
           {availableStatus.map((status) => (
             <option key={status} value={status}>
-              {status}
+              {getStatusLabel(status)}
             </option>
           ))}
         </select>
@@ -176,6 +224,8 @@ export default function RegistrationManagement({
                 <th className="px-5 py-4">Reg ID</th>
                 <th className="px-5 py-4">Waktu Pendaftaran</th>
                 <th className="px-5 py-4">Status Pembayaran</th>
+                <th className="px-5 py-4">Status Check-in</th>
+                <th className="px-5 py-4">Waktu Check-in</th>
                 <th className="px-5 py-4">Aksi</th>
               </tr>
             </thead>
@@ -210,9 +260,24 @@ export default function RegistrationManagement({
                   </td>
                   <td className="px-5 py-4">
                     <span
-                      className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${getStatusStyle(item.statusBayar)}`}>
-                      {item.statusBayar}
+                      className={`inline-flex whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ${getStatusStyle(item.statusBayar)}`}>
+                      {getStatusLabel(item.statusBayar)}
                     </span>
+                  </td>
+                  <td className="px-5 py-4">
+                    {item.checkedInAt ? (
+                      <span className="inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                        Sudah Check-in
+                      </span>
+                    ) : (
+                      <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                        Belum Check-in
+                      </span>
+                    )}
+                  </td>
+
+                  <td className="px-5 py-4 text-xs text-slate-600">
+                    {item.checkedInAt ? formatTanggal(item.checkedInAt) : "—"}
                   </td>
 
                   <td className="px-5 py-4">
