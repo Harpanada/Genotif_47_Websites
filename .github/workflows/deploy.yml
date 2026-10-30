@@ -75,6 +75,8 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DIRECT_URL: ${{ secrets.DIRECT_URL }}
 
+          SCANNER_SESSION_SECRET: ${{ secrets.SCANNER_SESSION_SECRET }}
+
           ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
           ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
@@ -100,6 +102,9 @@ jobs:
             printf "DIRECT_URL='%s'\n" "$DIRECT_URL"
             printf "ADMIN_USERNAME='%s'\n" "$ADMIN_USERNAME"
             printf "ADMIN_PASSWORD_HASH='%s'\n" "$ADMIN_PASSWORD_HASH"
+
+            printf "SCANNER_SESSION_SECRET='%s'\n" "$SCANNER_SESSION_SECRET"
+
             printf "AUTH_SECRET='%s'\n" "$AUTH_SECRET"
             printf "MIDTRANS_SERVER_KEY='%s'\n" "$MIDTRANS_SERVER_KEY"
             printf "NEXT_PUBLIC_MIDTRANS_CLIENT_KEY='%s'\n" "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
