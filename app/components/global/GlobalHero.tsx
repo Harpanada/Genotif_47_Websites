@@ -11,8 +11,7 @@ export default function GlobalHero({ bgSrc, ttl, desc }: GlobalHeroProps) {
     <section className="relative flex flex-col justify-between">
       <div
         style={{ backgroundImage: `url(${bgSrc})` }}
-        className={`  bg-cover bg-center  w-screen  h-screen bg-no-repeat  z-0 bg-fixed p-6 flex flex-col text-center gap-14 items-center justify-center   `}
-      >
+        className={` bg-cover bg-center w-screen h-screen bg-no-repeat bg-scroll md:bg-fixed p-6 flex flex-col text-center gap-14 items-center justify-center   `}>
         <div className="z-10  absolute top-44 md:top-52 lg:top-60 w-full  ">
           <div className="p-5 text-center flex justify-center flex-col items-center w-full  ">
             <AnimatedSection direction_y={-40} ease={"easeOut"} duration={0.5}>
@@ -24,8 +23,7 @@ export default function GlobalHero({ bgSrc, ttl, desc }: GlobalHeroProps) {
               direction_y={40}
               ease={"easeOut"}
               duration={0.5}
-              customStyle="flex flex-col justify-center items-center "
-            >
+              customStyle="flex flex-col justify-center items-center ">
               <p className="text-[#00354E] text-balance text-lg md:text-lg lg:text-xl xl:text-2xl md:max-w-3/5  font-['body-regular'] font-bold text-shadow-lg ">
                 {desc}
               </p>

@@ -4,7 +4,7 @@ import AnimatedSection from "@/app/components/animation/AnimatedSection";
 import AnimatedButton from "@/app/components/animation/AnimatedButton";
 export default function Hero() {
   return (
-    <section className="p-6 flex flex-col text-center gap-14 items-center justify-center w-screen bg-cover bg-center h-screen bg-no-repeat bg-fixed  bg-[url(/content/hero-edelweiss.webp)]  ">
+    <section className="p-6 flex flex-col text-center gap-14 items-center justify-center w-screen bg-cover bg-center h-screen bg-no-repeat bg-scroll md:bg-fixed  bg-[url(/content/hero-edelweiss.webp)]  ">
       <div className="flex flex-col text-center gap-14 items-center justify-center w-full h-full">
         <div className="flex flex-col gap-5 justify-center items-center  ">
           <AnimatedSection direction_y={40} ease={"easeOut"} duration={0.5}>
@@ -17,8 +17,7 @@ export default function Hero() {
             customStyle="text-[#00354E] text-balance text-md md:text-lg lg:text-xl xl:text-2xl md:max-w-3/5  font-['body-regular'] font-bold text-shadow-lg "
             direction_y={20}
             duration={0.8}
-            ease={"easeInOut"}
-          >
+            ease={"easeInOut"}>
             <h3 className="font-['body-bold'] md:mt-0 md:text-xl lg:text-2xl xl:text-3xl text-xl">
               <q>Three Generations. One Journey. Everlasting Memories. </q>
             </h3>
@@ -28,16 +27,14 @@ export default function Hero() {
           <AnimatedSection ease={"easeOut"} direction_x={100} duration={0.8}>
             <AnimatedButton
               link="/"
-              customStyle="font-['body-regular'] font-bold text-xs md:text-sm lg:text-lg flex bg-[#00354E] shadow-sm w-44 h-12  lg:w-64 lg:h-16 text-center items-center justify-center p-2 text-white rounded-full"
-            >
+              customStyle="font-['body-regular'] font-bold text-xs md:text-sm lg:text-lg flex bg-[#00354E] shadow-sm w-44 h-12  lg:w-64 lg:h-16 text-center items-center justify-center p-2 text-white rounded-full">
               SEE THE DAY'S TALE
             </AnimatedButton>
           </AnimatedSection>
           <AnimatedSection ease={"easeOut"} direction_x={-100} duration={0.8}>
             <AnimatedButton
               link="/partnership"
-              customStyle="font-['body-regular'] font-bold text-xs md:text-sm lg:text-lg flex bg-white/60 backdrop-blur-md border shadow-sm lg:w-64 lg:h-16 border-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-[#00354E] rounded-full"
-            >
+              customStyle="font-['body-regular'] font-bold text-xs md:text-sm lg:text-lg flex bg-white/60 backdrop-blur-md border shadow-sm lg:w-64 lg:h-16 border-[#BAE0E2] w-44 h-12 text-center items-center justify-center p-2 text-[#00354E] rounded-full">
               BECOME A PARTNERS
             </AnimatedButton>
           </AnimatedSection>

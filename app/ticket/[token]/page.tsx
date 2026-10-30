@@ -1,4 +1,5 @@
 import DownloadTicketButton from "@/app/ticket/[token]/DownloadTicketButton";
+import DownloadTicketCard from "@/app/ticket/[token]/DownloadTicketCard";
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
 import { db } from "@/src/prisma/db";
@@ -134,6 +135,15 @@ export default async function TicketPage({ params }: TicketPageProps) {
   });
 
   const ticketId = registration.id.toUpperCase();
+  const participantLabel =
+    registration.jenisLomba === "CERDAS_CERMAT"
+      ? "Nama Sekolah"
+      : registration.jenisLomba === "STMS" || members.length > 1
+        ? "Perwakilan / Ketua Tim"
+        : "Nama Peserta";
+
+  const competitionName =
+    competitionNames[registration.jenisLomba] ?? registration.jenisLomba;
 
   return (
     <main className="min-h-screen w-full overflow-x-hidden bg-[#eef4f7] px-3 py-6 text-[#00354E] sm:px-6 sm:py-8 lg:px-8 lg:py-10">
@@ -284,6 +294,34 @@ export default async function TicketPage({ params }: TicketPageProps) {
             <p className="text-xs font-['body-bold']">GENOTIF 47 | 2026</p>
           </footer>
         </article>
+        {/* Komponen khusus ekspor PNG */}
+
+        {/* Tiket khusus ekspor PNG — layout desktop 1200 × 600 */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "fixed",
+            left: "-2000px",
+            top: 0,
+            width: 1200,
+            height: 600,
+            overflow: "visible",
+            pointerEvents: "none",
+            zIndex: -1,
+          }}>
+          <DownloadTicketCard
+            competitionName={competitionName}
+            participantLabel={participantLabel}
+            participantName={participantName}
+            ticketId={ticketId}
+            category={category}
+            contact={contact}
+            details={details}
+            members={members}
+            qrDataUrl={qrDataUrl}
+          />
+        </div>
+
         <DownloadTicketButton token={token} />
         <p className="mx-auto mt-5 max-w-2xl text-center text-xs leading-5 text-slate-500">
           Tiket ini berlaku untuk pendaftaran yang pembayarannya telah
