@@ -109,7 +109,7 @@ jobs:
              printf "SCANNER_SESSION_SECRET='%s'\n" "$SCANNER_SESSION_SECRET"
              printf "AUTH_SECRET='%s'\n" "$AUTH_SECRET"
              printf "MIDTRANS_SERVER_KEY='%s'\n" "$MIDTRANS_SERVER_KEY"
-             printf "NEXT_PUBLIC_MIDTRANS_CLIENT_KEY='%s'\n' "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
+            printf "NEXT_PUBLIC_MIDTRANS_CLIENT_KEY='%s'\n" "$NEXT_PUBLIC_MIDTRANS_CLIENT_KEY"
              printf "MIDTRANS_IS_PRODUCTION='%s'\n" "$MIDTRANS_IS_PRODUCTION"
              printf "FONNTE_TOKEN='%s'\n" "$FONNTE_TOKEN"
              printf "FONNTE_GROUP_FUN_RUN='%s'\n" "$FONNTE_GROUP_FUN_RUN"
