@@ -1,90 +1,121 @@
 // use prisma-8
+// Contract inferred from the live database schema. Edit as needed, then run `prisma contract emit`.
+
+model PanitiaAccounts {
+  id           Uuid              @id(map: "panitia_accounts_pkey") @default(sql`gen_random_uuid()`)
+  username     VarChar(50)       @unique(map: "panitia_accounts_username_key")
+  passwordHash String            @map("password_hash")
+  nama         VarChar(100)
+  role         VarChar(20)       @default("SCANNER")
+  isActive     Boolean           @default(true) @map("is_active")
+  createdAt    TimestamptzString @default(now()) @map("created_at")
+  dataLombas   DataLomba[]
+
+  @@index(expression: sql`lower(username::text)`, map: "panitia_accounts_username_lower_idx", unique: true)
+  @@check(expression: sql`((role)::text = ANY ((ARRAY['ADMIN'::character varying, 'SCANNER'::character varying])::text[]))`, map: "panitia_accounts_role_check")
+  @@rls
+  @@map("panitia_accounts")
+}
+
 model DataLomba {
-  id         String   @id
-  jenisLomba String
-  statusBayar String  @default("PENDING")
-  orderId    String   @unique @default(uuid())
-  createdAt DateTime @default(now())
+  id                 String              @id(map: "DataLomba_pkey")
+  createdAt          TimestamptzString   @default(now())
+  jenisLomba         String
+  orderId            String              @unique(map: "DataLomba_orderId_key")
+  statusBayar        String              @default("PENDING")
+  checkedInAt        TimestamptzString?
+  ticketToken        String?             @unique(map: "DataLomba_ticketToken_key")
+  checkedInBy        Uuid?
+  jumlahBayar        Int?
 
-// Ticketing
-  ticketToken String?   @unique
-  checkedInAt DateTime?
-
-  funRun         DetailFunRun?
-  stms           DetailSTMS?
-  cerdasCermat   DetailCerdasCermat?
-  mewarnai       DetailMewarnai?
-
- 
-}
-
-model DetailFunRun {
-  id            String   @id
-  namaLengkap   String
-  jenisKelamin  String
-  kontakDarurat String
-  email         String
-  noWhatsapp    String
-
-  dataLombaId String    @unique
-  dataLomba   DataLomba @relation(fields: [dataLombaId], references: [id], onDelete: Cascade)
-}
-
-model DetailSTMS {
-  id                 String   @id
-  namaPerwakilan     String
-  kelas              String
-  jenisBakat         String
-  jumlahAnggota      Int
-  perlengkapan       String?
-  noWhatsapp         String
-  email              String
-  menggunakanMusik   Boolean  @default(false)
-
-  dataLombaId String    @unique
-  dataLomba   DataLomba @relation(fields: [dataLombaId], references: [id], onDelete: Cascade)
-  anggota     AnggotaSTMS[]
-}
-
-model AnggotaSTMS {
-  id           String     @id
-  namaLengkap  String
-  detailSTMSId String
-  detailSTMS   DetailSTMS @relation(fields: [detailSTMSId], references: [id], onDelete: Cascade)
+  detailCerdasCermat DetailCerdasCermat?
+  detailFunRun       DetailFunRun?
+  detailMewarnai     DetailMewarnai?
+  detailSTMS         DetailSTMS?
+  panitiaAccounts    PanitiaAccounts?    @relation(fields: [checkedInBy], references: [id], map: "DataLomba_checkedInBy_fkey", index: false)
 }
 
 model DetailCerdasCermat {
-  id                String   @id
-  namaSekolah       String
-  alamatSekolah     String
-  namaGuruPendamping String
-  emailPendamping   String
-  whatsappPendamping String
-
-  dataLombaId String    @unique
-  dataLomba   DataLomba @relation(fields: [dataLombaId], references: [id], onDelete: Cascade)
-  anggota     AnggotaCerdasCermat[]
+  id                   String                @id(map: "DetailCerdasCermat_pkey")
+  alamatSekolah        String
+  dataLombaId          String                @unique(map: "DetailCerdasCermat_dataLombaId_key")
+  emailPendamping      String
+  namaGuruPendamping   String
+  namaSekolah          String
+  whatsappPendamping   String
+  anggotaCerdasCermats AnggotaCerdasCermat[]
+  dataLomba            DataLomba             @relation(fields: [dataLombaId], references: [id], onDelete: Cascade, map: "DetailCerdasCermat_dataLombaId_fkey")
 }
 
 model AnggotaCerdasCermat {
-  id                   String             @id
-  namaLengkap          String
-  kelas                String
+  id                   String             @id(map: "AnggotaCerdasCermat_pkey")
   detailCerdasCermatId String
-  detailCerdasCermat   DetailCerdasCermat @relation(fields: [detailCerdasCermatId], references: [id], onDelete: Cascade)
+  kelas                String
+  namaLengkap          String
+  detailCerdasCermat   DetailCerdasCermat @relation(fields: [detailCerdasCermatId], references: [id], onDelete: Cascade, map: "AnggotaCerdasCermat_detailCerdasCermatId_fkey")
+
+  @@index([detailCerdasCermatId], name: "AnggotaCerdasCermat_detailCerdasCermatId_idx")
+}
+
+model DetailSTMS {
+  id               String        @id(map: "DetailSTMS_pkey")
+  dataLombaId      String        @unique(map: "DetailSTMS_dataLombaId_key")
+  jenisBakat       String
+  jumlahAnggota    Int
+  kelas            String
+  menggunakanMusik Boolean       @default(false)
+  namaPerwakilan   String
+  perlengkapan     String?
+  email            String
+  noWhatsapp       String
+  anggotaSTMS      AnggotaSTMS[]
+  dataLomba        DataLomba     @relation(fields: [dataLombaId], references: [id], onDelete: Cascade, map: "DetailSTMS_dataLombaId_fkey")
+}
+
+model AnggotaSTMS {
+  id           String     @id(map: "AnggotaSTMS_pkey")
+  detailSTMSId String
+  namaLengkap  String
+  detailSTMS   DetailSTMS @relation(fields: [detailSTMSId], references: [id], onDelete: Cascade, map: "AnggotaSTMS_detailSTMSId_fkey")
+
+  @@index([detailSTMSId], name: "AnggotaSTMS_detailSTMSId_idx")
+}
+
+model DetailFunRun {
+  id            String    @id(map: "DetailFunRun_pkey")
+  dataLombaId   String    @unique(map: "DetailFunRun_dataLombaId_key")
+  email         String
+  jenisKelamin  String
+  kontakDarurat String
+  namaLengkap   String
+  noWhatsapp    String
+
+  // Kategori peserta: INTERNAL atau EXTERNAL
+  kategoriPeserta String @default("EXTERNAL")
+
+  // Data verifikasi peserta INTERNAL
+  kelas                 String?
+  buktiKartuPelajarPath String?
+  statusVerifikasi      String @default("NOT_REQUIRED")
+  verifiedAt            TimestamptzString?
+  verificationNote      String?
+
+  // Batas pembayaran 24 jam setelah persetujuan
+  paymentExpiresAt TimestamptzString?
+
+  dataLomba DataLomba @relation(fields: [dataLombaId], references: [id], onDelete: Cascade, map: "DetailFunRun_dataLombaId_fkey")
 }
 
 model DetailMewarnai {
-  id             String   @id
-  namaPeserta    String
-  asalSekolah    String
-  kelas          Int
-  usia           Int
-  namaOrangTua   String
+  id               String    @id(map: "DetailMewarnai_pkey")
+  asalSekolah      String
+  dataLombaId      String    @unique(map: "DetailMewarnai_dataLombaId_key")
+  emailOrangTua    String
+  kelas            Int
+  namaOrangTua     String
+  namaPeserta      String
+  paketLomba       String
+  usia             Int
   whatsappOrangTua String
-  emailOrangTua  String
-  paketLomba     String
-
-  dataLombaId String    @unique
-  dataLomba   DataLomba @relation(fields: [dataLombaId], references: [id], onDelete: Cascade)
+  dataLomba        DataLomba @relation(fields: [dataLombaId], references: [id], onDelete: Cascade, map: "DetailMewarnai_dataLombaId_fkey")
 }

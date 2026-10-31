@@ -1,0 +1,874 @@
+[
+  {
+    "id": "schema.public",
+    "label": "Create schema \"public\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres"
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "Create schema \"public\"",
+        "sql": "CREATE SCHEMA IF NOT EXISTS \"public\"",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "table.AnggotaCerdasCermat",
+    "label": "Create table \"AnggotaCerdasCermat\"",
+    "summary": "Creates table \"AnggotaCerdasCermat\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "AnggotaCerdasCermat"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"AnggotaCerdasCermat\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"AnggotaCerdasCermat\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"AnggotaCerdasCermat\"",
+        "sql": "CREATE TABLE \"public\".\"AnggotaCerdasCermat\" (\n  \"detailCerdasCermatId\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"kelas\" text NOT NULL,\n  \"namaLengkap\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"AnggotaCerdasCermat\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"AnggotaCerdasCermat\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.AnggotaSTMS",
+    "label": "Create table \"AnggotaSTMS\"",
+    "summary": "Creates table \"AnggotaSTMS\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "AnggotaSTMS"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"AnggotaSTMS\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"AnggotaSTMS\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"AnggotaSTMS\"",
+        "sql": "CREATE TABLE \"public\".\"AnggotaSTMS\" (\n  \"detailSTMSId\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"namaLengkap\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"AnggotaSTMS\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"AnggotaSTMS\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.DataLomba",
+    "label": "Create table \"DataLomba\"",
+    "summary": "Creates table \"DataLomba\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"DataLomba\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"DataLomba\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"DataLomba\"",
+        "sql": "CREATE TABLE \"public\".\"DataLomba\" (\n  \"checkedInAt\" timestamptz,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"jenisLomba\" text NOT NULL,\n  \"orderId\" text NOT NULL,\n  \"statusBayar\" text DEFAULT 'PENDING' NOT NULL,\n  \"ticketToken\" text,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"DataLomba\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"DataLomba\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.DetailCerdasCermat",
+    "label": "Create table \"DetailCerdasCermat\"",
+    "summary": "Creates table \"DetailCerdasCermat\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "DetailCerdasCermat"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"DetailCerdasCermat\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"DetailCerdasCermat\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"DetailCerdasCermat\"",
+        "sql": "CREATE TABLE \"public\".\"DetailCerdasCermat\" (\n  \"alamatSekolah\" text NOT NULL,\n  \"dataLombaId\" text NOT NULL,\n  \"emailPendamping\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"namaGuruPendamping\" text NOT NULL,\n  \"namaSekolah\" text NOT NULL,\n  \"whatsappPendamping\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"DetailCerdasCermat\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"DetailCerdasCermat\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.DetailFunRun",
+    "label": "Create table \"DetailFunRun\"",
+    "summary": "Creates table \"DetailFunRun\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "DetailFunRun"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"DetailFunRun\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"DetailFunRun\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"DetailFunRun\"",
+        "sql": "CREATE TABLE \"public\".\"DetailFunRun\" (\n  \"dataLombaId\" text NOT NULL,\n  \"email\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"jenisKelamin\" text NOT NULL,\n  \"kontakDarurat\" text NOT NULL,\n  \"namaLengkap\" text NOT NULL,\n  \"noWhatsapp\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"DetailFunRun\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"DetailFunRun\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.DetailMewarnai",
+    "label": "Create table \"DetailMewarnai\"",
+    "summary": "Creates table \"DetailMewarnai\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "DetailMewarnai"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"DetailMewarnai\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"DetailMewarnai\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"DetailMewarnai\"",
+        "sql": "CREATE TABLE \"public\".\"DetailMewarnai\" (\n  \"asalSekolah\" text NOT NULL,\n  \"dataLombaId\" text NOT NULL,\n  \"emailOrangTua\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"kelas\" int4 NOT NULL,\n  \"namaOrangTua\" text NOT NULL,\n  \"namaPeserta\" text NOT NULL,\n  \"paketLomba\" text NOT NULL,\n  \"usia\" int4 NOT NULL,\n  \"whatsappOrangTua\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"DetailMewarnai\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"DetailMewarnai\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.DetailSTMS",
+    "label": "Create table \"DetailSTMS\"",
+    "summary": "Creates table \"DetailSTMS\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "DetailSTMS"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"DetailSTMS\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"DetailSTMS\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"DetailSTMS\"",
+        "sql": "CREATE TABLE \"public\".\"DetailSTMS\" (\n  \"dataLombaId\" text NOT NULL,\n  \"email\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"jenisBakat\" text NOT NULL,\n  \"jumlahAnggota\" int4 NOT NULL,\n  \"kelas\" text NOT NULL,\n  \"menggunakanMusik\" bool DEFAULT false NOT NULL,\n  \"namaPerwakilan\" text NOT NULL,\n  \"noWhatsapp\" text NOT NULL,\n  \"perlengkapan\" text,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"DetailSTMS\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"DetailSTMS\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.DataLomba.DataLomba_orderId_key",
+    "label": "Add unique constraint on \"DataLomba\" (orderId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "DataLomba_orderId_key",
+        "table": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"DataLomba_orderId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DataLomba_orderId_key",
+          "public",
+          "\"public\".\"DataLomba\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"DataLomba_orderId_key\"",
+        "sql": "ALTER TABLE \"public\".\"DataLomba\" ADD CONSTRAINT \"DataLomba_orderId_key\" UNIQUE (\"orderId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"DataLomba_orderId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DataLomba_orderId_key",
+          "public",
+          "\"public\".\"DataLomba\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.DataLomba.DataLomba_ticketToken_key",
+    "label": "Add unique constraint on \"DataLomba\" (ticketToken)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "DataLomba_ticketToken_key",
+        "table": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"DataLomba_ticketToken_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DataLomba_ticketToken_key",
+          "public",
+          "\"public\".\"DataLomba\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"DataLomba_ticketToken_key\"",
+        "sql": "ALTER TABLE \"public\".\"DataLomba\" ADD CONSTRAINT \"DataLomba_ticketToken_key\" UNIQUE (\"ticketToken\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"DataLomba_ticketToken_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DataLomba_ticketToken_key",
+          "public",
+          "\"public\".\"DataLomba\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.DetailCerdasCermat.DetailCerdasCermat_dataLombaId_key",
+    "label": "Add unique constraint on \"DetailCerdasCermat\" (dataLombaId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "DetailCerdasCermat_dataLombaId_key",
+        "table": "DetailCerdasCermat"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"DetailCerdasCermat_dataLombaId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailCerdasCermat_dataLombaId_key",
+          "public",
+          "\"public\".\"DetailCerdasCermat\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"DetailCerdasCermat_dataLombaId_key\"",
+        "sql": "ALTER TABLE \"public\".\"DetailCerdasCermat\" ADD CONSTRAINT \"DetailCerdasCermat_dataLombaId_key\" UNIQUE (\"dataLombaId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"DetailCerdasCermat_dataLombaId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailCerdasCermat_dataLombaId_key",
+          "public",
+          "\"public\".\"DetailCerdasCermat\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.DetailFunRun.DetailFunRun_dataLombaId_key",
+    "label": "Add unique constraint on \"DetailFunRun\" (dataLombaId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "DetailFunRun_dataLombaId_key",
+        "table": "DetailFunRun"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"DetailFunRun_dataLombaId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailFunRun_dataLombaId_key",
+          "public",
+          "\"public\".\"DetailFunRun\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"DetailFunRun_dataLombaId_key\"",
+        "sql": "ALTER TABLE \"public\".\"DetailFunRun\" ADD CONSTRAINT \"DetailFunRun_dataLombaId_key\" UNIQUE (\"dataLombaId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"DetailFunRun_dataLombaId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailFunRun_dataLombaId_key",
+          "public",
+          "\"public\".\"DetailFunRun\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.DetailMewarnai.DetailMewarnai_dataLombaId_key",
+    "label": "Add unique constraint on \"DetailMewarnai\" (dataLombaId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "DetailMewarnai_dataLombaId_key",
+        "table": "DetailMewarnai"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"DetailMewarnai_dataLombaId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailMewarnai_dataLombaId_key",
+          "public",
+          "\"public\".\"DetailMewarnai\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"DetailMewarnai_dataLombaId_key\"",
+        "sql": "ALTER TABLE \"public\".\"DetailMewarnai\" ADD CONSTRAINT \"DetailMewarnai_dataLombaId_key\" UNIQUE (\"dataLombaId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"DetailMewarnai_dataLombaId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailMewarnai_dataLombaId_key",
+          "public",
+          "\"public\".\"DetailMewarnai\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.DetailSTMS.DetailSTMS_dataLombaId_key",
+    "label": "Add unique constraint on \"DetailSTMS\" (dataLombaId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "DetailSTMS_dataLombaId_key",
+        "table": "DetailSTMS"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"DetailSTMS_dataLombaId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailSTMS_dataLombaId_key",
+          "public",
+          "\"public\".\"DetailSTMS\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"DetailSTMS_dataLombaId_key\"",
+        "sql": "ALTER TABLE \"public\".\"DetailSTMS\" ADD CONSTRAINT \"DetailSTMS_dataLombaId_key\" UNIQUE (\"dataLombaId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"DetailSTMS_dataLombaId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailSTMS_dataLombaId_key",
+          "public",
+          "\"public\".\"DetailSTMS\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.AnggotaCerdasCermat.AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184",
+    "label": "Create index \"AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184\" on \"AnggotaCerdasCermat\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184",
+        "table": "AnggotaCerdasCermat"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184\"",
+        "sql": "CREATE INDEX \"AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184\" ON \"public\".\"AnggotaCerdasCermat\" (\"detailCerdasCermatId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.AnggotaSTMS.AnggotaSTMS_detailSTMSId_idx_950314ad",
+    "label": "Create index \"AnggotaSTMS_detailSTMSId_idx_950314ad\" on \"AnggotaSTMS\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "AnggotaSTMS_detailSTMSId_idx_950314ad",
+        "table": "AnggotaSTMS"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"AnggotaSTMS_detailSTMSId_idx_950314ad\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"AnggotaSTMS_detailSTMSId_idx_950314ad\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"AnggotaSTMS_detailSTMSId_idx_950314ad\"",
+        "sql": "CREATE INDEX \"AnggotaSTMS_detailSTMSId_idx_950314ad\" ON \"public\".\"AnggotaSTMS\" (\"detailSTMSId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"AnggotaSTMS_detailSTMSId_idx_950314ad\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"AnggotaSTMS_detailSTMSId_idx_950314ad\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.AnggotaCerdasCermat.AnggotaCerdasCermat_detailCerdasCermatId_fkey",
+    "label": "Add foreign key \"AnggotaCerdasCermat_detailCerdasCermatId_fkey\" on \"AnggotaCerdasCermat\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "AnggotaCerdasCermat_detailCerdasCermatId_fkey",
+        "table": "AnggotaCerdasCermat"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"AnggotaCerdasCermat_detailCerdasCermatId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "AnggotaCerdasCermat_detailCerdasCermatId_fkey",
+          "public",
+          "\"public\".\"AnggotaCerdasCermat\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"AnggotaCerdasCermat_detailCerdasCermatId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"AnggotaCerdasCermat\"\nADD CONSTRAINT \"AnggotaCerdasCermat_detailCerdasCermatId_fkey\"\nFOREIGN KEY (\"detailCerdasCermatId\")\nREFERENCES \"public\".\"DetailCerdasCermat\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"AnggotaCerdasCermat_detailCerdasCermatId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "AnggotaCerdasCermat_detailCerdasCermatId_fkey",
+          "public",
+          "\"public\".\"AnggotaCerdasCermat\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.AnggotaSTMS.AnggotaSTMS_detailSTMSId_fkey",
+    "label": "Add foreign key \"AnggotaSTMS_detailSTMSId_fkey\" on \"AnggotaSTMS\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "AnggotaSTMS_detailSTMSId_fkey",
+        "table": "AnggotaSTMS"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"AnggotaSTMS_detailSTMSId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "AnggotaSTMS_detailSTMSId_fkey",
+          "public",
+          "\"public\".\"AnggotaSTMS\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"AnggotaSTMS_detailSTMSId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"AnggotaSTMS\"\nADD CONSTRAINT \"AnggotaSTMS_detailSTMSId_fkey\"\nFOREIGN KEY (\"detailSTMSId\")\nREFERENCES \"public\".\"DetailSTMS\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"AnggotaSTMS_detailSTMSId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "AnggotaSTMS_detailSTMSId_fkey",
+          "public",
+          "\"public\".\"AnggotaSTMS\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.DetailCerdasCermat.DetailCerdasCermat_dataLombaId_fkey",
+    "label": "Add foreign key \"DetailCerdasCermat_dataLombaId_fkey\" on \"DetailCerdasCermat\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "DetailCerdasCermat_dataLombaId_fkey",
+        "table": "DetailCerdasCermat"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"DetailCerdasCermat_dataLombaId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailCerdasCermat_dataLombaId_fkey",
+          "public",
+          "\"public\".\"DetailCerdasCermat\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"DetailCerdasCermat_dataLombaId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"DetailCerdasCermat\"\nADD CONSTRAINT \"DetailCerdasCermat_dataLombaId_fkey\"\nFOREIGN KEY (\"dataLombaId\")\nREFERENCES \"public\".\"DataLomba\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"DetailCerdasCermat_dataLombaId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailCerdasCermat_dataLombaId_fkey",
+          "public",
+          "\"public\".\"DetailCerdasCermat\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.DetailFunRun.DetailFunRun_dataLombaId_fkey",
+    "label": "Add foreign key \"DetailFunRun_dataLombaId_fkey\" on \"DetailFunRun\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "DetailFunRun_dataLombaId_fkey",
+        "table": "DetailFunRun"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"DetailFunRun_dataLombaId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailFunRun_dataLombaId_fkey",
+          "public",
+          "\"public\".\"DetailFunRun\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"DetailFunRun_dataLombaId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"DetailFunRun\"\nADD CONSTRAINT \"DetailFunRun_dataLombaId_fkey\"\nFOREIGN KEY (\"dataLombaId\")\nREFERENCES \"public\".\"DataLomba\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"DetailFunRun_dataLombaId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailFunRun_dataLombaId_fkey",
+          "public",
+          "\"public\".\"DetailFunRun\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.DetailMewarnai.DetailMewarnai_dataLombaId_fkey",
+    "label": "Add foreign key \"DetailMewarnai_dataLombaId_fkey\" on \"DetailMewarnai\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "DetailMewarnai_dataLombaId_fkey",
+        "table": "DetailMewarnai"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"DetailMewarnai_dataLombaId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailMewarnai_dataLombaId_fkey",
+          "public",
+          "\"public\".\"DetailMewarnai\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"DetailMewarnai_dataLombaId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"DetailMewarnai\"\nADD CONSTRAINT \"DetailMewarnai_dataLombaId_fkey\"\nFOREIGN KEY (\"dataLombaId\")\nREFERENCES \"public\".\"DataLomba\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"DetailMewarnai_dataLombaId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailMewarnai_dataLombaId_fkey",
+          "public",
+          "\"public\".\"DetailMewarnai\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.DetailSTMS.DetailSTMS_dataLombaId_fkey",
+    "label": "Add foreign key \"DetailSTMS_dataLombaId_fkey\" on \"DetailSTMS\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "DetailSTMS_dataLombaId_fkey",
+        "table": "DetailSTMS"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"DetailSTMS_dataLombaId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailSTMS_dataLombaId_fkey",
+          "public",
+          "\"public\".\"DetailSTMS\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"DetailSTMS_dataLombaId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"DetailSTMS\"\nADD CONSTRAINT \"DetailSTMS_dataLombaId_fkey\"\nFOREIGN KEY (\"dataLombaId\")\nREFERENCES \"public\".\"DataLomba\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"DetailSTMS_dataLombaId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DetailSTMS_dataLombaId_fkey",
+          "public",
+          "\"public\".\"DetailSTMS\""
+        ]
+      }
+    ]
+  }
+]

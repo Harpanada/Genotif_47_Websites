@@ -1,0 +1,338 @@
+[
+  {
+    "id": "column.public.DataLomba.jumlahBayar",
+    "label": "Add column \"jumlahBayar\" to \"DataLomba\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "jumlahBayar",
+        "table": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"jumlahBayar\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "jumlahBayar"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"jumlahBayar\"",
+        "sql": "ALTER TABLE \"public\".\"DataLomba\" ADD COLUMN \"jumlahBayar\" int4"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"jumlahBayar\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "jumlahBayar"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DetailFunRun.buktiKartuPelajarPath",
+    "label": "Add column \"buktiKartuPelajarPath\" to \"DetailFunRun\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "buktiKartuPelajarPath",
+        "table": "DetailFunRun"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"buktiKartuPelajarPath\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "buktiKartuPelajarPath"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"buktiKartuPelajarPath\"",
+        "sql": "ALTER TABLE \"public\".\"DetailFunRun\" ADD COLUMN \"buktiKartuPelajarPath\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"buktiKartuPelajarPath\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "buktiKartuPelajarPath"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DetailFunRun.kategoriPeserta",
+    "label": "Add column \"kategoriPeserta\" to \"DetailFunRun\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "kategoriPeserta",
+        "table": "DetailFunRun"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"kategoriPeserta\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "kategoriPeserta"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"kategoriPeserta\"",
+        "sql": "ALTER TABLE \"public\".\"DetailFunRun\" ADD COLUMN \"kategoriPeserta\" text DEFAULT 'EXTERNAL' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"kategoriPeserta\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "kategoriPeserta"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DetailFunRun.kelas",
+    "label": "Add column \"kelas\" to \"DetailFunRun\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "kelas",
+        "table": "DetailFunRun"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"kelas\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "kelas"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"kelas\"",
+        "sql": "ALTER TABLE \"public\".\"DetailFunRun\" ADD COLUMN \"kelas\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"kelas\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "kelas"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DetailFunRun.paymentExpiresAt",
+    "label": "Add column \"paymentExpiresAt\" to \"DetailFunRun\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "paymentExpiresAt",
+        "table": "DetailFunRun"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"paymentExpiresAt\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "paymentExpiresAt"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"paymentExpiresAt\"",
+        "sql": "ALTER TABLE \"public\".\"DetailFunRun\" ADD COLUMN \"paymentExpiresAt\" timestamptz"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"paymentExpiresAt\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "paymentExpiresAt"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DetailFunRun.statusVerifikasi",
+    "label": "Add column \"statusVerifikasi\" to \"DetailFunRun\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "statusVerifikasi",
+        "table": "DetailFunRun"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"statusVerifikasi\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "statusVerifikasi"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"statusVerifikasi\"",
+        "sql": "ALTER TABLE \"public\".\"DetailFunRun\" ADD COLUMN \"statusVerifikasi\" text DEFAULT 'NOT_REQUIRED' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"statusVerifikasi\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "statusVerifikasi"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DetailFunRun.verificationNote",
+    "label": "Add column \"verificationNote\" to \"DetailFunRun\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "verificationNote",
+        "table": "DetailFunRun"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"verificationNote\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "verificationNote"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"verificationNote\"",
+        "sql": "ALTER TABLE \"public\".\"DetailFunRun\" ADD COLUMN \"verificationNote\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"verificationNote\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "verificationNote"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DetailFunRun.verifiedAt",
+    "label": "Add column \"verifiedAt\" to \"DetailFunRun\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "verifiedAt",
+        "table": "DetailFunRun"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"verifiedAt\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "verifiedAt"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"verifiedAt\"",
+        "sql": "ALTER TABLE \"public\".\"DetailFunRun\" ADD COLUMN \"verifiedAt\" timestamptz"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"verifiedAt\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DetailFunRun",
+          "verifiedAt"
+        ]
+      }
+    ]
+  }
+]

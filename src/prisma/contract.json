@@ -31,6 +31,10 @@
     "DetailSTMS": {
       "model": "DetailSTMS",
       "namespace": "public"
+    },
+    "panitia_accounts": {
+      "model": "PanitiaAccounts",
+      "namespace": "public"
     }
   },
   "domain": {
@@ -168,14 +172,21 @@
               "checkedInAt": {
                 "nullable": true,
                 "type": {
-                  "codecId": "pg/timestamptz-temporal@1",
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "checkedInBy": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/uuid@1",
                   "kind": "scalar"
                 }
               },
               "createdAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-temporal@1",
+                  "codecId": "pg/timestamptz-string@1",
                   "kind": "scalar"
                 }
               },
@@ -190,6 +201,13 @@
                 "nullable": false,
                 "type": {
                   "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "jumlahBayar": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/int4@1",
                   "kind": "scalar"
                 }
               },
@@ -216,7 +234,7 @@
               }
             },
             "relations": {
-              "cerdasCermat": {
+              "detailCerdasCermat": {
                 "cardinality": "1:1",
                 "nullable": true,
                 "on": {
@@ -232,7 +250,7 @@
                   "namespace": "public"
                 }
               },
-              "funRun": {
+              "detailFunRun": {
                 "cardinality": "1:1",
                 "nullable": true,
                 "on": {
@@ -248,7 +266,7 @@
                   "namespace": "public"
                 }
               },
-              "mewarnai": {
+              "detailMewarnai": {
                 "cardinality": "1:1",
                 "nullable": true,
                 "on": {
@@ -264,7 +282,7 @@
                   "namespace": "public"
                 }
               },
-              "stms": {
+              "detailSTMS": {
                 "cardinality": "1:1",
                 "nullable": true,
                 "on": {
@@ -279,12 +297,31 @@
                   "model": "DetailSTMS",
                   "namespace": "public"
                 }
+              },
+              "panitiaAccounts": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "checkedInBy"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "PanitiaAccounts",
+                  "namespace": "public"
+                }
               }
             },
             "storage": {
               "fields": {
                 "checkedInAt": {
                   "column": "checkedInAt"
+                },
+                "checkedInBy": {
+                  "column": "checkedInBy"
                 },
                 "createdAt": {
                   "column": "createdAt"
@@ -294,6 +331,9 @@
                 },
                 "jenisLomba": {
                   "column": "jenisLomba"
+                },
+                "jumlahBayar": {
+                  "column": "jumlahBayar"
                 },
                 "orderId": {
                   "column": "orderId"
@@ -362,7 +402,7 @@
               }
             },
             "relations": {
-              "anggota": {
+              "anggotaCerdasCermats": {
                 "cardinality": "1:N",
                 "on": {
                   "localFields": [
@@ -424,6 +464,13 @@
           },
           "DetailFunRun": {
             "fields": {
+              "buktiKartuPelajarPath": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
               "dataLombaId": {
                 "nullable": false,
                 "type": {
@@ -452,6 +499,20 @@
                   "kind": "scalar"
                 }
               },
+              "kategoriPeserta": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "kelas": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
               "kontakDarurat": {
                 "nullable": false,
                 "type": {
@@ -470,6 +531,34 @@
                 "nullable": false,
                 "type": {
                   "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "paymentExpiresAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "statusVerifikasi": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "verificationNote": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "verifiedAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
                   "kind": "scalar"
                 }
               }
@@ -494,6 +583,9 @@
             },
             "storage": {
               "fields": {
+                "buktiKartuPelajarPath": {
+                  "column": "buktiKartuPelajarPath"
+                },
                 "dataLombaId": {
                   "column": "dataLombaId"
                 },
@@ -506,6 +598,12 @@
                 "jenisKelamin": {
                   "column": "jenisKelamin"
                 },
+                "kategoriPeserta": {
+                  "column": "kategoriPeserta"
+                },
+                "kelas": {
+                  "column": "kelas"
+                },
                 "kontakDarurat": {
                   "column": "kontakDarurat"
                 },
@@ -514,6 +612,18 @@
                 },
                 "noWhatsapp": {
                   "column": "noWhatsapp"
+                },
+                "paymentExpiresAt": {
+                  "column": "paymentExpiresAt"
+                },
+                "statusVerifikasi": {
+                  "column": "statusVerifikasi"
+                },
+                "verificationNote": {
+                  "column": "verificationNote"
+                },
+                "verifiedAt": {
+                  "column": "verifiedAt"
                 }
               },
               "namespaceId": "public",
@@ -722,7 +832,7 @@
               }
             },
             "relations": {
-              "anggota": {
+              "anggotaSTMS": {
                 "cardinality": "1:N",
                 "on": {
                   "localFields": [
@@ -790,6 +900,112 @@
               "namespaceId": "public",
               "table": "DetailSTMS"
             }
+          },
+          "PanitiaAccounts": {
+            "fields": {
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "isActive": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/bool@1",
+                  "kind": "scalar"
+                }
+              },
+              "nama": {
+                "nullable": false,
+                "type": {
+                  "codecId": "sql/varchar@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "length": 100
+                  }
+                }
+              },
+              "passwordHash": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "role": {
+                "nullable": false,
+                "type": {
+                  "codecId": "sql/varchar@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "length": 20
+                  }
+                }
+              },
+              "username": {
+                "nullable": false,
+                "type": {
+                  "codecId": "sql/varchar@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "length": 50
+                  }
+                }
+              }
+            },
+            "relations": {
+              "dataLombas": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "checkedInBy"
+                  ]
+                },
+                "to": {
+                  "model": "DataLomba",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "createdAt": {
+                  "column": "created_at"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "isActive": {
+                  "column": "is_active"
+                },
+                "nama": {
+                  "column": "nama"
+                },
+                "passwordHash": {
+                  "column": "password_hash"
+                },
+                "role": {
+                  "column": "role"
+                },
+                "username": {
+                  "column": "username"
+                }
+              },
+              "namespaceId": "public",
+              "table": "panitia_accounts"
+            }
           }
         }
       }
@@ -828,6 +1044,7 @@
                   "index": {
                     "name": "AnggotaCerdasCermat_detailCerdasCermatId_idx_2eaa5184"
                   },
+                  "name": "AnggotaCerdasCermat_detailCerdasCermatId_fkey",
                   "onDelete": "cascade",
                   "source": {
                     "columns": [
@@ -858,7 +1075,8 @@
               "primaryKey": {
                 "columns": [
                   "id"
-                ]
+                ],
+                "name": "AnggotaCerdasCermat_pkey"
               },
               "uniques": []
             },
@@ -885,6 +1103,7 @@
                   "index": {
                     "name": "AnggotaSTMS_detailSTMSId_idx_950314ad"
                   },
+                  "name": "AnggotaSTMS_detailSTMSId_fkey",
                   "onDelete": "cascade",
                   "source": {
                     "columns": [
@@ -915,19 +1134,25 @@
               "primaryKey": {
                 "columns": [
                   "id"
-                ]
+                ],
+                "name": "AnggotaSTMS_pkey"
               },
               "uniques": []
             },
             "DataLomba": {
               "columns": {
                 "checkedInAt": {
-                  "codecId": "pg/timestamptz-temporal@1",
+                  "codecId": "pg/timestamptz-string@1",
                   "dataType": "pg/timestamptz",
                   "nullable": true
                 },
+                "checkedInBy": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "nullable": true
+                },
                 "createdAt": {
-                  "codecId": "pg/timestamptz-temporal@1",
+                  "codecId": "pg/timestamptz-string@1",
                   "dataType": "pg/timestamptz",
                   "default": {
                     "expression": "now()",
@@ -944,6 +1169,11 @@
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
                   "nullable": false
+                },
+                "jumlahBayar": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "nullable": true
                 },
                 "orderId": {
                   "codecId": "pg/text@1",
@@ -965,23 +1195,44 @@
                   "nullable": true
                 }
               },
-              "foreignKeys": [],
+              "foreignKeys": [
+                {
+                  "name": "DataLomba_checkedInBy_fkey",
+                  "source": {
+                    "columns": [
+                      "checkedInBy"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "DataLomba"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "panitia_accounts"
+                  }
+                }
+              ],
               "indexes": [],
               "primaryKey": {
                 "columns": [
                   "id"
-                ]
+                ],
+                "name": "DataLomba_pkey"
               },
               "uniques": [
                 {
                   "columns": [
                     "orderId"
-                  ]
+                  ],
+                  "name": "DataLomba_orderId_key"
                 },
                 {
                   "columns": [
                     "ticketToken"
-                  ]
+                  ],
+                  "name": "DataLomba_ticketToken_key"
                 }
               ]
             },
@@ -1030,6 +1281,7 @@
                       "dataLombaId"
                     ]
                   },
+                  "name": "DetailCerdasCermat_dataLombaId_fkey",
                   "onDelete": "cascade",
                   "source": {
                     "columns": [
@@ -1051,18 +1303,25 @@
               "primaryKey": {
                 "columns": [
                   "id"
-                ]
+                ],
+                "name": "DetailCerdasCermat_pkey"
               },
               "uniques": [
                 {
                   "columns": [
                     "dataLombaId"
-                  ]
+                  ],
+                  "name": "DetailCerdasCermat_dataLombaId_key"
                 }
               ]
             },
             "DetailFunRun": {
               "columns": {
+                "buktiKartuPelajarPath": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
                 "dataLombaId": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
@@ -1083,6 +1342,20 @@
                   "dataType": "pg/text",
                   "nullable": false
                 },
+                "kategoriPeserta": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "EXTERNAL"
+                  },
+                  "nullable": false
+                },
+                "kelas": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
                 "kontakDarurat": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
@@ -1097,6 +1370,30 @@
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
                   "nullable": false
+                },
+                "paymentExpiresAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true
+                },
+                "statusVerifikasi": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "NOT_REQUIRED"
+                  },
+                  "nullable": false
+                },
+                "verificationNote": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "verifiedAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true
                 }
               },
               "foreignKeys": [
@@ -1106,6 +1403,7 @@
                       "dataLombaId"
                     ]
                   },
+                  "name": "DetailFunRun_dataLombaId_fkey",
                   "onDelete": "cascade",
                   "source": {
                     "columns": [
@@ -1127,13 +1425,15 @@
               "primaryKey": {
                 "columns": [
                   "id"
-                ]
+                ],
+                "name": "DetailFunRun_pkey"
               },
               "uniques": [
                 {
                   "columns": [
                     "dataLombaId"
-                  ]
+                  ],
+                  "name": "DetailFunRun_dataLombaId_key"
                 }
               ]
             },
@@ -1197,6 +1497,7 @@
                       "dataLombaId"
                     ]
                   },
+                  "name": "DetailMewarnai_dataLombaId_fkey",
                   "onDelete": "cascade",
                   "source": {
                     "columns": [
@@ -1218,13 +1519,15 @@
               "primaryKey": {
                 "columns": [
                   "id"
-                ]
+                ],
+                "name": "DetailMewarnai_pkey"
               },
               "uniques": [
                 {
                   "columns": [
                     "dataLombaId"
-                  ]
+                  ],
+                  "name": "DetailMewarnai_dataLombaId_key"
                 }
               ]
             },
@@ -1292,6 +1595,7 @@
                       "dataLombaId"
                     ]
                   },
+                  "name": "DetailSTMS_dataLombaId_fkey",
                   "onDelete": "cascade",
                   "source": {
                     "columns": [
@@ -1313,13 +1617,107 @@
               "primaryKey": {
                 "columns": [
                   "id"
-                ]
+                ],
+                "name": "DetailSTMS_pkey"
               },
               "uniques": [
                 {
                   "columns": [
                     "dataLombaId"
-                  ]
+                  ],
+                  "name": "DetailSTMS_dataLombaId_key"
+                }
+              ]
+            },
+            "panitia_accounts": {
+              "checks": [
+                {
+                  "expression": "((role)::text = ANY ((ARRAY['ADMIN'::character varying, 'SCANNER'::character varying])::text[]))",
+                  "name": "panitia_accounts_role_check"
+                }
+              ],
+              "columns": {
+                "created_at": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/uuid@1",
+                  "dataType": "pg/uuid",
+                  "default": {
+                    "expression": "gen_random_uuid()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "is_active": {
+                  "codecId": "pg/bool@1",
+                  "dataType": "pg/bool",
+                  "default": {
+                    "kind": "literal",
+                    "value": true
+                  },
+                  "nullable": false
+                },
+                "nama": {
+                  "codecId": "sql/varchar@1",
+                  "dataType": "pg/varchar",
+                  "nullable": false,
+                  "typeParams": {
+                    "length": 100
+                  }
+                },
+                "password_hash": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "role": {
+                  "codecId": "sql/varchar@1",
+                  "dataType": "pg/varchar",
+                  "default": {
+                    "kind": "literal",
+                    "value": "SCANNER"
+                  },
+                  "nullable": false,
+                  "typeParams": {
+                    "length": 20
+                  }
+                },
+                "username": {
+                  "codecId": "sql/varchar@1",
+                  "dataType": "pg/varchar",
+                  "nullable": false,
+                  "typeParams": {
+                    "length": 50
+                  }
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "expression": "lower(username::text)",
+                  "name": "panitia_accounts_username_lower_idx",
+                  "unique": true
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ],
+                "name": "panitia_accounts_pkey"
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "username"
+                  ],
+                  "name": "panitia_accounts_username_key"
                 }
               ]
             }
@@ -1329,25 +1727,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "26c4a9cdfe767c5518742dcdaba378a49b34fcf77ce24feff576d20381ad2268"
-  },
-  "execution": {
-    "executionHash": "6a03bd6b3718ecc1a90d1716b3119ea07b463f3f2ec0f6cae24ac9c1630d5be8",
-    "mutations": {
-      "defaults": [
-        {
-          "onCreate": {
-            "id": "uuidv4",
-            "kind": "generator"
-          },
-          "ref": {
-            "entry": "DataLomba",
-            "field": "orderId",
-            "namespace": "public"
-          }
-        }
-      ]
-    }
+    "storageHash": "af205d188cd72a7e13aef560b09172480420be809082a768845a82cdb7a4e971"
   },
   "capabilities": {
     "postgres": {
