@@ -130,31 +130,72 @@ const mewarnaiSchema = z
 // ============================================
 // Fun Run
 // ============================================
+// ============================================
+// Fun Run
+// ============================================
 
-const funRunSchema = z.object({
-  jenisLomba: z.literal("FUN_RUN"),
+const funRunSchema = z
+  .object({
+    jenisLomba: z.literal("FUN_RUN"),
 
-  namaLengkap: z.string().trim().min(1, "Nama lengkap wajib diisi"),
+    kategoriPeserta: z.enum(["INTERNAL", "EXTERNAL"], {
+      error: "Kategori peserta wajib dipilih",
+    }),
 
-  jenisKelamin: z.enum(["L", "P"], {
-    error: "Jenis kelamin wajib dipilih",
-  }),
+    namaLengkap: z.string().trim().min(1, "Nama lengkap wajib diisi"),
 
-  kontakDarurat: z
-    .string()
-    .trim()
-    .min(8, "Nomor kontak darurat terlalu pendek")
-    .max(20, "Nomor kontak darurat terlalu panjang"),
+    jenisKelamin: z.enum(["L", "P"], {
+      error: "Jenis kelamin wajib dipilih",
+    }),
 
-  email: z.email("Format email tidak valid"),
+    kontakDarurat: z
+      .string()
+      .trim()
+      .min(8, "Nomor kontak darurat terlalu pendek")
+      .max(20, "Nomor kontak darurat terlalu panjang"),
 
-  noWhatsapp: z
-    .string()
-    .trim()
-    .min(8, "Nomor WhatsApp terlalu pendek")
-    .max(20, "Nomor WhatsApp terlalu panjang"),
-});
+    email: z.email("Format email tidak valid"),
 
+    noWhatsapp: z
+      .string()
+      .trim()
+      .min(8, "Nomor WhatsApp terlalu pendek")
+      .max(20, "Nomor WhatsApp terlalu panjang"),
+
+    // Khusus peserta internal
+    kelas: z.string().trim().optional(),
+
+    buktiKartuPelajarPath: z.string().trim().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.kategoriPeserta === "INTERNAL") {
+      if (!data.kelas) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["kelas"],
+          message: "Kelas wajib diisi",
+        });
+      }
+
+      if (!data.buktiKartuPelajarPath) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["buktiKartuPelajarPath"],
+          message: "Foto kartu pelajar wajib diunggah",
+        });
+      } else if (
+        !/^pending\/[a-f0-9-]+\.(jpg|png|webp)$/i.test(
+          data.buktiKartuPelajarPath,
+        )
+      ) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["buktiKartuPelajarPath"],
+          message: "Path kartu pelajar tidak valid",
+        });
+      }
+    }
+  });
 // ============================================
 // Schema gabungan
 // ============================================

@@ -4,7 +4,7 @@ import Navbar from "@/app/components/global/Navbar";
 import SnapProvider from "@/app/components/payment/SnapProvider";
 import Footer from "@/app/components/global/Footer";
 import { registrationSchema } from "@/lib/validations/register";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type JenisLomba = "FUN_RUN" | "LCC_SD" | "TALENT_SHOW" | "MEWARNAI";
@@ -18,6 +18,13 @@ interface RegistrationFormData {
   jenisLomba: JenisLomba;
 
   // Fun Run
+  kategoriPeserta: "INTERNAL" | "EXTERNAL";
+  kelasFunRun: string;
+
+  // Fun Run
+  studentCard: File | null;
+  studentCardPath: string;
+
   namaLengkap: string;
   jenisKelamin: "L" | "P" | "";
   kontakDarurat: string;
@@ -56,6 +63,12 @@ interface RegistrationFormData {
 
 const initialFormData: RegistrationFormData = {
   jenisLomba: "FUN_RUN",
+
+  studentCard: null,
+  studentCardPath: "",
+
+  kategoriPeserta: "EXTERNAL",
+  kelasFunRun: "",
 
   namaLengkap: "",
   jenisKelamin: "",
@@ -119,6 +132,64 @@ export default function Registration() {
     type: "success" | "error";
     text: string;
   } | null>(null);
+
+  const [studentCardPreview, setStudentCardPreview] = useState<string | null>(
+    null,
+  );
+
+  const MAX_STUDENT_CARD_SIZE = 5 * 1024 * 1024;
+
+  const ALLOWED_STUDENT_CARD_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
+  const handleStudentCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!allowedTypes.includes(file.type)) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        studentCard: "Format gambar harus JPG, PNG, atau WEBP.",
+      }));
+      e.target.value = "";
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        studentCard: "Ukuran gambar maksimal 5 MB.",
+      }));
+      e.target.value = "";
+      return;
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      studentCard: file,
+      studentCardPath: "",
+    }));
+
+    setStudentCardPreview(URL.createObjectURL(file));
+
+    setFieldErrors((prev) => {
+      const next = { ...prev };
+      delete next.studentCard;
+      return next;
+    });
+
+    setResponseMsg(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (studentCardPreview) {
+        URL.revokeObjectURL(studentCardPreview);
+      }
+    };
+  }, [studentCardPreview]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -214,16 +285,25 @@ export default function Registration() {
     });
   };
 
-  const buildRegistrationPayload = () => {
+  const buildRegistrationPayload = (
+    uploadedStudentCardPath = formData.studentCardPath,
+  ) => {
     switch (formData.jenisLomba) {
       case "FUN_RUN":
         return {
           jenisLomba: "FUN_RUN" as const,
+          kategoriPeserta: formData.kategoriPeserta,
+
           namaLengkap: formData.namaLengkap.trim(),
           jenisKelamin: formData.jenisKelamin,
           kontakDarurat: formData.kontakDarurat.trim(),
           email: formData.emailFunRun.trim(),
           noWhatsapp: formData.whatsappFunRun.trim(),
+
+          ...(formData.kategoriPeserta === "INTERNAL" && {
+            kelas: formData.kelasFunRun.trim(),
+            buktiKartuPelajarPath: uploadedStudentCardPath,
+          }),
         };
 
       case "LCC_SD":
@@ -273,9 +353,15 @@ export default function Registration() {
 
   const mapErrorPath = (path: string, jenisLomba: JenisLomba): string => {
     const directMappings: Record<string, string> = {
+      kategoriPeserta: "kategoriPeserta",
       namaPerwakilan: "namaPerwakilan",
       noWhatsapp: "whatsappStms",
-      kelas: jenisLomba === "TALENT_SHOW" ? "kelasStms" : "kelasMewarnai",
+      kelas:
+        jenisLomba === "FUN_RUN"
+          ? "kelasFunRun"
+          : jenisLomba === "TALENT_SHOW"
+            ? "kelasStms"
+            : "kelasMewarnai",
       jumlahAnggota: "jumlahAnggotaStms",
       perlengkapan: "alatPerlengkapan",
       menggunakanMusik: "butuhMusik",
@@ -368,7 +454,51 @@ export default function Registration() {
     setResponseMsg(null);
 
     try {
-      const payload = buildRegistrationPayload();
+      let uploadedStudentCardPath = formData.studentCardPath;
+
+      if (
+        formData.jenisLomba === "FUN_RUN" &&
+        formData.kategoriPeserta === "INTERNAL"
+      ) {
+        if (!formData.studentCard) {
+          setFieldErrors((prev) => ({
+            ...prev,
+            studentCard: "Foto kartu pelajar wajib diunggah.",
+          }));
+
+          setResponseMsg({
+            type: "error",
+            text: "Silakan unggah foto kartu pelajar terlebih dahulu.",
+          });
+
+          return;
+        }
+
+        const uploadData = new FormData();
+        uploadData.append("file", formData.studentCard);
+
+        const uploadResponse = await fetch("/api/upload/student-card", {
+          method: "POST",
+          body: uploadData,
+        });
+
+        const uploadResult = await uploadResponse.json();
+
+        if (!uploadResponse.ok || !uploadResult.data?.path) {
+          throw new Error(
+            uploadResult.error ?? "Gagal mengunggah kartu pelajar.",
+          );
+        }
+
+        uploadedStudentCardPath = uploadResult.data.path;
+
+        setFormData((prev) => ({
+          ...prev,
+          studentCardPath: uploadedStudentCardPath,
+        }));
+      }
+
+      const payload = buildRegistrationPayload(uploadedStudentCardPath);
       const validation = registrationSchema.safeParse(payload);
 
       if (!validation.success) {
@@ -404,6 +534,8 @@ export default function Registration() {
         data?: {
           id?: string;
           token?: string;
+          paymentRequired?: boolean;
+          statusVerifikasi?: string;
           lomba?: {
             id: string;
             orderId: string;
@@ -430,6 +562,24 @@ export default function Registration() {
         throw new Error(
           result.error ?? result.message ?? "Gagal menyimpan pendaftaran.",
         );
+      }
+
+      if (result.data?.paymentRequired === false) {
+        setFormData({
+          ...initialFormData,
+          jenisLomba: formData.jenisLomba,
+        });
+
+        setStudentCardPreview(null);
+
+        setResponseMsg({
+          type: "success",
+          text:
+            result.message ??
+            "Pendaftaran berhasil. Silakan menunggu verifikasi panitia.",
+        });
+
+        return;
       }
 
       const token = result.data?.token;
@@ -591,6 +741,81 @@ export default function Registration() {
                   exit={{ opacity: 0, y: -10 }}
                   className={sectionClass}>
                   <h2 className={sectionTitleClass}>Data Peserta Fun Run</h2>
+
+                  <div className="w-full">
+                    <label className={labelClass} htmlFor="kategoriPeserta">
+                      Kategori Peserta
+                    </label>
+
+                    <select
+                      id="kategoriPeserta"
+                      name="kategoriPeserta"
+                      value={formData.kategoriPeserta}
+                      onChange={handleChange}
+                      className={`${inputClass} cursor-pointer`}>
+                      <option value="EXTERNAL">Peserta Umum (External)</option>
+                      <option value="INTERNAL">
+                        Siswa SMAN 1 Ciranjang (Internal)
+                      </option>
+                    </select>
+
+                    {renderError("kategoriPeserta")}
+                  </div>
+
+                  {formData.kategoriPeserta === "INTERNAL" && (
+                    <div className="w-full">
+                      <label className={labelClass} htmlFor="kelasFunRun">
+                        Kelas
+                      </label>
+
+                      <input
+                        id="kelasFunRun"
+                        name="kelasFunRun"
+                        type="text"
+                        value={formData.kelasFunRun}
+                        onChange={handleChange}
+                        placeholder="Contoh: XII-F2A"
+                        required
+                        className={inputClass}
+                      />
+
+                      {renderError("kelasFunRun")}
+
+                      <p className="mt-1 text-xs text-gray-600">
+                        Masukkan kelas sesuai identitas siswa.
+                      </p>
+                    </div>
+                  )}
+                  {formData.kategoriPeserta === "INTERNAL" && (
+                    <div className="w-full">
+                      <label className={labelClass} htmlFor="studentCard">
+                        Foto Kartu Pelajar
+                      </label>
+
+                      <input
+                        id="studentCard"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        onChange={handleStudentCardChange}
+                        required={formData.kategoriPeserta === "INTERNAL"}
+                        className={inputClass}
+                      />
+
+                      <p className="mt-1 text-xs text-gray-600">
+                        Format JPG, PNG, atau WEBP. Maksimal 2 MB.
+                      </p>
+
+                      {studentCardPreview && (
+                        <img
+                          src={studentCardPreview}
+                          alt="Preview kartu pelajar"
+                          className="mt-3 w-full max-h-64 object-contain rounded-xl border"
+                        />
+                      )}
+
+                      {renderError("studentCard")}
+                    </div>
+                  )}
 
                   {renderInput(
                     "Nama Lengkap",

@@ -92,6 +92,10 @@ jobs:
           FONNTE_GROUP_MEWARNAI: ${{ secrets.FONNTE_GROUP_MEWARNAI }}
 
           TICKET_PUBLIC_BASE_URL: ${{ secrets.TICKET_PUBLIC_BASE_URL }}
+
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_STORAGE_BUCKET: ${{ secrets.SUPABASE_STORAGE_BUCKET }}
         shell: bash
         run: |
           set -eu
@@ -117,6 +121,10 @@ jobs:
             printf "FONNTE_GROUP_MEWARNAI='%s'\n" "$FONNTE_GROUP_MEWARNAI"
 
             printf "TICKET_PUBLIC_BASE_URL='%s'\n" "$TICKET_PUBLIC_BASE_URL"
+
+            printf "SUPABASE_URL='%s'\n" "$SUPABASE_URL"
+            printf "SUPABASE_SERVICE_ROLE_KEY='%s'\n" "$SUPABASE_SERVICE_ROLE_KEY"
+            printf "SUPABASE_STORAGE_BUCKET='%s'\n" "$SUPABASE_STORAGE_BUCKET
             
           } > .env
 

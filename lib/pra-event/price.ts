@@ -5,6 +5,8 @@ export const HARGA_LOMBA = {
   MEWARNAI: 35000,
 } as const;
 
+export const HARGA_FUN_RUN_INTERNAL = 20000;
+
 export function getHargaLomba(jenisLomba: string): number {
   switch (jenisLomba) {
     case "FUN_RUN":

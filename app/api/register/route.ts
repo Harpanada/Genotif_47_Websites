@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { createSnapTransaction } from "@/lib/validations/midtrans";
-import { getHargaLomba } from "@/lib/pra-event/price";
+import { getHargaLomba, HARGA_FUN_RUN_INTERNAL } from "@/lib/pra-event/price";
 import type { RegistrationInput } from "@/lib/validations/register";
 import {
   generateRegistrationId,
@@ -53,6 +53,19 @@ export async function POST(req: Request) {
           kontakDarurat: data.kontakDarurat,
           email: data.email,
           noWhatsapp: data.noWhatsapp,
+
+          kategoriPeserta: data.kategoriPeserta,
+
+          kelas: data.kategoriPeserta === "INTERNAL" ? data.kelas! : null,
+
+          buktiKartuPelajarPath:
+            data.kategoriPeserta === "INTERNAL"
+              ? data.buktiKartuPelajarPath!
+              : null,
+
+          statusVerifikasi:
+            data.kategoriPeserta === "INTERNAL" ? "PENDING" : "NOT_REQUIRED",
+
           dataLombaId: newLomba.id,
         });
 
@@ -123,6 +136,23 @@ export async function POST(req: Request) {
 
         break;
       }
+    }
+    // Peserta Internal menunggu verifikasi admin.
+    // Transaksi Midtrans belum dibuat pada tahap ini.
+    if (data.jenisLomba === "FUN_RUN" && data.kategoriPeserta === "INTERNAL") {
+      return NextResponse.json(
+        {
+          success: true,
+          message:
+            "Pendaftaran berhasil. Silakan menunggu verifikasi kartu pelajar oleh panitia.",
+          data: {
+            lomba: newLomba,
+            paymentRequired: false,
+            statusVerifikasi: "PENDING",
+          },
+        },
+        { status: 201 },
+      );
     }
 
     function getCustomerDetails(data: RegistrationInput) {
