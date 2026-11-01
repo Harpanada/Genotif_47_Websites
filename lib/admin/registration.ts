@@ -240,6 +240,9 @@ export async function getAdminRegistrationDetail(id: string) {
         detail = {
           jenisKelamin: result.jenisKelamin,
           kontakDarurat: result.kontakDarurat,
+          kategoriPeserta: result.kategoriPeserta,
+          kelas: result.kelas,
+          statusVerifikasi: result.statusVerifikasi,
         };
       }
 
@@ -332,6 +335,7 @@ export async function getAdminRegistrationDetail(id: string) {
   }
 
   // 4. Kembalikan data dalam struktur yang digunakan page.tsx
+
   return {
     id: pendaftaran.id,
     jenisLomba,
@@ -349,5 +353,27 @@ export async function getAdminRegistrationDetail(id: string) {
 
     detail,
     anggota,
+    verifikasi:
+      jenisLomba === "FUN_RUN"
+        ? await (async () => {
+            const result = await db.orm.public.DetailFunRun.where({
+              dataLombaId: pendaftaran.id,
+            }).first();
+
+            if (!result || result.kategoriPeserta !== "INTERNAL") {
+              return null;
+            }
+
+            return {
+              kategoriPeserta: result.kategoriPeserta,
+              statusVerifikasi: result.statusVerifikasi,
+              kelas: result.kelas,
+              buktiKartuPelajarPath: result.buktiKartuPelajarPath,
+              verifiedAt: result.verifiedAt?.toString() ?? null,
+              verificationNote: result.verificationNote,
+              paymentExpiresAt: result.paymentExpiresAt?.toString() ?? null,
+            };
+          })()
+        : null,
   };
 }

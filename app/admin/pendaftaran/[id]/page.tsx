@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import AdminHeader from "@/app/components/admin/AdminHeader";
+import AdminNavbar from "@/app/components/admin/AdminSidebar";
 import PaymentStatusBadge from "@/app/components/admin/PaymentStatusBadge";
+import FunRunVerificationActions from "@/app/components/admin/FunRunVerificationActions";
 import { getAdminRegistrationDetail } from "@/lib/admin/registration";
 
 type PageProps = {
@@ -84,6 +86,7 @@ export default async function PendaftaranDetailPage({ params }: PageProps) {
 
   return (
     <>
+      <AdminNavbar />
       <AdminHeader
         title="Detail Pendaftaran"
         description="Informasi peserta, data lomba, dan status transaksi."
@@ -138,36 +141,45 @@ export default async function PendaftaranDetailPage({ params }: PageProps) {
               </dd>
             </div>
           </dl>
-          {/* Informasi Check-in */}
-          <section className="rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 className="mb-5 text-lg font-bold text-[#00354E]">
-              Informasi Check-in
-            </h2>
-
-            <div className="rounded-xl bg-slate-50 p-4">
-              <p className="text-sm text-slate-500">Status Check-in</p>
-
-              {data.checkedInAt ? (
-                <>
-                  <span className="mt-2 inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
-                    Sudah Check-in
-                  </span>
-
-                  <p className="mt-4 text-sm text-slate-500">Waktu Check-in</p>
-
-                  <p className="mt-1 font-semibold text-slate-800">
-                    {formatTanggal(data.checkedInAt)}
-                  </p>
-                </>
-              ) : (
-                <span className="mt-2 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-                  Belum Check-in
-                </span>
-              )}
-            </div>
-          </section>
         </section>
+        {data.verifikasi && (
+          <FunRunVerificationActions
+            registrationId={data.id}
+            status={data.verifikasi.statusVerifikasi}
+            note={data.verifikasi.verificationNote}
+            studentCardPath={data.verifikasi.buktiKartuPelajarPath}
+            verifiedAt={data.verifikasi.verifiedAt}
+            paymentExpiresAt={data.verifikasi.paymentExpiresAt}
+          />
+        )}
+        {/* Informasi Check-in */}
+        <section className="rounded-2xl border border-slate-200 bg-white p-6">
+          <h2 className="mb-5 text-lg font-bold text-[#00354E]">
+            Informasi Check-in
+          </h2>
 
+          <div className="rounded-xl bg-slate-50 p-4">
+            <p className="text-sm text-slate-500">Status Check-in</p>
+
+            {data.checkedInAt ? (
+              <>
+                <span className="mt-2 inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                  Sudah Check-in
+                </span>
+
+                <p className="mt-4 text-sm text-slate-500">Waktu Check-in</p>
+
+                <p className="mt-1 font-semibold text-slate-800">
+                  {formatTanggal(data.checkedInAt)}
+                </p>
+              </>
+            ) : (
+              <span className="mt-2 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                Belum Check-in
+              </span>
+            )}
+          </div>
+        </section>
         {/* Detail sesuai jenis lomba */}
         <section className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="mb-5 text-lg font-bold text-[#00354E]">
