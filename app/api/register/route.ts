@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { createSnapTransaction } from "@/lib/validations/midtrans";
 import { getHargaLomba, HARGA_FUN_RUN_INTERNAL } from "@/lib/pra-event/price";
+import { sendAdminFunRunInternalNotification } from "@/lib/notifications/admin";
 import type { RegistrationInput } from "@/lib/validations/register";
 import {
   generateRegistrationId,
@@ -135,6 +136,29 @@ export async function POST(req: Request) {
         });
 
         break;
+      }
+    }
+    // Notifikasi admin untuk pendaftaran Fun Run Internal.
+    if (data.jenisLomba === "FUN_RUN" && data.kategoriPeserta === "INTERNAL") {
+      try {
+        const notification = await sendAdminFunRunInternalNotification({
+          registrationId: newLomba.id,
+          namaLengkap: data.namaLengkap,
+          email: data.email,
+          noWhatsapp: data.noWhatsapp,
+          kelas: data.kelas ?? "-",
+          createdAt: newLomba.createdAt,
+        });
+
+        console.log("ADMIN_NOTIFICATION_SENT:", {
+          registrationId: newLomba.id,
+          emailId: notification.emailId,
+        });
+      } catch (error) {
+        console.error("ADMIN_NOTIFICATION_FAILED:", {
+          registrationId: newLomba.id,
+          error,
+        });
       }
     }
     // Peserta Internal menunggu verifikasi admin.
