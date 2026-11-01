@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { verifyAdminSession } from "@/lib/admin/auth";
 import { db } from "@/src/prisma/db";
+import { createSnapTransaction } from "@/lib/validations/midtrans";
+import { sendWhatsAppMessage } from "@/lib/validations/fonnte";
+import { HARGA_FUN_RUN_INTERNAL } from "@/lib/pra-event/price";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -100,6 +103,218 @@ export async function GET(_request: Request, context: Context) {
   }
 }
 
+async function processInternalPaymentLink(
+  registrationId: string,
+  detail: {
+    namaLengkap: string;
+    email: string;
+    noWhatsapp: string;
+  },
+  orderId: string,
+  paymentExpiresAt: string | null,
+) {
+  let paymentUrl: string | null = null;
+  let snapToken: string | null = null;
+
+  const current = await db.orm.public.DataLomba.where({
+    id: registrationId,
+  }).first();
+
+  if (!current) {
+    throw new Error("Data pendaftaran tidak ditemukan.");
+  }
+  if (current.paymentUrl && current.snapToken) {
+    paymentUrl = current.paymentUrl;
+    snapToken = current.snapToken;
+
+    if (current.paymentLinkStatus === "SENT") {
+      return {
+        success: true,
+        message: "Link pembayaran sudah pernah dikirim.",
+        paymentUrl,
+      };
+    }
+
+    if (
+      current.paymentLinkStatus !== "CREATED" &&
+      current.paymentLinkStatus !== "SEND_FAILED"
+    ) {
+      return {
+        success: false,
+        message: "Status pengiriman link belum dapat diproses.",
+        paymentUrl,
+      };
+    }
+  }
+
+  // Jika URL sudah ada, gunakan kembali. Jangan membuat transaksi baru.
+  if (current.paymentUrl && current.snapToken) {
+    paymentUrl = current.paymentUrl;
+    snapToken = current.snapToken;
+  } else {
+    if (
+      current.paymentLinkStatus !== "NOT_CREATED" &&
+      current.paymentLinkStatus !== "FAILED"
+    ) {
+      return {
+        success: false,
+        message: "Transaksi sedang diproses atau sudah dibuat.",
+      };
+    }
+    // Claim pembuatan transaksi secara atomik.
+    // Hanya satu request yang boleh mengubah status menjadi CREATING.
+    const claimPlan = db.sql.public.DataLomba.update({
+      paymentLinkStatus: "CREATING",
+    })
+      .where((fields, fns) =>
+        fns.and(
+          fns.eq(fields.id, registrationId),
+          fns.eq(fields.snapToken, null),
+          fns.eq(fields.paymentLinkStatus, current.paymentLinkStatus),
+          fns.eq(fields.paymentUrl, null),
+        ),
+      )
+      .returning("id")
+      .build();
+
+    const claimed = await db.runtime().query(claimPlan);
+
+    if (!claimed.length) {
+      return {
+        success: false,
+        message: "Transaksi sedang diproses oleh request lain.",
+      };
+    }
+
+    try {
+      const snap = await createSnapTransaction({
+        transaction_details: {
+          order_id: orderId,
+          gross_amount: HARGA_FUN_RUN_INTERNAL,
+        },
+        item_details: [
+          {
+            id: "FUN_RUN_INTERNAL",
+            price: HARGA_FUN_RUN_INTERNAL,
+            quantity: 1,
+            name: "Pendaftaran Fun Run Internal",
+          },
+        ],
+        customer_details: {
+          first_name: detail.namaLengkap,
+          email: detail.email,
+          phone: detail.noWhatsapp,
+        },
+      });
+
+      if (!snap.token || !snap.redirect_url) {
+        throw new Error("Respons Snap tidak lengkap.");
+      }
+
+      snapToken = snap.token;
+      paymentUrl = snap.redirect_url;
+
+      const savePlan = db.sql.public.DataLomba.update({
+        snapToken,
+        paymentUrl,
+        paymentLinkCreatedAt: new Date().toISOString(),
+        paymentLinkStatus: "CREATED",
+        jumlahBayar: HARGA_FUN_RUN_INTERNAL,
+      })
+        .where((fields, fns) =>
+          fns.and(
+            fns.eq(fields.id, registrationId),
+            fns.eq(fields.paymentLinkStatus, "CREATING"),
+          ),
+        )
+        .returning("id")
+        .build();
+
+      const saved = await db.runtime().query(savePlan);
+
+      if (!saved.length) {
+        throw new Error("Gagal menyimpan URL pembayaran.");
+      }
+    } catch (error) {
+      const failedPlan = db.sql.public.DataLomba.update({
+        paymentLinkStatus: "FAILED",
+      })
+        .where((fields, fns) => fns.eq(fields.id, registrationId))
+        .build();
+
+      await db.runtime().query(failedPlan);
+
+      throw error;
+    }
+  }
+
+  // Kirim URL pembayaran melalui WhatsApp.
+  try {
+    const expiryText = paymentExpiresAt
+      ? new Date(paymentExpiresAt).toLocaleString("id-ID", {
+          dateStyle: "long",
+          timeStyle: "short",
+          timeZone: "Asia/Jakarta",
+        })
+      : "24 jam setelah persetujuan";
+
+    const message = [
+      `Halo, Kak ${detail.namaLengkap}! 👋`,
+      "",
+      "🎉 *PENDAFTARAN FUN RUN INTERNAL DISETUJUI!*",
+      "",
+      "Verifikasi kartu pelajar kamu berhasil. Sekarang kamu bisa melanjutkan pembayaran.",
+      "",
+      `💰 *Biaya pendaftaran: Rp${HARGA_FUN_RUN_INTERNAL.toLocaleString("id-ID")}*`,
+      "",
+      "👇 *Klik tautan berikut untuk membayar:*",
+      paymentUrl,
+      "",
+      `⏰ Batas pembayaran: ${expiryText}`,
+      "",
+      "Jika mengalami kendala pembayaran, silakan hubungi panitia Genotif 47.",
+      "",
+      "Salam kreatif dan inovatif,",
+      "Panitia Genotif 47 💙",
+    ].join("\n");
+
+    await sendWhatsAppMessage(detail.noWhatsapp, message);
+
+    const sentPlan = db.sql.public.DataLomba.update({
+      paymentLinkStatus: "SENT",
+      paymentWhatsAppSentAt: new Date().toISOString(),
+    })
+      .where((fields, fns) => fns.eq(fields.id, registrationId))
+      .build();
+
+    await db.runtime().query(sentPlan);
+
+    return {
+      success: true,
+      message: "URL pembayaran berhasil dikirim.",
+      paymentUrl,
+    };
+  } catch (error) {
+    console.error("INTERNAL_PAYMENT_WHATSAPP_ERROR:", {
+      registrationId,
+      error,
+    });
+
+    const failedPlan = db.sql.public.DataLomba.update({
+      paymentLinkStatus: "SEND_FAILED",
+    })
+      .where((fields, fns) => fns.eq(fields.id, registrationId))
+      .build();
+
+    await db.runtime().query(failedPlan);
+
+    return {
+      success: false,
+      message: "Transaksi tersimpan, tetapi WhatsApp gagal dikirim.",
+      paymentUrl,
+    };
+  }
+}
 // Menyetujui atau menolak pendaftaran.
 export async function POST(request: Request, context: Context) {
   try {
@@ -133,6 +348,47 @@ export async function POST(request: Request, context: Context) {
       );
     }
 
+    // Approval sebelumnya sudah berhasil:
+    // proses ulang hanya untuk memastikan link pembayaran terkirim.
+    if (
+      record.detail.statusVerifikasi === "APPROVED" &&
+      decision === "APPROVED"
+    ) {
+      try {
+        const payment = await processInternalPaymentLink(
+          id,
+          {
+            namaLengkap: record.detail.namaLengkap,
+            email: record.detail.email,
+            noWhatsapp: record.detail.noWhatsapp,
+          },
+          record.registration.orderId,
+          record.detail.paymentExpiresAt,
+        );
+
+        return NextResponse.json({
+          success: payment.success,
+          message: payment.message,
+          data: {
+            statusVerifikasi: "APPROVED",
+            paymentUrl: payment.paymentUrl ?? null,
+          },
+        });
+      } catch (error) {
+        console.error("INTERNAL_PAYMENT_CREATION_ERROR:", error);
+
+        return NextResponse.json({
+          success: true,
+          message:
+            "Pendaftaran sudah disetujui, tetapi pembuatan transaksi gagal. Silakan coba lagi.",
+          data: {
+            statusVerifikasi: "APPROVED",
+            paymentLinkStatus: "FAILED",
+          },
+        });
+      }
+    }
+
     if (record.detail.statusVerifikasi !== "PENDING") {
       return errorResponse("Pendaftaran sudah diproses sebelumnya.", 409);
     }
@@ -144,8 +400,6 @@ export async function POST(request: Request, context: Context) {
         ? new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString()
         : null;
 
-    // Conditional update: mencegah dua admin memproses
-    // pendaftaran yang sama secara bersamaan.
     const updatePlan = db.sql.public.DetailFunRun.update({
       statusVerifikasi: decision,
       verifiedAt: now.toISOString(),
@@ -168,19 +422,87 @@ export async function POST(request: Request, context: Context) {
       return errorResponse("Pendaftaran sudah diproses oleh admin lain.", 409);
     }
 
-    return NextResponse.json({
-      success: true,
-      message:
-        decision === "APPROVED"
-          ? "Pendaftaran berhasil disetujui."
-          : "Pendaftaran berhasil ditolak.",
-      data: {
-        statusVerifikasi: decision,
-        verifiedAt: now.toISOString(),
+    // Rejection selesai di sini, tidak membuat transaksi.
+    // Rejection selesai di sini, tidak membuat transaksi.
+    if (decision === "REJECTED") {
+      let whatsappSent = false;
+
+      const message = [
+        `Halo, Kak ${record.detail.namaLengkap}.`,
+        "",
+        "*PEMBERITAHUAN HASIL VERIFIKASI FUN RUN INTERNAL*",
+        "",
+        "Mohon maaf, pendaftaran Fun Run Internal Genotif 47 belum dapat kami setujui.",
+        "",
+        `Alasan penolakan: ${note}`,
+        "",
+        "Jika terdapat kekeliruan dalam proses verifikasi, silakan hubungi panitia Genotif 47.",
+        "",
+        "Terima kasih atas perhatian dan pengertiannya.",
+        "",
+        "Panitia Genotif 47 💙",
+      ].join("\n");
+
+      try {
+        await sendWhatsAppMessage(record.detail.noWhatsapp, message);
+
+        whatsappSent = true;
+      } catch (error) {
+        console.error("INTERNAL_REJECTION_WHATSAPP_ERROR:", {
+          registrationId: id,
+          error,
+        });
+      }
+
+      return NextResponse.json({
+        success: true,
+        message: whatsappSent
+          ? "Pendaftaran berhasil ditolak dan pemberitahuan WhatsApp terkirim."
+          : "Pendaftaran berhasil ditolak, tetapi pemberitahuan WhatsApp gagal dikirim.",
+        data: {
+          statusVerifikasi: decision,
+          verifiedAt: now.toISOString(),
+          verificationNote: note,
+          whatsappSent,
+        },
+      });
+    }
+
+    // Approval berhasil. Lanjutkan membuat transaksi dan mengirim URL.
+    try {
+      const payment = await processInternalPaymentLink(
+        id,
+        {
+          namaLengkap: record.detail.namaLengkap,
+          email: record.detail.email,
+          noWhatsapp: record.detail.noWhatsapp,
+        },
+        record.registration.orderId,
         paymentExpiresAt,
-        verificationNote: decision === "REJECTED" ? note : null,
-      },
-    });
+      );
+
+      return NextResponse.json({
+        success: true,
+        message: payment.message,
+        data: {
+          statusVerifikasi: "APPROVED",
+          paymentUrl: payment.paymentUrl ?? null,
+          paymentLinkSent: payment.success,
+        },
+      });
+    } catch (error) {
+      console.error("INTERNAL_PAYMENT_CREATION_ERROR:", error);
+
+      return NextResponse.json({
+        success: true,
+        message:
+          "Pendaftaran disetujui, tetapi pembuatan transaksi gagal. Admin dapat mencoba kembali.",
+        data: {
+          statusVerifikasi: "APPROVED",
+          paymentLinkStatus: "FAILED",
+        },
+      });
+    }
   } catch (error) {
     console.error("ADMIN_VERIFICATION_POST_ERROR:", error);
     return errorResponse("Terjadi kesalahan server.", 500);

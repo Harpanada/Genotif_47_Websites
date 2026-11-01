@@ -18,7 +18,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'af205d188cd72a7e13aef560b09172480420be809082a768845a82cdb7a4e971'>;
+  StorageHashBase<'bcd47c406662190325c3ec8005f3f8c988c2d4867ca2e9181f0eda2b93c29400'>;
 export type ExecutionHash = ExecutionHashBase<string>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
@@ -252,6 +252,11 @@ export type FieldOutputTypes = {
       readonly jenisLomba: CodecTypes['pg/text@1']['output'];
       readonly jumlahBayar: CodecTypes['pg/int4@1']['output'] | null;
       readonly orderId: CodecTypes['pg/text@1']['output'];
+      readonly paymentLinkCreatedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+      readonly paymentLinkStatus: CodecTypes['pg/text@1']['output'];
+      readonly paymentUrl: CodecTypes['pg/text@1']['output'] | null;
+      readonly paymentWhatsAppSentAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+      readonly snapToken: CodecTypes['pg/text@1']['output'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['output'];
       readonly ticketToken: CodecTypes['pg/text@1']['output'] | null;
     };
@@ -336,6 +341,11 @@ export type FieldInputTypes = {
       readonly jenisLomba: CodecTypes['pg/text@1']['input'];
       readonly jumlahBayar: CodecTypes['pg/int4@1']['input'] | null;
       readonly orderId: CodecTypes['pg/text@1']['input'];
+      readonly paymentLinkCreatedAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
+      readonly paymentLinkStatus: CodecTypes['pg/text@1']['input'];
+      readonly paymentUrl: CodecTypes['pg/text@1']['input'] | null;
+      readonly paymentWhatsAppSentAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
+      readonly snapToken: CodecTypes['pg/text@1']['input'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['input'];
       readonly ticketToken: CodecTypes['pg/text@1']['input'] | null;
     };
@@ -420,6 +430,11 @@ export type StorageColumnTypes = {
       readonly jenisLomba: CodecTypes['pg/text@1']['output'];
       readonly jumlahBayar: CodecTypes['pg/int4@1']['output'] | null;
       readonly orderId: CodecTypes['pg/text@1']['output'];
+      readonly paymentLinkCreatedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+      readonly paymentLinkStatus: CodecTypes['pg/text@1']['output'];
+      readonly paymentUrl: CodecTypes['pg/text@1']['output'] | null;
+      readonly paymentWhatsAppSentAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+      readonly snapToken: CodecTypes['pg/text@1']['output'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['output'];
       readonly ticketToken: CodecTypes['pg/text@1']['output'] | null;
     };
@@ -504,6 +519,11 @@ export type StorageColumnInputTypes = {
       readonly jenisLomba: CodecTypes['pg/text@1']['input'];
       readonly jumlahBayar: CodecTypes['pg/int4@1']['input'] | null;
       readonly orderId: CodecTypes['pg/text@1']['input'];
+      readonly paymentLinkCreatedAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
+      readonly paymentLinkStatus: CodecTypes['pg/text@1']['input'];
+      readonly paymentUrl: CodecTypes['pg/text@1']['input'] | null;
+      readonly paymentWhatsAppSentAt: CodecTypes['pg/timestamptz-string@1']['input'] | null;
+      readonly snapToken: CodecTypes['pg/text@1']['input'] | null;
       readonly statusBayar: CodecTypes['pg/text@1']['input'];
       readonly ticketToken: CodecTypes['pg/text@1']['input'] | null;
     };
@@ -592,6 +612,11 @@ export namespace Models {
     jenisLomba: CodecTypes['pg/text@1']['output'];
     jumlahBayar: CodecTypes['pg/int4@1']['output'] | null;
     orderId: CodecTypes['pg/text@1']['output'];
+    paymentLinkCreatedAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+    paymentLinkStatus: CodecTypes['pg/text@1']['output'];
+    paymentUrl: CodecTypes['pg/text@1']['output'] | null;
+    paymentWhatsAppSentAt: CodecTypes['pg/timestamptz-string@1']['output'] | null;
+    snapToken: CodecTypes['pg/text@1']['output'] | null;
     statusBayar: CodecTypes['pg/text@1']['output'];
     ticketToken: CodecTypes['pg/text@1']['output'] | null;
     detailCerdasCermat: public_DetailCerdasCermat | null;
@@ -851,6 +876,40 @@ type ContractBase = Omit<
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly paymentLinkCreatedAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly paymentLinkStatus: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'NOT_CREATED'>;
+                  };
+                  readonly many: false;
+                };
+                readonly paymentUrl: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly paymentWhatsAppSentAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly snapToken: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
                   readonly many: false;
                 };
                 readonly statusBayar: {
@@ -1511,6 +1570,32 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
+              readonly paymentLinkCreatedAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+              readonly paymentLinkStatus: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly paymentUrl: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly paymentWhatsAppSentAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+              readonly snapToken: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
               readonly statusBayar: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
@@ -1593,6 +1678,11 @@ type ContractBase = Omit<
                 readonly jenisLomba: { readonly column: 'jenisLomba' };
                 readonly jumlahBayar: { readonly column: 'jumlahBayar' };
                 readonly orderId: { readonly column: 'orderId' };
+                readonly paymentLinkCreatedAt: { readonly column: 'paymentLinkCreatedAt' };
+                readonly paymentLinkStatus: { readonly column: 'paymentLinkStatus' };
+                readonly paymentUrl: { readonly column: 'paymentUrl' };
+                readonly paymentWhatsAppSentAt: { readonly column: 'paymentWhatsAppSentAt' };
+                readonly snapToken: { readonly column: 'snapToken' };
                 readonly statusBayar: { readonly column: 'statusBayar' };
                 readonly ticketToken: { readonly column: 'ticketToken' };
               };

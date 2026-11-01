@@ -218,6 +218,41 @@
                   "kind": "scalar"
                 }
               },
+              "paymentLinkCreatedAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "paymentLinkStatus": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "paymentUrl": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "paymentWhatsAppSentAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "snapToken": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
               "statusBayar": {
                 "nullable": false,
                 "type": {
@@ -337,6 +372,21 @@
                 },
                 "orderId": {
                   "column": "orderId"
+                },
+                "paymentLinkCreatedAt": {
+                  "column": "paymentLinkCreatedAt"
+                },
+                "paymentLinkStatus": {
+                  "column": "paymentLinkStatus"
+                },
+                "paymentUrl": {
+                  "column": "paymentUrl"
+                },
+                "paymentWhatsAppSentAt": {
+                  "column": "paymentWhatsAppSentAt"
+                },
+                "snapToken": {
+                  "column": "snapToken"
                 },
                 "statusBayar": {
                   "column": "statusBayar"
@@ -1180,6 +1230,35 @@
                   "dataType": "pg/text",
                   "nullable": false
                 },
+                "paymentLinkCreatedAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true
+                },
+                "paymentLinkStatus": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "NOT_CREATED"
+                  },
+                  "nullable": false
+                },
+                "paymentUrl": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "paymentWhatsAppSentAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true
+                },
+                "snapToken": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
                 "statusBayar": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
@@ -1727,7 +1806,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "af205d188cd72a7e13aef560b09172480420be809082a768845a82cdb7a4e971"
+    "storageHash": "bcd47c406662190325c3ec8005f3f8c988c2d4867ca2e9181f0eda2b93c29400"
   },
   "capabilities": {
     "postgres": {
