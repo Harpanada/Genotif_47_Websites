@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
-import { createSnapTransaction } from "@/lib/validations/midtrans";
-import { getHargaLomba, HARGA_FUN_RUN_INTERNAL } from "@/lib/pra-event/price";
-import { sendAdminFunRunInternalNotification } from "@/lib/notifications/admin";
+import { createSnapTransaction } from "@/lib/payment/midtrans";
+import { getHargaLomba, HARGA_FUN_RUN_INTERNAL } from "@/lib/payment/price";
+import { sendAdminFunRunInternalNotification } from "@/lib/notifications/admin/admin";
 import type { RegistrationInput } from "@/lib/validations/register";
 import {
   generateRegistrationId,

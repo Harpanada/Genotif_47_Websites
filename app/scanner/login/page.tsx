@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, SyntheticEvent } from "react";
 import { useRouter } from "next/navigation";
 
 export default function ScannerLoginPage() {
@@ -12,7 +12,7 @@ export default function ScannerLoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (loading) return;

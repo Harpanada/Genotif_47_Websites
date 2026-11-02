@@ -1,5 +1,5 @@
 import Link from "next/link";
-import AnimatedButton from "@/app/components/animation/AnimatedButton";
+import AnimatedButton from "@/components/animation/AnimatedButton";
 export default function About() {
   return (
     <section className="-translate-y-10 h-11/12 rounded-t-4xl   bg-linear-to-b from-white via-white to-[#e4f3f6]  w-full  flex flex-col p-5  items-center text-center">
@@ -17,14 +17,12 @@ export default function About() {
       <div className="flex flex-col gap-4">
         <AnimatedButton
           link="/gallery"
-          customStyle="after:content-['_↗'] font-['body-regular'] font-black text-sm md:text-lg flex bg-[#00354E] backdrop-blur-md border shadow-sm ring-[#BAE0E2] w-44 h-12 md:w-52 md:h-14  text-center items-center justify-center p-2  text-white rounded-full"
-        >
+          customStyle="after:content-['_↗'] font-['body-regular'] font-black text-sm md:text-lg flex bg-[#00354E] backdrop-blur-md border shadow-sm ring-[#BAE0E2] w-44 h-12 md:w-52 md:h-14  text-center items-center justify-center p-2  text-white rounded-full">
           VISIT THE GALLERY
         </AnimatedButton>
         <AnimatedButton
           href="/"
-          customStyle="font-['body-regular']  font-bold  text-sm md:text-lg flex bg-white/60 backdrop-blur-md border shadow-sm border-[#BAE0E2] w-44 h-12 md:w-52 md:h-14 text-center items-center justify-center p-2 text-[#00354E] rounded-full"
-        >
+          customStyle="font-['body-regular']  font-bold  text-sm md:text-lg flex bg-white/60 backdrop-blur-md border shadow-sm border-[#BAE0E2] w-44 h-12 md:w-52 md:h-14 text-center items-center justify-center p-2 text-[#00354E] rounded-full">
           THEME
         </AnimatedButton>
       </div>

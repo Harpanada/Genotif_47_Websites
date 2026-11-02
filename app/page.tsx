@@ -1,10 +1,10 @@
-import Navbar from "@/app/components/global/Navbar";
-import Footer from "@/app/components/global/Footer";
-import Hero from "@/app/components/main/Hero";
-import About from "@/app/components/main/About";
-import News from "@/app/components/main/News";
-import Partners from "@/app/components/main/Partners";
-import Map from "@/app/components/main/Map";
+import Navbar from "@/components/global/Navbar";
+import Footer from "@/components/global/Footer";
+import Hero from "@/components/main/Hero";
+import About from "@/components/main/About";
+import News from "@/components/main/News";
+import Partners from "@/components/main/Partners";
+import Map from "@/components/main/Map";
 
 export default function Home() {
   return (

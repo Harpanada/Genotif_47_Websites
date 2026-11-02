@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { verifyAdminSession } from "@/lib/admin/auth";
 import { db } from "@/src/prisma/db";
-import { createSnapTransaction } from "@/lib/validations/midtrans";
-import { sendWhatsAppMessage } from "@/lib/validations/fonnte";
-import { HARGA_FUN_RUN_INTERNAL } from "@/lib/pra-event/price";
+import { createSnapTransaction } from "@/lib/payment/midtrans";
+import { sendWhatsAppMessage } from "@/lib/notifications/register/fonnte";
+import { HARGA_FUN_RUN_INTERNAL } from "@/lib/payment/price";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

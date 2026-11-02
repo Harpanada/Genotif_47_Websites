@@ -1,8 +1,8 @@
 "use client";
 
-import Navbar from "@/app/components/global/Navbar";
-import SnapProvider from "@/app/components/payment/SnapProvider";
-import Footer from "@/app/components/global/Footer";
+import Navbar from "@/components/global/Navbar";
+import SnapProvider from "@/components/payment/SnapProvider";
+import Footer from "@/components/global/Footer";
 import { registrationSchema } from "@/lib/validations/register";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";

@@ -1,4 +1,4 @@
-import LinkNav from "@/app/components/main/nav/LinkNav";
+import LinkNav from "@/components/main/nav/LinkNav";
 export default function Footer() {
   return (
     <footer className="min-w-screen bg-[#00354E] flex flex-col justify-center items-center p-10 gap-4 md:gap-5  shadow-lg">
@@ -9,20 +9,17 @@ export default function Footer() {
         <div className=" flex gap-3">
           <a
             href=""
-            className="flex w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-2.5"
-          >
+            className="flex w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-2.5">
             <img src="/icon//Instagram_Glyph_Black.svg" alt="" />
           </a>
           <a
             href=""
-            className="flex w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-1.5"
-          >
+            className="flex w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-1.5">
             <img src="/icon/TIKTOK_SIMPLIFIED_NOTE_BLACK.svg" alt="" />
           </a>
           <a
             href=""
-            className=" w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-0.5 "
-          >
+            className=" w-10 rounded-full h-10 md:w-12 md:h-12 bg-white p-0.5 ">
             <img
               className="translate-y-0.5"
               src="/icon//yt_icon_almostblack_digital.png"
@@ -46,8 +43,7 @@ export default function Footer() {
           ©Copyright 2026 GENOTIF 47, part of
           <a
             href="https://sman1ciranjang.sch.id/#"
-            className="underline underline-offset-4 after:content-['_↗'] "
-          >
+            className="underline underline-offset-4 after:content-['_↗'] ">
             {" "}
             SMAN 1 CIRANJANG
           </a>

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import AnimatedSection from "@/app/components/animation/AnimatedSection";
-import AnimatedButton from "@/app/components/animation/AnimatedButton";
+import AnimatedSection from "@/components/animation/AnimatedSection";
+import AnimatedButton from "@/components/animation/AnimatedButton";
 export default function Hero() {
   return (
     <section className="p-6 flex flex-col text-center gap-14 items-center justify-center w-screen bg-cover bg-center h-screen bg-no-repeat bg-scroll md:bg-fixed  bg-[url(/content/hero-edelweiss.webp)]  ">

@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import LinkNav from "@/app/components/main/nav/LinkNav";
+import LinkNav from "@/components/main/nav/LinkNav";
 import { motion } from "motion/react";
 import Image from "next/image";
-import AnimatedSection from "@/app/components/animation/AnimatedSection";
+import AnimatedSection from "@/components/animation/AnimatedSection";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   return (
