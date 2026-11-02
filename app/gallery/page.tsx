@@ -1,7 +1,7 @@
-import Navbar from "@/app/components/global/Navbar";
-import Footer from "@/app/components/global/Footer";
-import GallerySection from "@/app/components/gallery_elments/GallerySection";
-import GlobalHero from "@/app/components/global/GlobalHero";
+import Navbar from "@/components/global/Navbar";
+import Footer from "@/components/global/Footer";
+import GallerySection from "@/components/gallery_elments/GallerySection";
+import GlobalHero from "@/components/global/GlobalHero";
 export default function Gallery() {
   return (
     <section className="scroll-smooth min-w-screen min-h-screen bg-[#e4f3f6] overflow-hidden">

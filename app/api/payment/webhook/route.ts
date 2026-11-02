@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateTicketToken } from "@/lib/ticketing/tickets";
-import { sendWhatsAppMessage } from "@/lib/validations/fonnte";
+import { sendWhatsAppMessage } from "@/lib/notifications/register/fonnte";
 import crypto from "node:crypto";
 import { db } from "@/src/prisma/db";
 

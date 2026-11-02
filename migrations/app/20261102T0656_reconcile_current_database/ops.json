@@ -1,0 +1,416 @@
+[
+  {
+    "id": "table.panitia_accounts",
+    "label": "Create table \"panitia_accounts\"",
+    "summary": "Creates table \"panitia_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "panitia_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"panitia_accounts\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"panitia_accounts\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"panitia_accounts\"",
+        "sql": "CREATE TABLE \"public\".\"panitia_accounts\" (\n  \"created_at\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" uuid DEFAULT (gen_random_uuid()) NOT NULL,\n  \"is_active\" bool DEFAULT true NOT NULL,\n  \"nama\" character varying(100) NOT NULL,\n  \"password_hash\" text NOT NULL,\n  \"role\" character varying(20) DEFAULT 'SCANNER' NOT NULL,\n  \"username\" character varying(50) NOT NULL,\n  CONSTRAINT \"panitia_accounts_pkey\" PRIMARY KEY (\"id\"),\n  CONSTRAINT \"panitia_accounts_role_check\" CHECK (((role)::text = ANY ((ARRAY['ADMIN'::character varying, 'SCANNER'::character varying])::text[])))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"panitia_accounts\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"panitia_accounts\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DataLomba.checkedInBy",
+    "label": "Add column \"checkedInBy\" to \"DataLomba\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "checkedInBy",
+        "table": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"checkedInBy\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "checkedInBy"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"checkedInBy\"",
+        "sql": "ALTER TABLE \"public\".\"DataLomba\" ADD COLUMN \"checkedInBy\" uuid"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"checkedInBy\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "checkedInBy"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DataLomba.paymentLinkCreatedAt",
+    "label": "Add column \"paymentLinkCreatedAt\" to \"DataLomba\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "paymentLinkCreatedAt",
+        "table": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"paymentLinkCreatedAt\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "paymentLinkCreatedAt"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"paymentLinkCreatedAt\"",
+        "sql": "ALTER TABLE \"public\".\"DataLomba\" ADD COLUMN \"paymentLinkCreatedAt\" timestamptz"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"paymentLinkCreatedAt\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "paymentLinkCreatedAt"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DataLomba.paymentLinkStatus",
+    "label": "Add column \"paymentLinkStatus\" to \"DataLomba\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "paymentLinkStatus",
+        "table": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"paymentLinkStatus\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "paymentLinkStatus"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"paymentLinkStatus\"",
+        "sql": "ALTER TABLE \"public\".\"DataLomba\" ADD COLUMN \"paymentLinkStatus\" text DEFAULT 'NOT_CREATED' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"paymentLinkStatus\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "paymentLinkStatus"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DataLomba.paymentUrl",
+    "label": "Add column \"paymentUrl\" to \"DataLomba\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "paymentUrl",
+        "table": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"paymentUrl\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "paymentUrl"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"paymentUrl\"",
+        "sql": "ALTER TABLE \"public\".\"DataLomba\" ADD COLUMN \"paymentUrl\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"paymentUrl\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "paymentUrl"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DataLomba.paymentWhatsAppSentAt",
+    "label": "Add column \"paymentWhatsAppSentAt\" to \"DataLomba\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "paymentWhatsAppSentAt",
+        "table": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"paymentWhatsAppSentAt\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "paymentWhatsAppSentAt"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"paymentWhatsAppSentAt\"",
+        "sql": "ALTER TABLE \"public\".\"DataLomba\" ADD COLUMN \"paymentWhatsAppSentAt\" timestamptz"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"paymentWhatsAppSentAt\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "paymentWhatsAppSentAt"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.DataLomba.snapToken",
+    "label": "Add column \"snapToken\" to \"DataLomba\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "snapToken",
+        "table": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"snapToken\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "snapToken"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"snapToken\"",
+        "sql": "ALTER TABLE \"public\".\"DataLomba\" ADD COLUMN \"snapToken\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"snapToken\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "DataLomba",
+          "snapToken"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.panitia_accounts.panitia_accounts_username_key",
+    "label": "Add unique constraint on \"panitia_accounts\" (username)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "panitia_accounts_username_key",
+        "table": "panitia_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"panitia_accounts_username_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "panitia_accounts_username_key",
+          "public",
+          "\"public\".\"panitia_accounts\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"panitia_accounts_username_key\"",
+        "sql": "ALTER TABLE \"public\".\"panitia_accounts\" ADD CONSTRAINT \"panitia_accounts_username_key\" UNIQUE (\"username\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"panitia_accounts_username_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "panitia_accounts_username_key",
+          "public",
+          "\"public\".\"panitia_accounts\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.panitia_accounts.panitia_accounts_username_lower_idx",
+    "label": "Create index \"panitia_accounts_username_lower_idx\" on \"panitia_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "panitia_accounts_username_lower_idx",
+        "table": "panitia_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"panitia_accounts_username_lower_idx\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"panitia_accounts_username_lower_idx\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"panitia_accounts_username_lower_idx\"",
+        "sql": "CREATE UNIQUE INDEX \"panitia_accounts_username_lower_idx\" ON \"public\".\"panitia_accounts\" (lower(username::text))",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"panitia_accounts_username_lower_idx\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"panitia_accounts_username_lower_idx\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.DataLomba.DataLomba_checkedInBy_fkey",
+    "label": "Add foreign key \"DataLomba_checkedInBy_fkey\" on \"DataLomba\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "DataLomba_checkedInBy_fkey",
+        "table": "DataLomba"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"DataLomba_checkedInBy_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DataLomba_checkedInBy_fkey",
+          "public",
+          "\"public\".\"DataLomba\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"DataLomba_checkedInBy_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"DataLomba\"\nADD CONSTRAINT \"DataLomba_checkedInBy_fkey\"\nFOREIGN KEY (\"checkedInBy\")\nREFERENCES \"public\".\"panitia_accounts\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"DataLomba_checkedInBy_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "DataLomba_checkedInBy_fkey",
+          "public",
+          "\"public\".\"DataLomba\""
+        ]
+      }
+    ]
+  }
+]

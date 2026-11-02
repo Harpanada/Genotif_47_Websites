@@ -1,4 +1,4 @@
-import AnimatedSection from "@/app/components/animation/AnimatedSection";
+import AnimatedSection from "@/components/animation/AnimatedSection";
 import { image } from "motion/react-client";
 
 interface GlobalHeroProps {

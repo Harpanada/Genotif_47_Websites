@@ -1,8 +1,7 @@
-import Navbar from "@/app/components/global/Navbar";
-import Footer from "@/app/components/global/Footer";
-import Card from "../components/contact_elements/card";
-import AnimatedSection from "@/app/components/animation/AnimatedSection";
-import GlobalHero from "@/app/components/global/GlobalHero";
+import Navbar from "@/components/global/Navbar";
+import Footer from "@/components/global/Footer";
+import Card from "@/components/contact_elements/card";
+import GlobalHero from "@/components/global/GlobalHero";
 
 const getWALink = (phone: string, text: string) => {
   return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
