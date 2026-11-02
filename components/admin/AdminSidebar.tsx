@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import LogoutButton from "@/app/components/admin/LogoutButton";
+import LogoutButton from "@/components/admin/LogoutButton";
 import { useState } from "react";
-import LinkNav from "@/app/components/main/nav/LinkNav";
+import LinkNav from "@/components/main/nav/LinkNav";
 import { motion } from "motion/react";
 import Image from "next/image";
-import AnimatedSection from "@/app/components/animation/AnimatedSection";
+import AnimatedSection from "@/components/animation/AnimatedSection";
 
 const navigation = [
   {

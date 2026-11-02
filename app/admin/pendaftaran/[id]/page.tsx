@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import AdminHeader from "@/app/components/admin/AdminHeader";
-import AdminNavbar from "@/app/components/admin/AdminSidebar";
-import PaymentStatusBadge from "@/app/components/admin/PaymentStatusBadge";
-import FunRunVerificationActions from "@/app/components/admin/FunRunVerificationActions";
+import AdminHeader from "@/components/admin/AdminHeader";
+import AdminNavbar from "@/components/admin/AdminSidebar";
+import PaymentStatusBadge from "@/components/admin/PaymentStatusBadge";
+import FunRunVerificationActions from "@/components/admin/FunRunVerificationActions";
 import { getAdminRegistrationDetail } from "@/lib/admin/registration";
 
 type PageProps = {

@@ -1,8 +1,8 @@
-import AdminHeader from "@/app/components/admin/AdminHeader";
-import RegistrationManagement from "@/app/components/admin/RegistrationManagement";
+import AdminHeader from "@/components/admin/AdminHeader";
+import RegistrationManagement from "@/components/admin/RegistrationManagement";
 import { getAdminRegistrations } from "@/lib/admin/registration";
-import AdminAutoRefresh from "@/app/components/admin/AdminAutoRefresh";
-import AdminNavbar from "@/app/components/admin/AdminSidebar";
+import AdminAutoRefresh from "@/components/admin/AdminAutoRefresh";
+import AdminNavbar from "@/components/admin/AdminSidebar";
 
 export const dynamic = "force-dynamic";
 
