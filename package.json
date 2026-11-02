@@ -13,7 +13,6 @@
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
     "@pdf-lib/fontkit": "^1.1.1",
-    "@prisma/client": "^7.10.0",
     "@prisma/orm-postgres": "^8.0.0-rc.18",
     "bcryptjs": "^3.0.3",
     "dotenv": "^18.0.8",
