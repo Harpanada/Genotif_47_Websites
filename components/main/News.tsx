@@ -4,12 +4,12 @@ export default function News() {
     <section className="mt-10  w-full min-h-screen flex flex-col items-center justify-center text-center gap-6">
       {/* <hr className="w-2/3 text-[#00354E]" /> */}
       <h1 className="text-[#00354E] font-['Telma-Medium'] text-4xl p-5 text-shadow-lg md:text-5xl">
-        Latest News
+        Latest Information
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card
-          cardTitle="PRA EVENT"
-          cardSubtitle=" Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos enim eaque delectus nulla, iste exercitationem? "
+          cardTitle="FANTASY BEYOND THE PEAK"
+          cardSubtitle="Fantasy Beyond the Peak merupakan rangkaian acara pra-puncak Genotif 47 yang menjadi wadah bagi peserta untuk mengekspresikan kreativitas dan merasakan pengalaman seru melalui berbagai kegiatan menarik."
           cardImg="/content/scene-fair.webp"
         />
         <Card
