@@ -24,7 +24,7 @@ export default function Navbar() {
           </div>{" "}
           <ul className=" hidden lg:flex justify-center items-center text-lg gap-10 mr-5   text-[#00354E] font-['body-regular'] font-bold">
             <LinkNav contain={"Home"} linkInput="/"></LinkNav>
-            {/* <LinkNav contain={"Theme"} linkInput="/"></LinkNav> */}
+            <LinkNav contain={"Philosophy"} linkInput="/philosophy"></LinkNav>
             <LinkNav contain={"Gallery"} linkInput="/gallery"></LinkNav>
             {/* <LinkNav contain={"Merch"} linkInput="/"></LinkNav> */}
             <LinkNav contain={"Partnership"} linkInput="/partnership"></LinkNav>
@@ -64,17 +64,16 @@ export default function Navbar() {
             transition={{ duration: 0.2, ease: "easeInOut" }}>
             <LinkNav contain={"Home"} linkInput="/"></LinkNav>
           </motion.button>
-          {/* <motion.button
+          <motion.button
             whileInView={{ opacity: 1, x: 0 }}
             initial={{ opacity: 0, x: 60 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-          >
-            <LinkNav contain={"Theme"} linkInput="/"></LinkNav>
-          </motion.button> */}
+            transition={{ duration: 0.3, ease: "easeInOut" }}>
+            <LinkNav contain={"Philosophy"} linkInput="/philosophy"></LinkNav>
+          </motion.button>
           <motion.button
             whileInView={{ opacity: 1, x: 0 }}
             initial={{ opacity: 0, x: 80 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}>
+            transition={{ duration: 0.4, ease: "easeInOut" }}>
             <LinkNav contain={"Gallery"} linkInput="/gallery"></LinkNav>
           </motion.button>
           {/* <motion.button
@@ -87,13 +86,13 @@ export default function Navbar() {
           <motion.button
             whileInView={{ opacity: 1, x: 0 }}
             initial={{ opacity: 0, x: 90 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}>
+            transition={{ duration: 0.5, ease: "easeInOut" }}>
             <LinkNav contain={"Partnership"} linkInput="/partnership"></LinkNav>
           </motion.button>
           <motion.button
             whileInView={{ opacity: 1, x: 0 }}
             initial={{ opacity: 0, x: 90 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}>
+            transition={{ duration: 0.6, ease: "easeInOut" }}>
             <LinkNav
               contain={"Registration"}
               linkInput="/registration"></LinkNav>
@@ -101,7 +100,7 @@ export default function Navbar() {
           <motion.button
             whileInView={{ opacity: 1, x: 0 }}
             initial={{ opacity: 0, x: 100 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}>
+            transition={{ duration: 0.7, ease: "easeOut" }}>
             <LinkNav contain={"Contact"} linkInput="/contact"></LinkNav>
           </motion.button>
         </ul>

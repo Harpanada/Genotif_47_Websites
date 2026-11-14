@@ -26,9 +26,9 @@ export default function Hero() {
         <div className=" flex flex-col gap-3">
           <AnimatedSection ease={"easeOut"} direction_x={100} duration={0.8}>
             <AnimatedButton
-              link="/"
+              link="/philosophy"
               customStyle="font-['body-regular'] font-bold text-xs md:text-sm lg:text-lg flex bg-[#00354E] shadow-sm w-44 h-12  lg:w-64 lg:h-16 text-center items-center justify-center p-2 text-white rounded-full">
-              SEE THE DAY'S TALE
+              THEME AND PHILOSOPHY
             </AnimatedButton>
           </AnimatedSection>
           <AnimatedSection ease={"easeOut"} direction_x={-100} duration={0.8}>
